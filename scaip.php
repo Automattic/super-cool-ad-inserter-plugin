@@ -13,8 +13,13 @@ define( 'SCAIP_PLUGIN_FILE', __FILE__ );
 /**
  * Shortcode addition
  */
-require_once(__DIR__ . '/inc/scaip-shortcode-inserter.php')
-require_once(__DIR__ . '/inc/scaip-shortcode.php')
+require_once(__DIR__ . '/inc/scaip-shortcode-inserter.php');
+require_once(__DIR__ . '/inc/scaip-shortcode.php');
+
+/**
+ * Settings
+ */
+require_once(__DIR__ . '/inc/scaip-settings.php');
 
 
 
