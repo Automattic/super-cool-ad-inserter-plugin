@@ -5,7 +5,7 @@
  *
  * @return HTML
  */
-function scaip_shortcode() {
-	return "<p>Super Cool Ad Inserter Plugin was here! Sincerely, the SCAIP Goat.</p>";
+function scaip_shortcode( $atts, $content, $tag) {
+	return "<p>Super Cool Ad Inserter Plugin was here! This is shortcode number " . $atts['number'] . ". Sincerely, the SCAIP Goat.</p>";
 }
 add_shortcode('scaip', 'scaip_shortcode');
