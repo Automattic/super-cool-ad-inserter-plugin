@@ -21,7 +21,7 @@ tests_add_filter('filesystem_method', function($arg) {
 }, 1, 10);
 
 function _manually_load_environment() {
-	$plugins_to_active = array (basename(dirname(__DIR__))) . "/scaip.php";
+	$plugins_to_active = array( (basename(dirname(__DIR__))) . "/scaip.php" );
 
 	update_option('active_plugins', $plugins_to_active);
 
