@@ -1,4 +1,4 @@
-=== DoubleClick for WordPress ===
+=== Super Cool Ad Inserter Plugin ===
 Contributors: 
 Tags: ads, publishers
 Requires at least: 4.0.0
