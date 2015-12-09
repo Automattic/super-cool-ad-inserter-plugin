@@ -14,6 +14,13 @@ function scaip_insert_shortcode($content = '') {
 		return $content;
 	}
 
+	/*
+	 * Check that there isn't a [scaip shortcode starting an empty line. If there is, abort! The content must be passed to the shortcode parser without adding more shortcodes.
+	 */
+	if ( preg_match( "/^\[scaip/m", $content )) {
+		return $content;
+	}
+
 	$scaip_period = get_option('scaip_settings_period', 3);
 	$scaip_repetitions = get_option('scaip_settings_repetitions', 2);
 	$scaip_minimum_paragraphs = get_option('scaip_settings_min_paragraphs', 6);
