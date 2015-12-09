@@ -6,14 +6,16 @@
  * Borrows heavily from the GPL3 plugin Ad-Inserter's function ai_generateAfterParagraph
  *
  * @link https://plugins.trac.wordpress.org/browser/ad-inserter/trunk/ad-inserter.php#L1474
- * @global $scaip_period, $scaip_repetitions, $scaip_minimum_paragraphs
  */
 function scaip_insert_shortcode($content = '') {
 	if (! in_the_loop() ) {
 		return $content;
 	}
 
-	global $scaip_period, $scaip_repetitions, $scaip_minimum_paragraphs;
+	$scaip_period = get_option('scaip_settings_period', 3);
+	$scaip_repetitions = get_option('scaip_settings_repetitions', 2);
+	$scaip_minimum_paragraphs = get_option('scaip_settings_min_paragraphs', 6);
+
 
 	$paragraph_positions = array();
 	$last_position = -1;

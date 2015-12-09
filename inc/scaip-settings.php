@@ -1,15 +1,9 @@
 <?php
+/**
+ * The settings page for the Super Cool Ad Inserter Plugin.
+ */
 
-global $scaip_period, $scaip_repetitions, $scaip_minimum_paragraphs;
-
-// This is the number of paragraphs after which SCAIP should insert a shortcode, counted in paragraphs since wither the beginning or the last time SCAIP inserted a shortcode
-$scaip_period = 3;
-
-// This is the number of times that SCAIP should insert a shortcode in a post
-$scaip_repetitions = 2;
-
-// This is the minimum number of paragraphs in a post required for SCAIP to insert a shortcode in a post.
-$scaip_minimum_paragraphs = 6;
+/**/
 
 /**
  * Adds the SCAIP settings to the WordPress menu systen, under "Plugins."
@@ -50,16 +44,19 @@ function scaip_settings_section_header($args) {
 	echo '<p>This is a test paragraph.</p>';
 }
 
+// This is the number of paragraphs after which SCAIP should insert a shortcode, counted in paragraphs since wither the beginning or the last time SCAIP inserted a shortcode
 function scaip_settings_period($args) {
 	$period = get_option('scaip_settings_period', 3);
 	echo '<input name="scaip_settings_period" id="scaip_settings_period" type="number" value="' . $period . '" />';
 }
 
+// This is the number of times that SCAIP should insert a shortcode in a post
 function scaip_settings_repetitions($args) {
 	$repetitions = get_option('scaip_settings_repetitions', 2);
 	echo '<input name="scaip_settings_repetitions" id="scaip_settings_repetitions" type="number" value="' . $repetitions . '" />';
 }
 
+// This is the minimum number of paragraphs in a post required for SCAIP to insert a shortcode in a post.
 function scaip_settings_min_paragraphs($args) {
 	$min_paragraphs = get_option('scaip_settings_min_paragraphs', 6);
 	echo '<input name="scaip_settings_min_paragraphs" id="scaip_settings_min_paragraphs" type="number" value="' . $min_paragraphs . '" />';
