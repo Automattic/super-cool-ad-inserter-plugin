@@ -20,6 +20,7 @@ require_once(__DIR__ . '/inc/scaip-shortcode.php');
  * Settings
  */
 require_once(__DIR__ . '/inc/scaip-settings.php');
+require_once(__DIR__ . '/inc/scaip-metaboxes.php');
 
 
 

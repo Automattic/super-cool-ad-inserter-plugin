@@ -79,8 +79,8 @@ function scaip_admin_page() {
 		?>
 		</form>
 		<hr/>
-		<p>Insert explanation of shortcodes here, possibly as a function that also gets inserted in the post editor as a metabox.</p>
 		<p>Insert link to docs on creating callbacks here.</p>
+		<?php scaip_how_to_shortcode_callback() ?>
 	</div>
 	<?php
 }
