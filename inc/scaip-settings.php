@@ -11,6 +11,11 @@ $scaip_repetitions = 2;
 // This is the minimum number of paragraphs in a post required for SCAIP to insert a shortcode in a post.
 $scaip_minimum_paragraphs = 6;
 
+/**
+ * Adds the SCAIP settings to the WordPress menu systen, under "Plugins."
+ *
+ * The capability 'manage_options' is limited to Super Admins on multisite WordPress, which might be a problem.
+ */
 function scaip_add_admin_menu() {
 	add_submenu_page('plugins.php', 'Super Cool Ad Inserter Plugin', 'Ad Inserter', 'manage_options', 'scaip', 'scaip_admin_page');
 }
@@ -69,8 +74,8 @@ function scaip_admin_page() {
 	<div class="wrap scaip-admin">
 		<h1>Super Cool Ad Inserter Plugin Options</h1>
 		<?php
-			do_settings_sections('scaip-settings');
 			settings_fields('scaip-settings');
+			do_settings_sections('scaip');
 			submit_button();
 		?>
 		<hr/>
