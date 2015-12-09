@@ -24,9 +24,9 @@ function scaip_register_settings() {
 	add_settings_section('scaip-settings', 'Control how often the ads appear', 'scaip_settings_section_header', 'scaip');
 
 	// id, title, callback, slug of the menu page it's displayed on, section of the settings page,
-	add_settings_field('scaip_settings_period', 'Number of paragraphs before each inserted ad', 'scaip_settings_period', 'scaip', 'scaip-settings');
-	add_settings_field('scaip_settings_repetitions', 'Number of times the ad should be inserted', 'scaip_settings_repetitions', 'scaip', 'scaip-settings');
-	add_settings_field('scaip_settings_min_paragraphs', 'Number paragraphs needed in a post to insert ads', 'scaip_settings_min_paragraphs', 'scaip', 'scaip-settings');
+	add_settings_field('scaip_settings_period', 'Number of paragraphs before each insertion, and between insertions', 'scaip_settings_period', 'scaip', 'scaip-settings');
+	add_settings_field('scaip_settings_repetitions', 'Number of times the ad should be inserted in a post', 'scaip_settings_repetitions', 'scaip', 'scaip-settings');
+	add_settings_field('scaip_settings_min_paragraphs', 'Minimum number of paragraphs needed in a post to insert ads', 'scaip_settings_min_paragraphs', 'scaip', 'scaip-settings');
 
 	// section, option name
 	register_setting('scaip-settings', 'scaip_settings_period');
@@ -60,6 +60,7 @@ function scaip_settings_repetitions($args) {
 function scaip_settings_min_paragraphs($args) {
 	$min_paragraphs = get_option('scaip_settings_min_paragraphs', 6);
 	echo '<input name="scaip_settings_min_paragraphs" id="scaip_settings_min_paragraphs" type="number" value="' . $min_paragraphs . '" />';
+	echo '<p>If a post has fewer than this number of paragraphs, ads will not be inserted.</p>';
 }
 
 function scaip_admin_page() {
@@ -70,11 +71,13 @@ function scaip_admin_page() {
 	?>
 	<div class="wrap scaip-admin">
 		<h1>Super Cool Ad Inserter Plugin Options</h1>
+		<form method="post" action="options.php">
 		<?php
 			settings_fields('scaip-settings');
 			do_settings_sections('scaip');
 			submit_button();
 		?>
+		</form>
 		<hr/>
 		<p>Insert explanation of shortcodes here, possibly as a function that also gets inserted in the post editor as a metabox.</p>
 		<p>Insert link to docs on creating callbacks here.</p>

@@ -5,6 +5,8 @@
  *
  * Borrows heavily from the GPL3 plugin Ad-Inserter's function ai_generateAfterParagraph
  *
+ * Some questions in this code, because Ad-Inserter doesn't have inline docs at all.
+ *
  * @link https://plugins.trac.wordpress.org/browser/ad-inserter/trunk/ad-inserter.php#L1474
  */
 function scaip_insert_shortcode($content = '') {
@@ -16,18 +18,20 @@ function scaip_insert_shortcode($content = '') {
 	$scaip_repetitions = get_option('scaip_settings_repetitions', 2);
 	$scaip_minimum_paragraphs = get_option('scaip_settings_min_paragraphs', 6);
 
-
 	$paragraph_positions = array();
 	$last_position = -1;
 	$paragraph_end = "</p>";
 
 	while ( stripos( $content, $paragraph_end, $last_position +1) !== false) {
+		// Get the position of the end of the next $paragraph_end.
 		$last_position = stripos( $content, $paragraph_end, $last_position +1 ) +3; // what does the 3 mean?
 		$paragraph_positions[] = $last_position;
-		// @todo
-		// can this be simplified to just go off of
-		// $paragraph_positions[] = $last_position + 4 
-		// ?
+		// Can this be simplified to just go off of: ?
+		//     $paragraph_positions[] = $last_position + 4 
+		//
+		// Maybe? 1 + 3 is the length of '</p>', and putting it in the offset argument for strpos() would 
+		// make the strpos start looking for the opening '<' after the ending '>' instead of in the middle of the '</p>'.
+		// Or it might not. Not going to mess with this today.
 	}
 
 	// If the total number of paragraphs is bigger than the minimum number of paragraphs
@@ -35,16 +39,16 @@ function scaip_insert_shortcode($content = '') {
 	if ( sizeof($paragraph_positions) >= $scaip_minimum_paragraphs ) {
 
 		// How many shortcodes have been added;
-		$n = 0;
+		$n = 1;
 
-		while ( $i <= sizeof($paragraph_positions)) {
+		while ( $i <= sizeof($paragraph_positions) && $n <= $scaip_repetitions ) {
 			// Modulo math to only output shortcode after $scaip_period closing paragraph tags.
 			// +1 because of zero-based indexing
 			if ( ($i + 1 ) % $scaip_period == 0 ) {
 
-				// Increment number of shortcodes added, make a shortcode
-				$n++;
+				// make a shortcode, then increment number of shortcodes that have been added to the document.
 				$shortcode = "[scaip number=$n ]";
+				$n++;
 
 				$content = substr_replace($content, $shortcode, $paragraph_positions[$i] + 1, 0);
 
