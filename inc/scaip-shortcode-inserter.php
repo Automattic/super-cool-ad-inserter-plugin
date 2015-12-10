@@ -10,12 +10,19 @@
  * @link https://plugins.trac.wordpress.org/browser/ad-inserter/trunk/ad-inserter.php#L1474
  */
 function scaip_insert_shortcode($content = '') {
+	// abort if this is not being called In The Loop.
 	if (! in_the_loop() ) {
 		return $content;
 	}
 
+	// abort if this is not a normal post
+	global $wp_query;
+	if ( $wp_query->queried_object->post_type !== 'post' ) {
+		return $content;
+	}
+
 	/*
-	 * Check that there isn't a [scaip shortcode starting an empty line. If there is, abort! The content must be passed to the shortcode parser without adding more shortcodes.
+	 * Check that there isn't a line starting with `[scaip`. If there is, abort! The content must be passed to the shortcode parser without adding more shortcodes. The user may have set a shortcode manually or set the `[scaip no]` shortcode.
 	 */
 	if ( preg_match( "/^\[scaip/m", $content )) {
 		return $content;
