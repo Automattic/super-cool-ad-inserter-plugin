@@ -15,13 +15,20 @@ function scaip_how_to_shortcode_callback($post = null) {
 	?>
 	<p>By default, <?php echo $scaip_repetitions; ?> ads will be inserted in a post, beginning <?php echo $scaip_period; ?> paragraphs after the beginning and every <?php echo $scaip_period; ?> paragraphs after that. They will not appear if this post is shorter than <?php echo $scaip_minimum_paragraphs; ?> paragraphs long.</p>
 	<p>If the automatic positioning is terrible, you can prevent automatic placement of ads by adding the <code>[scaip]</code> shortcode on its own line in the post. Ads will be placed there.</p>
-	<p>If you want to disable automatic addition of ads, add <code>[scaip no]</code> at the start of the story, or disable it here:</p>
 	<?php
-	$value = get_post_meta( $post->ID, 'scaip_prevent_shortcode_addition', true );
-	?>
-	<p><input type='checkbox' class="checkbox" id="scaip_prevent_shortcode_addition" name="scaip_prevent_shortcode_addition" <?php checked($value, 'on'); ?> /><label for="scaip_prevent_shortcode_addition"><?php _e("Prevent automatic addition of ads to this post.", "scaip"); ?></label></p>
 
-	<?php
+	// Only show the override option on posts.
+	
+	if ( $post != null ) {
+		$value = get_post_meta( $post->ID, 'scaip_prevent_shortcode_addition', true );
+		?>
+		<p>If you want to disable automatic addition of ads, add <code>[scaip no]</code> at the start of the story, or disable it here:</p>
+		<p><input type='checkbox' class="checkbox" id="scaip_prevent_shortcode_addition" name="scaip_prevent_shortcode_addition" <?php checked($value, 'on'); ?> /><label for="scaip_prevent_shortcode_addition"><?php _e("Prevent automatic addition of ads to this post.", "scaip"); ?></label></p>
+
+		<?php
+	} else {
+		echo "<p>If you want to disable automatic addition of ads, add <code>[scaip no]</code> at the start of the story.</p>";
+	}
 }
 add_action('add_meta_boxes', function() {
 	add_meta_box( 'scaip_docs_and_options', __('Super Cool Ad Inserter', 'scaip'), 'scaip_how_to_shortcode_callback', 'post', 'normal', 'low');
