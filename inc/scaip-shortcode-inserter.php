@@ -11,13 +11,20 @@
  */
 function scaip_insert_shortcode($content = '') {
 	// abort if this is not being called In The Loop.
-	if (! in_the_loop() ) {
+	if ( !in_the_loop() || !is_main_query() ) {
 		return $content;
 	}
 
 	// abort if this is not a normal post
 	global $wp_query;
 	if ( $wp_query->queried_object->post_type !== 'post' ) {
+		return $content;
+	}
+
+	/*
+	 * Abort if this post has the option set to not add ads.
+	 */
+	if ( get_post_meta($wp_query->queried_object->ID, 'scaip_prevent_shortcode_addition', true) === 'on') {
 		return $content;
 	}
 
