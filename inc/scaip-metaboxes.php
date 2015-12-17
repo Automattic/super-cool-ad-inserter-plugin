@@ -31,11 +31,11 @@ function scaip_how_to_shortcode_callback($post = null) {
 	}
 }
 // Only register the meta box if the user is an editor or greater
-if ( current_user_can('edit_others_posts') ) {
-	add_action('add_meta_boxes', function() {
+add_action('add_meta_boxes', function() {
+	if ( current_user_can('edit_others_posts') ) {
 		add_meta_box( 'scaip_docs_and_options', __('Super Cool Ad Inserter', 'scaip'), 'scaip_how_to_shortcode_callback', 'post', 'normal', 'low');
-	});
-}
+	}
+});
 // But always register the meta.
 register_meta('post', 'scaip_prevent_shortcode_addition', 'scaip_prevent_shortcode_addition_sanitize');
 
