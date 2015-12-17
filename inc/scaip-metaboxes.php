@@ -19,7 +19,7 @@ function scaip_how_to_shortcode_callback($post = null) {
 
 	// Only show the override option on posts.
 	
-	if ( $post != null ) {
+	if ( $post != null && current_user_can('edit_others_posts') ) {
 		$value = get_post_meta( $post->ID, 'scaip_prevent_shortcode_addition', true );
 		?>
 		<p>If you want to disable automatic addition of ads, add <code>[scaip no]</code> at the start of the story, or disable it here:</p>
@@ -30,9 +30,13 @@ function scaip_how_to_shortcode_callback($post = null) {
 		echo "<p>If you want to disable automatic addition of ads, add <code>[scaip no]</code> at the start of the story.</p>";
 	}
 }
-add_action('add_meta_boxes', function() {
-	add_meta_box( 'scaip_docs_and_options', __('Super Cool Ad Inserter', 'scaip'), 'scaip_how_to_shortcode_callback', 'post', 'normal', 'low');
-});
+// Only register the meta box if the user is an editor or greater
+if ( current_user_can('edit_others_posts') ) {
+	add_action('add_meta_boxes', function() {
+		add_meta_box( 'scaip_docs_and_options', __('Super Cool Ad Inserter', 'scaip'), 'scaip_how_to_shortcode_callback', 'post', 'normal', 'low');
+	});
+}
+// But always register the meta.
 register_meta('post', 'scaip_prevent_shortcode_addition', 'scaip_prevent_shortcode_addition_sanitize');
 
 /**
