@@ -1,17 +1,17 @@
 # Super Cool Ad Inserter Plugin Documentation
 
-- [Installation and setup](installation-and-setup.md)
+- [Installation and setup](installation-and-setup.md) (**INCOMPLETE**)
 	- Download
 	- Install
 	- Activate
-- [Plugin configuration](configuration.md)
+- [Plugin configuration](configuration.md) (**INCOMPLETE**)
 	- How many ads appear in a post
 	- How the ads are spaced within the post
 	- Minimum post length for automatic ad insertion
-- [Advertisement display settings](display-settings.md)
+- [Advertisement display settings](display-settings.md) (**INCOMPLETE**)
 	- Prevent automatic ad insertion on a post
 	- Manually insert ads in posts
-- [Developer docs: Creating ad placements](developers-shortcode-docs.md
+- [Developer docs: Creating ad placements](developers-shortcode-docs.md)
 	- Example code
 
 You can contribute to the development of this plugin by filing an issue or submitting a pull request on its GitHub repository, [INN/super-cool-ad-inserter](https://github.com/INN/super-cool-ad-inserter-plugin).
