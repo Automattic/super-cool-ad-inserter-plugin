@@ -50,7 +50,6 @@ function scaip_prevent_shortcode_addition_sanitize($args) {
 		$ret =  false;
 	}
 
-	var_log($ret);
 	return $ret;
 }
 

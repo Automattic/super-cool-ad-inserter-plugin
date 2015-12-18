@@ -27,3 +27,16 @@ function scaip_shortcode_test_comment($args) {
 	echo "-->";
 }
 add_action('scaip_shortcode', 'scaip_shortcode_test_comment');
+
+/**
+ * Outputs the sidebar 'scaip-#' where # is the 'number' argument on the shortcode.
+ *
+ * To prevent this happening, decrease the number of ads that should be inserted to 0, remove the ad widgets form the sidebar, or remove_action('scaip_shortcode', 'scaip_shortcode_do_sidebar');
+ * @since 0.1
+ */
+function scaip_shortcode_do_sidebar($args) {
+	if ( isset($args['number']) ) {
+		dynamic_sidebar('scaip-' . $args['number']);
+	}
+}
+add_action('scaip_shortcode', 'scaip_shortcode_do_sidebar');

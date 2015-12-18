@@ -1,6 +1,6 @@
 <?php
 /**
- * The settings page for the Super Cool Ad Inserter Plugin.
+ * The settings page for the Super Cool Ad Inserter Plugin, and setting up the sidebars used by the shortcode to display ads.
  */
 
 /**/
@@ -37,11 +37,10 @@ add_action('admin_init', 'scaip_register_settings');
 
 
 /*
- * Here being callbacks for settings sections and settings fields.
+ * Here begin callbacks for settings sections and settings fields.
  */
 
 function scaip_settings_section_header($args) {
-	echo '<p>This is a test paragraph.</p>';
 }
 
 // This is the number of paragraphs after which SCAIP should insert a shortcode, counted in paragraphs since wither the beginning or the last time SCAIP inserted a shortcode
@@ -78,9 +77,36 @@ function scaip_admin_page() {
 			submit_button();
 		?>
 		</form>
+		<p>To place ads or change ad placements, visit the <a href="<?php echo admin_url("widgets.php"); ?>">Widgets Settings</a>.</p>
 		<hr/>
-		<p>Insert link to docs on creating callbacks here.</p>
 		<?php scaip_how_to_shortcode_callback() ?>
 	</div>
 	<?php
 }
+
+/**
+ * Create a number of sidebars equal to scaip_settings_min_repetitions
+ *
+ * To create no widgets, reduce the "Number of times the ad should be inserted in a post" to 0.
+ *
+ * @since 0.1
+ *
+ */
+function scaip_register_sidebars() {
+	$sidebars = get_option('scaip_settings_repetitions', 2);
+	$i=1;
+
+	while ($i <= $sidebars) {
+		register_sidebar(array(
+			'name' => "Inserted Ad Position " . $i,
+			'description' => "Widgets in this sidebar will be automatically inserted into posts. Please do not put more than one widget here.",
+			'id' => "scaip-".$i,
+			'before_widget' => '<aside id="%1$s" class="%2$s clearfix">',
+			'after_widget' => '</aside>',
+			'before_title' => '<h5 class="adtitle visuallyhidden">',
+			'after_title' => '</h5>',
+		));
+		$i++;
+	}
+}
+add_action( 'widgets_init', 'scaip_register_sidebars', 11); // 11 so these are added at the very bottom of the list.
