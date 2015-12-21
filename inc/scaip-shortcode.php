@@ -17,14 +17,17 @@ function scaip_shortcode( $atts, $content, $tag) {
 add_shortcode('scaip', 'scaip_shortcode');
 
 /**
- * Dummy test function that does not harm users' content, outputs an HTML comment.
+ * Dummy test function that outputs the shortcode's attributes in an HTML comment.
  *
  * To remove this action, remove_action('scaip_shortcode', 'scaip_shortcode_test_comment');
+ * @global bool WP_DEBUG whether this is running as debug or not.
  */
 function scaip_shortcode_test_comment($args) {
-	echo "<!-- SCAIP was here, with these arguments: ";
-	echo var_dump($args);
-	echo "-->";
+	if ( WP_DEBUG ) {
+		echo "<!-- SCAIP was here, with these arguments: ";
+		echo var_dump($args);
+		echo "-->";
+	}
 }
 add_action('scaip_shortcode', 'scaip_shortcode_test_comment');
 
