@@ -59,7 +59,7 @@ function scaip_settings_repetitions($args) {
 function scaip_settings_min_paragraphs($args) {
 	$min_paragraphs = get_option('scaip_settings_min_paragraphs', 6);
 	echo '<input name="scaip_settings_min_paragraphs" id="scaip_settings_min_paragraphs" type="number" value="' . $min_paragraphs . '" />';
-	echo '<p>If a post has fewer than this number of paragraphs, ads will not be inserted.</p>';
+	_e('<p>If a post has fewer than this number of paragraphs, ads will not be inserted.</p>','scaip');
 }
 
 function scaip_admin_page() {
@@ -77,9 +77,12 @@ function scaip_admin_page() {
 			submit_button();
 		?>
 		</form>
-		<p>To place ads or change ad placements, visit the <a href="<?php echo admin_url("widgets.php"); ?>">Widgets Settings</a>.</p>
-		<hr/>
-		<?php scaip_how_to_shortcode_callback() ?>
+		<?php
+		echo sprintf(
+			__('<p>To place ads or change ad placements, visit the <a href="%1$s">Widgets Settings</a>. For example, widgets in the first position will be in the "Inserted Ad Position 1" sidebar.</p>', 'scaip'),
+			admin_url("widgets.php")
+		);
+		scaip_how_to_shortcode_callback() ?>
 	</div>
 	<?php
 }
