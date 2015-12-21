@@ -39,7 +39,9 @@ add_action('scaip_shortcode', 'scaip_shortcode_test_comment');
  */
 function scaip_shortcode_do_sidebar($args) {
 	if ( isset($args['number']) ) {
+		echo '<aside class="scaip scaip-' . $args['number'] . '">';
 		dynamic_sidebar('scaip-' . $args['number']);
+		echo '</aside>';
 	}
 }
 add_action('scaip_shortcode', 'scaip_shortcode_do_sidebar');
