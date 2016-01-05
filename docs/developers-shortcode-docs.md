@@ -9,11 +9,11 @@
 
 ### Manually place shortcodes in a post
 
-If you want to manually place SCAIP widget areas in a post, you can do so using the `[scaip]` shortcode.
+If you want to manually place SCAIP widget areas in a post, you can do so using the `[ad]` shortcode.
 
 For example, to display the "Inserted Ad Position 2" in a custom location in your post, you would use the following shortcode:
 
-    [scaip number="2"]
+    [ad number="2"]
 
 Using this method, you can reorder inserted widget areas or manually limit the number of inserted ad positions on a per-post basis without having to define a callback to determine what gets placed in the widget area.
 

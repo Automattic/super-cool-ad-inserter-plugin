@@ -15,6 +15,7 @@ function scaip_shortcode( $atts, $content, $tag) {
 	return $ret;
 }
 add_shortcode('scaip', 'scaip_shortcode');
+add_shortcode('ad', 'scaip_shortcode');
 
 /**
  * Dummy test function that outputs the shortcode's attributes in an HTML comment.

@@ -29,8 +29,12 @@ function scaip_insert_shortcode($content = '') {
 	}
 
 	/*
-	 * Check that there isn't a line starting with `[scaip`. If there is, abort! The content must be passed to the shortcode parser without adding more shortcodes. The user may have set a shortcode manually or set the `[scaip no]` shortcode.
+	 * Check that there isn't a line starting with `[ad`. If there is, abort! The content must be passed to the shortcode parser without adding more shortcodes. The user may have set a shortcode manually or set the `[ad no]` shortcode.
 	 */
+	if ( preg_match( "/^\[ad/m", $content )) {
+		return $content;
+	}
+	// Support for development-era `[scaip` shortcode.
 	if ( preg_match( "/^\[scaip/m", $content )) {
 		return $content;
 	}
@@ -68,7 +72,7 @@ function scaip_insert_shortcode($content = '') {
 			if ( ($i + 1 ) % $scaip_period == 0 ) {
 
 				// make a shortcode, then increment number of shortcodes that have been added to the document.
-				$shortcode = "[scaip number=$n ]";
+				$shortcode = "[ad number=$n ]";
 				$n++;
 
 				$content = substr_replace($content, $shortcode, $paragraph_positions[$i] + 1, 0);
