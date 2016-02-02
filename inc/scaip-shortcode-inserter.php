@@ -85,9 +85,12 @@ function scaip_insert_shortcode($content = '') {
 				// Then something has gone wrong and we should insert no more shortcodes.
 				if ( $position > $previous_position ) {
 					$content = substr_replace($content, $shortcode, $paragraph_positions[$i] + 1, 0);
-					
+
 					// Increase the saved last position.
 					$previous_position = $position;
+
+					// Increment number of shortcodes added to the post
+					$n++;
 				}
 
 				// Increase the position of later shortcodes by the length of the current shortcode
@@ -96,9 +99,6 @@ function scaip_insert_shortcode($content = '') {
 						$paragraph_positions[$j] = $pp + strlen($shortcode);
 					}
 				}
-
-				// Increment number of shortcodes added to the post
-				$n++;
 			}
 
 			$i++;
