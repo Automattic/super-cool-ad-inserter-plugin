@@ -2,7 +2,7 @@
 
 ## The SCAIP settings page
 
-![Options](./img/scaip-settings.php)
+![Options](./img/scaip-settings.php.png)
 
 The settings on this page control the placement and amount of automatic ad zone insertions.
 
