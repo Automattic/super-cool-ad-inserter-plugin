@@ -25,9 +25,7 @@ After you define the number of paragraphs before each ad insertion, and the numb
 
 You can then enter the content of the ad in the Text Widget. Note that you may include HTML, CSS, and JavaScript including iframed content from external ad sources. You can alternatively create your own ad content, and include inline styles for the content in the Text Widget:
 
-![ad content in the text widget](./img/ad-config-in-text-widget.png)
-
-![empty Inserted Ad position](./img/ad-config-in-text-widget.png)
+![ad content in the text widget](./img/ad-markup-in-text-widget.png)
 
 In this case we've added our own markup, including inline styles defined in a div wrapping the ad. We've given this div the class of "supercoolad" so if your Largo child theme has styles for this in its CSS file, the class would be all you need. Or you can add to the div whatever class defines your ad styles.
 
