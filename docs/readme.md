@@ -4,14 +4,15 @@
 	- Download
 	- Install
 	- Activate
-- [Adding Ads for Display in Posts](adding-ads.md) (**INCOMPLETE**)
-- [Plugin configuration](configuration.md) (**INCOMPLETE**)
+- [Plugin configuration](configuration.md)
 	- How many ads appear in a post
 	- How the ads are spaced within the post
 	- Minimum post length for automatic ad insertion
-- [Advertisement Display Settings](display-settings.md) (**INCOMPLETE**)
-	- Prevent automatic ad insertion on a post
-	- Manually insert ads in posts
+- [Adding Ads for Display in Posts](adding-ads.md)	
+- [Ad Display Settings](display-settings.md)
+	- Prevent automatic ad insertion in a post
+	- Manual Ad Placement
+	- Ad Spacing Using Empty Inserted Ad Positions
 - [Developer Docs: Creating Ad Placements](developers-shortcode-docs.md)
 	- Example code
 
