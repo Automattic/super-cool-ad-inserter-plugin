@@ -19,17 +19,4 @@ Having an ad every three paragraphs until the end of the story might get very an
 
 ## Create the Ads
 
-After you define the number of paragraphs before each ad insertion, you can move on to [add the ads](adding-ads.md) themselves. 
-
-### Ad Spacing using empty Inserted Ad Positions
-
-You can add Text Widgets to each and every numbered Inserted Ad Position, and they will display every nth paragraph based on the number of paragraphs you defined in **Plugins** > **Ad Inserter**  settings. 
-
-But sometimes you might want to protect larger blocks of paragraphs from getting interrupted by an ad. Let's say the ads are set to display every 3 paragraphs, which means the first ad will appear 3 paragraphs from the beginning of the post. As mentioned above, you can use an empty Inserted Ad Position to reserve that position without displaying an ad. In this case, we'd leave Inserted Ad Position 1 blank:
-
-![empty Inserted Ad position](./img/scaip-widget-area-empty.png)
-
-Note that we haven't even added an empty Text Widget to this Ad Position, but simply left it empty. On the post page, the first ad won't display until after 6 paragraphs:
-
-![post with six paragraphs before the first ad](./img/scaip-ad-after-six-paras.png)
-
+After you define the number of paragraphs before each ad insertion, you can move on to [add the ads](adding-ads.md) themselves.
