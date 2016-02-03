@@ -19,9 +19,13 @@ Having an ad every three paragraphs until the end of the story might get very an
 
 ## The widget settings page
 
-After you define the number of paragraphs before each ad insertion, and the number of available ad insertions, you can visit **Appearance** > **Widgets** to create the ads themselves. Begin by adding a Text Widget to one of the numbered Inserted Ad positions, then enter the content of the ad in the Text Widget. Note that you may include HTML, CSS, and JavaScript including iframed content from external ad sources. You can alternatively create your own ad content, and include inline styles for the content in the Text Widget:
+After you define the number of paragraphs before each ad insertion, and the number of available ad insertions, you can visit **Appearance** > **Widgets** to create the ads themselves. Begin by adding a Text Widget to one of the numbered Inserted Ad positions. 
 
-![Configuring a Text Widget in the Widget areas for the scaip plugin](./img/scaip-widget-config.png)
+![empty text widget in an Ad Position area](./img/empty-text-widget-in-ad-position.png)
+
+You can then enter the content of the ad in the Text Widget. Note that you may include HTML, CSS, and JavaScript including iframed content from external ad sources. You can alternatively create your own ad content, and include inline styles for the content in the Text Widget:
+
+![Configuring a Text Widget in the Widget areas for the scaip plugin](./img/ad-config-in-text-widget.png)
 
 In this case we've added our own markup, including inline styles defined in a div wrapping the ad. We've given this div the class of "supercoolad" so if your Largo child theme has styles for this in its CSS file, the class would be all you need. Or you can add to the div whatever class defines your ad styles.
 
