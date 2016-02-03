@@ -1,6 +1,6 @@
 # Super Cool Ad Inserter Plugin Documentation
 
-- [Installation and Setup](installation-and-setup.md) (**INCOMPLETE**)
+- [Installation and Setup](installation-and-setup.md)
 	- Download
 	- Install
 	- Activate
