@@ -52,9 +52,9 @@ function scaip_insert_shortcode($content = '') {
 		$last_position = stripos( $content, $paragraph_end, $last_position +1 ) +3; // what does the 3 mean?
 		$paragraph_positions[] = $last_position;
 		// Can this be simplified to just go off of: ?
-		//     $paragraph_positions[] = $last_position + 4 
+		//     $paragraph_positions[] = $last_position + 4
 		//
-		// Maybe? 1 + 3 is the length of '</p>', and putting it in the offset argument for strpos() would 
+		// Maybe? 1 + 3 is the length of '</p>', and putting it in the offset argument for strpos() would
 		// make the strpos start looking for the opening '<' after the ending '>' instead of in the middle of the '</p>'.
 		// Or it might not. Not going to mess with this today.
 	}
@@ -65,17 +65,33 @@ function scaip_insert_shortcode($content = '') {
 
 		// How many shortcodes have been added;
 		$n = 1;
+		
+		// Safety check number: stores the position of the last insertion
+		$previous_position = 0;
 
-		while ( $i <= sizeof($paragraph_positions) && $n <= $scaip_repetitions ) {
+		$i = 0;
+		while ( $i < sizeof($paragraph_positions) && $n <= $scaip_repetitions ) {
 			// Modulo math to only output shortcode after $scaip_period closing paragraph tags.
 			// +1 because of zero-based indexing
-			if ( ($i + 1 ) % $scaip_period == 0 ) {
+			if ( ($i + 1 ) % $scaip_period == 0 && isset( $paragraph_positions[$i] ) ) {
 
-				// make a shortcode, then increment number of shortcodes that have been added to the document.
+				// make a shortcode using the number of the shorcode that will be added.
 				$shortcode = "[ad number=$n ]";
-				$n++;
 
-				$content = substr_replace($content, $shortcode, $paragraph_positions[$i] + 1, 0);
+				$position = $paragraph_positions[$i] + 1;
+
+				// Safety check:
+				// If the position we're adding the shortcode is at a lower point in the story than the position we're adding,
+				// Then something has gone wrong and we should insert no more shortcodes.
+				if ( $position > $previous_position ) {
+					$content = substr_replace($content, $shortcode, $paragraph_positions[$i] + 1, 0);
+
+					// Increase the saved last position.
+					$previous_position = $position;
+
+					// Increment number of shortcodes added to the post
+					$n++;
+				}
 
 				// Increase the position of later shortcodes by the length of the current shortcode
 				foreach ( $paragraph_positions as $j => $pp ) {
