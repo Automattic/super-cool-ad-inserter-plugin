@@ -22,3 +22,22 @@ Having an ad every three paragraphs until the end of the story might get very an
 After you define the number of paragraphs before each ad insertion, and the number of available ad insertions, you can visit **Appearance** > **Widgets** to create the ads themselves. Begin by adding a Text Widget to one of the numbered Inserted Ad positions, then enter the content of the ad in the Text Widget. Note that you may include HTML, CSS, and JavaScript including iframed content from external ad sources. You can alternatively create your own ad content, and include inline styles for the content in the Text Widget:
 
 ![Configuring a Text Widget in the Widget areas for the scaip plugin](./img/scaip-widget-config.png)
+
+In this case we've added our own markup, including inline styles defined in a div wrapping the ad. We've given this div the class of "supercoolad" so if your Largo child theme has styles for this in its CSS file, the class would be all you need. Or you can add to the div whatever class defines your ad styles.
+
+With the above markup in the Text Widget in this Inserted Ad Position, the ad looks like this in the post:
+
+![advertisement for bagpipes on the post page](./img/scaip-ad-on-post.png)
+
+### Ad Spacing using empty Inserted Ad Positions
+
+You can add Text Widgets to each and every numbered Inserted Ad Position, and they will display every nth paragraph based on the number of paragraphs you defined in **Plugins** > **Ad Inserter**  settings. 
+
+But sometimes you might want to protect larger blocks of paragraphs from getting interrupted by an ad. Let's say the ads are set to display every 3 paragraphs, which means the first ad will appear 3 paragraphs from the beginning of the post. As mentioned above, you can use an empty Inserted Ad Position to reserve that position without displaying an ad. In this case, we'd leave Inserted Ad Position 1 blank:
+
+![empty Inserted Ad position](./img/scaip-widget-area-empty.png)
+
+Note that we haven't even added an empty Text Widget to this Ad Position, but simply left it empty. On the post page, the first ad won't display until after 6 paragraphs:
+
+![post with six paragraphs before the first ad](./img/ad-after-six-paras.png)
+
