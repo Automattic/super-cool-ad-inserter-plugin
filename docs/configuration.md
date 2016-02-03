@@ -19,4 +19,6 @@ Having an ad every three paragraphs until the end of the story might get very an
 
 ## The widget settings page
 
+After you define the number of paragraphs before each ad insertion, and the number of available ad insertions, you can visit **Appearance** > **Widgets** to create the ads themselves. Begin by adding a Text Widget to one of the numbered Inserted Ad positions, then enter the content of the ad in the Text Widget. Note that you may include HTML, CSS, and JavaScript including iframed content from external ad sources. You can alternatively create your own ad content, and include inline styles for the content in the Text Widget:
 
+![Configuring a Text Widget in the Widget areas for the scaip plugin](./img/scaip-widget-config.png)
