@@ -6,11 +6,13 @@ To create an ad, begin by adding a Text Widget to one of the numbered Inserted A
 
 ![empty text widget in an Ad Position area](./img/empty-text-widget-in-ad-position.png)
 
-You can then enter the content of the ad in the Text Widget. Note that you may include HTML, CSS, and JavaScript including iframed content from external ad sources. You can alternatively create your own ad content, and include inline styles for the content in the Text Widget:
+You can then enter the content of the ad in the Text Widget. Note that you may include markup including iframed content from external ad sources. You can alternatively create your own ad content, and include inline styles for the content in the Text Widget:
 
 ![ad content in the text widget](./img/scaip-ad-markup.png)
 
-In this case we've added our own markup, including inline styles defined in a div wrapping the ad. We've given this div the class of "supercoolad" so if your Largo child theme has styles for this in its CSS file, the class would be all you need. Or you can add to the div whatever class defines your ad styles.
+In this case we've added our own markup, including inline styles defined in a div wrapping the ad. 
+
+You can add CSS rules to your Largo child theme to apply styles to all inserted ads, which are contained in an aside with a class of "scaip". Or in the Text Widget for each ad, you can wrap the ad in a div with whatever class defines your existing ad styles.
 
 With the above markup in the Text Widget in this Inserted Ad Position, the ad looks like this in the post:
 
