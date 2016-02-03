@@ -15,3 +15,7 @@ In this case we've added our own markup, including inline styles defined in a di
 With the above markup in the Text Widget in this Inserted Ad Position, the ad looks like this in the post:
 
 ![advertisement for bagpipes on the post page](./img/scaip-ad-on-post.png)
+
+## Setting How Ads are Displayed in Posts
+
+The SCAIP provides great flexibility in how and where ads are displayed in posts. For details see [Ad Display Settings](display-settings.md).
