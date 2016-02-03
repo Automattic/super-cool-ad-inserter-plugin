@@ -16,7 +16,7 @@ You can override automatic placement of ads by inserting shortcodes in the body 
 
     [ad number="2"]
 
-In this case the post will display the ad in Inserted Ad Position 2 wherever we placed the shortcode, and no other ads will automatically display. This allows you to have many Inserted Ad Positions available for some posts when needed, but display fewer ads with certain posts.
+In this case the post will display the ad in Inserted Ad Position 2 wherever you placed the shortcode, and no other ads will automatically display. This allows you to have many Inserted Ad Positions available for some posts when needed, but display fewer ads with certain posts.
 
 You can also reorder the display of Inserted Ad Positions by placing shortcodes for each wherever you want in the post.
 
