@@ -10,7 +10,7 @@ The settings on this page control the placement and number of automatic ad zone 
 
 "**Number of times the ad should be inserted in a post**": The absolute maximum number of ad zones that can be inserted in any post. This  will set the number of Widget Areas available for ads in a post. So if you set it to 6, you'll have 6 Widget areas available for different ads:
 
-![Widget areas for the scaip plugin](./img/scaip-widgets-panel.png)
+![Widget areas for the scaip plugin](./img/scaip-widgets-panel2.png)
 
 Note that you don't have to fill all the available Widget Areas with actual ads. If some don't have any ad content they'll remain blank on the post page. This provides additional flexibility for placing ads where you want without disrupting the flow of the post content. 
 Having an ad every three paragraphs until the end of the story might get very annoying to users, so this option allows you to balance the presentation of ads along with the post.
