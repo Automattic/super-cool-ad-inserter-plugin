@@ -43,5 +43,5 @@ But sometimes you might want to protect larger blocks of paragraphs from getting
 
 Note that we haven't even added an empty Text Widget to this Ad Position, but simply left it empty. On the post page, the first ad won't display until after 6 paragraphs:
 
-![post with six paragraphs before the first ad](./img/ascaip-ad-after-six-paras.png)
+![post with six paragraphs before the first ad](./img/scaip-ad-after-six-paras.png)
 
