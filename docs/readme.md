@@ -11,8 +11,8 @@
 - [Adding Ads for Display in Posts](adding-ads.md)	
 - [Ad Display Settings](display-settings.md)
 	- Prevent automatic ad insertion in a post
-	- Manual Ad Placement
-	- Ad Spacing Using Empty Inserted Ad Positions
+	- Manual placement of ads within posts
+	- Using empty ad positions to change apparent ad placement within posts
 - [Developer Docs: Creating Ad Placements](developers-shortcode-docs.md)
 	- Example code
 
