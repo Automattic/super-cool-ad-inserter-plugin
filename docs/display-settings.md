@@ -22,7 +22,7 @@ You can also reorder the display of Inserted Ad Positions by placing shortcodes 
 
 ## Ad Spacing Using Empty Inserted Ad Positions
 
-You can add Text Widgets to each and every numbered Inserted Ad Position, and they will display every nth paragraph based on the number of paragraphs you defined in **Plugins** > **Ad Inserter**  [options](configuration.md).
+You can add  Widgets to each and every numbered Inserted Ad Position, and they will display every nth paragraph based on the number of paragraphs you defined in **Plugins** > **Ad Inserter**  [options](configuration.md).
 
 But sometimes you might want to use the default automatic ad insertion but protect larger blocks of paragraphs from getting interrupted by an ad. Let's say the ads are set to display every 3 paragraphs, which means the first ad will appear 3 paragraphs from the beginning of the post. You can use an empty Inserted Ad Position to reserve that position without displaying an ad. In this case, we'd leave Inserted Ad Position 1 blank:
 
