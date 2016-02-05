@@ -11,7 +11,7 @@ Insert widgets into posts, and override their placement with shortcodes
 
 == Description ==
 
-This WordPress plugin gives site administrators a way to insert widgets such as ads, newsletter signups, or calls to action into posts at set intervals. This setting can be overriden on a per-post basis.
+This WordPress plugin gives site administrators a way to insert widgets such as ads, newsletter signups, or calls to action into posts at set intervals. This setting can be overridden on a per-post basis.
 
 == Installation ==
 
