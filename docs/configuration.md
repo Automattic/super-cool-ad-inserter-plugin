@@ -1,6 +1,6 @@
 # Configuration
 
-After installing the Super Cool Ad Inserted Plugin, a link to Ad Inserter configuration panel will appear in the WordPress Plugins menu:
+After installing the Super Cool Ad Inserter Plugin, a link to the Ad Inserter configuration panel will appear in the WordPress Plugins menu:
 
 ![Options](./img/scaip-plugin-settings.png)
 
@@ -12,7 +12,20 @@ The settings on this page control the placement and number of automatic ad zone 
 
 ![Widget areas for the scaip plugin](./img/scaip-widgets-panel2.png)
 
-Note that you don't have to fill all the available Widget Areas with actual ads. If some don't have any ad content they'll remain blank on the post page. This provides additional flexibility for placing ads where you want without disrupting the flow of the post content. 
+Higher-numbered Inserted Ad Positions may not display in shorter posts. The minimum number of paragraphs needed in a post for all ads to display can be calculated with a simple formula. Using the theme's default settings:
+
+```
+    3   Number of paragraphs before each insertion, and between insertions
+  x 2   Number of times the ad should be inserted in a post
+ -----
+    6
+  + 1   A paragraph is needed after the last ad inserted
+ -----
+    7   Minumum number of paragraphs to display all ads
+```
+
+Note that you don't have to fill all the available Widget Areas with actual ads. If a position doesn't have any widgets, then it will remain blank on the post page. This provides additional flexibility for placing ads where you want without disrupting the flow of the post content.
+
 Having an ad every three paragraphs until the end of the story might get very annoying to users, so this option allows you to balance the presentation of ads along with the post.
 
 "**Minimum number of paragraphs needed in a post to insert ads**": If a post is very short, placing an ad in the middle of the content can be very annoying to readers. This setting allows you to prevent ads from appearing on posts with fewer paragraphs than the threshold.
