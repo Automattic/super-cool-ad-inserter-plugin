@@ -4,7 +4,7 @@ The Super Cool Ad Inserter provides lots of flexibility in how and where ads are
 
 ## Prevent Automatic Insertion of Ads in a Post
 
-By defaulti, once [configured](configuration.md) SCAIP will insert ads in every post. But you may have posts for which you want to exclude advertising. This is simple to do using the Super Cool Ad inserter post meta box that appears in the post editing page:
+By default, once [configured](configuration.md) SCAIP will insert ads in every post. But you may have posts for which you want to exclude advertising. This is simple to do using the Super Cool Ad inserter post meta box that appears in the post editing page:
 
 ![Super Cool Ad inserter post meta box](./img/scaip-post-meta-box.png)
 
