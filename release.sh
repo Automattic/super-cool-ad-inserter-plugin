@@ -5,7 +5,7 @@
 
 RELEASE_DIR=release
 SVN_PATH=$RELEASE_DIR/svn
-SVN_REPO=
+SVN_REPO="https://plugins.svn.wordpress.org/super-cool-ad-inserter/"
 
 # Simple colors
 ESC_SEQ="\x1b["
