@@ -19,8 +19,8 @@ COL_CYAN=$ESC_SEQ"36;01m"
 
 # which files go into the release?
 GLOBIGNORE=*
-WHITELIST=(js/* dfw-*.php dfw.php readme.txt)
-BLACKLIST=(docs/* release/* mkdocs.yml readme.md .* *.sh)
+WHITELIST=(js/* scaip.php inc/* readme.txt)
+BLACKLIST=(docs/* tests/* .travis.yml Gruntfile.js phpunit.xml readme.md .* *.sh)
 
 # (1) check branch state of this git repo
 REMOTES=`git ls-remote --quiet`
