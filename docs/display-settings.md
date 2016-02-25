@@ -14,11 +14,21 @@ You can check the box to "prevent automatic addition of ads to this post" or add
 
 You can override automatic placement of ads by inserting shortcodes in the body of the post wherever you want the ads placed. For example, to display the Inserted Ad Position 2 in a custom location in your post, you would use the following shortcode:
 
-    [ad number="2"]
+```
+
+A paragraph of text, or an image, or anything else that you would use in a story.
+
+[ad number="2"]
+
+The next paragraph, block quote, image, embed, link, or really anything else.
+
+```
 
 In this case the post will display the ad in Inserted Ad Position 2 wherever you placed the shortcode, and no other ads will automatically display. This allows you to have many Inserted Ad Positions available for some posts when needed, but display fewer ads with certain posts.
 
 You can also reorder the display of Inserted Ad Positions by placing shortcodes for each wherever you want in the post.
+
+Shortcodes must have an empty line between the shortcode and anything before or after the shortcode.
 
 ## Ad Spacing Using Empty Inserted Ad Positions
 
