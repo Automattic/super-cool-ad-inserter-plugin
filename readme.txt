@@ -19,7 +19,7 @@ This WordPress plugin gives site administrators a way to insert widgets such as 
 1. Upload the plugin directory to your `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
 
-For more advanced documentation for developers and advanced users see [the official plugin docs](http://scaip.readthedocs.org/en/latest/).
+For more advanced documentation for developers and advanced users see [the official plugin docs](https://github.com/INN/super-cool-ad-inserter-plugin/tree/master/docs).
 
 == Changelog ==
 
