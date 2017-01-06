@@ -4,7 +4,7 @@ Donate link: https://inn.org/donate
 Tags: ads, advertising,  widget, shortcode, google, post, page
 Requires at least: 4.0.0
 Tested up to: 4.6
-Stable tag: 0.1.1
+Stable tag: 0.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,6 +22,11 @@ This WordPress plugin gives site administrators a way to insert widgets such as 
 For more advanced documentation for developers and advanced users see [the official plugin docs](https://github.com/INN/super-cool-ad-inserter-plugin/tree/master/docs).
 
 == Changelog ==
+
+= 0.1.2 =
+* Removes the .visuallyhidden class from the widget title of inserted widgets
+* Improves compliance with Wordpress PHP code standards
+* Removes some unneeded development files
 
 = 0.1 =
 * Initial beta release.
