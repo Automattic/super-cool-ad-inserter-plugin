@@ -7,9 +7,9 @@ class scaip_shortcode_inserter_test_functions extends WP_UnitTestCase {
 		// Check that it does nothing on posts outside The Loop
 
 		$ret = scaip_insert_shortcode('');
-		$this->assertEquals($ret, '');
+		$this->assertEquals( $ret, '' );
 
-		$this->markTestIncomplete('This test has not been implemented yet.');
+		$this->markTestIncomplete( 'This test has not been implemented yet.' );
 	}
 
 }
