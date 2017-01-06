@@ -9,9 +9,9 @@
  *
  * @link https://plugins.trac.wordpress.org/browser/ad-inserter/trunk/ad-inserter.php#L1474
  */
-function scaip_insert_shortcode($content = '') {
+function scaip_insert_shortcode( $content = '' ) {
 	// abort if this is not being called In The Loop.
-	if ( !in_the_loop() || !is_main_query() ) {
+	if ( ! in_the_loop() || !is_main_query() ) {
 		return $content;
 	}
 
@@ -24,33 +24,34 @@ function scaip_insert_shortcode($content = '') {
 	/*
 	 * Abort if this post has the option set to not add ads.
 	 */
-	if ( get_post_meta($wp_query->queried_object->ID, 'scaip_prevent_shortcode_addition', true) === 'on') {
+	if ( get_post_meta( $wp_query->queried_object->ID, 'scaip_prevent_shortcode_addition', true ) === 'on') {
 		return $content;
 	}
 
 	/*
 	 * Check that there isn't a line starting with `[ad`. If there is, abort! The content must be passed to the shortcode parser without adding more shortcodes. The user may have set a shortcode manually or set the `[ad no]` shortcode.
 	 */
-	if ( preg_match( "/^\[ad/m", $content )) {
+	if ( preg_match( "/^\[ad/m", $content ) ) {
 		return $content;
 	}
 	// Support for development-era `[scaip` shortcode.
-	if ( preg_match( "/^\[scaip/m", $content )) {
+	if ( preg_match( "/^\[scaip/m", $content ) ) {
 		return $content;
 	}
 
-	$scaip_period = get_option('scaip_settings_period', 3);
-	$scaip_repetitions = get_option('scaip_settings_repetitions', 2);
-	$scaip_minimum_paragraphs = get_option('scaip_settings_min_paragraphs', 6);
+	$scaip_period = get_option( 'scaip_settings_period', 3 );
+	$scaip_repetitions = get_option( 'scaip_settings_repetitions', 2 );
+	$scaip_minimum_paragraphs = get_option( 'scaip_settings_min_paragraphs', 6 );
 
 	$paragraph_positions = array();
 	$last_position = -1;
 	$paragraph_end = "</p>";
 
-	while ( stripos( $content, $paragraph_end, $last_position +1) !== false) {
+	while ( stripos( $content, $paragraph_end, $last_position +1 ) !== false ) {
 		// Get the position of the end of the next $paragraph_end.
 		$last_position = stripos( $content, $paragraph_end, $last_position +1 ) +3; // what does the 3 mean?
 		$paragraph_positions[] = $last_position;
+		// @todo
 		// Can this be simplified to just go off of: ?
 		//     $paragraph_positions[] = $last_position + 4
 		//
@@ -61,7 +62,7 @@ function scaip_insert_shortcode($content = '') {
 
 	// If the total number of paragraphs is bigger than the minimum number of paragraphs
 	// It is assumed that $scaip_minimum_paragraphs > $scaip_period * $scaip_repetitions
-	if ( sizeof($paragraph_positions) >= $scaip_minimum_paragraphs ) {
+	if ( sizeof( $paragraph_positions ) >= $scaip_minimum_paragraphs ) {
 
 		// How many shortcodes have been added;
 		$n = 1;
@@ -70,12 +71,13 @@ function scaip_insert_shortcode($content = '') {
 		$previous_position = 0;
 
 		$i = 0;
-		while ( $i < sizeof($paragraph_positions) && $n <= $scaip_repetitions ) {
+		while ( $i < sizeof( $paragraph_positions ) && $n <= $scaip_repetitions ) {
 			// Modulo math to only output shortcode after $scaip_period closing paragraph tags.
 			// +1 because of zero-based indexing
-			if ( ($i + 1 ) % $scaip_period == 0 && isset( $paragraph_positions[$i] ) ) {
+			if ( ( $i + 1 ) % $scaip_period == 0 && isset( $paragraph_positions[$i] ) ) {
 
 				// make a shortcode using the number of the shorcode that will be added.
+				// Using "" here so we can interpolate the variable
 				$shortcode = "[ad number=$n ]";
 
 				$position = $paragraph_positions[$i] + 1;
@@ -84,7 +86,7 @@ function scaip_insert_shortcode($content = '') {
 				// If the position we're adding the shortcode is at a lower point in the story than the position we're adding,
 				// Then something has gone wrong and we should insert no more shortcodes.
 				if ( $position > $previous_position ) {
-					$content = substr_replace($content, $shortcode, $paragraph_positions[$i] + 1, 0);
+					$content = substr_replace( $content, $shortcode, $paragraph_positions[$i] + 1, 0 );
 
 					// Increase the saved last position.
 					$previous_position = $position;
@@ -96,7 +98,7 @@ function scaip_insert_shortcode($content = '') {
 				// Increase the position of later shortcodes by the length of the current shortcode
 				foreach ( $paragraph_positions as $j => $pp ) {
 					if ( $j > $i ) {
-						$paragraph_positions[$j] = $pp + strlen($shortcode);
+						$paragraph_positions[$j] = $pp + strlen( $shortcode );
 					}
 				}
 			}
@@ -106,4 +108,4 @@ function scaip_insert_shortcode($content = '') {
 	}
 	return $content;
 }
-add_filter('the_content', 'scaip_insert_shortcode');
+add_filter( 'the_content', 'scaip_insert_shortcode' );
