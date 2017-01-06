@@ -106,7 +106,7 @@ function scaip_register_sidebars() {
 			'id' => "scaip-".$i,
 			'before_widget' => '<aside id="%1$s" class="%2$s clearfix">',
 			'after_widget' => '</aside>',
-			'before_title' => '<h5 class="adtitle visuallyhidden">',
+			'before_title' => '<h5 class="adtitle">',
 			'after_title' => '</h5>',
 		));
 		$i++;
