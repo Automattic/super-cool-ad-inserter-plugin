@@ -1,0 +1,132 @@
+
+FILE: ...ww/mjvip/htdocs/wp-content/plugins/scaip/inc/scaip-metaboxes.php
+----------------------------------------------------------------------
+FOUND 13 ERRORS AND 2 WARNINGS AFFECTING 10 LINES
+----------------------------------------------------------------------
+ 17 | ERROR   | Expected next thing to be an escaping function (see
+    |         | Codex for 'Data Validation'), not '__'
+ 18 | ERROR   | Expected next thing to be an escaping function (see
+    |         | Codex for 'Data Validation'), not
+    |         | '$scaip_repetitions'
+ 19 | ERROR   | Expected next thing to be an escaping function (see
+    |         | Codex for 'Data Validation'), not '$scaip_period'
+ 20 | ERROR   | Expected next thing to be an escaping function (see
+    |         | Codex for 'Data Validation'), not
+    |         | '$scaip_minimum_paragraphs'
+ 24 | ERROR   | Expected next thing to be an escaping function (like
+    |         | esc_html_e() or esc_attr_e()), not '_e'
+ 29 | WARNING | Found: !=. Use strict comparisons (=== or !==).
+ 29 | ERROR   | Use Yoda Condition checks, you must
+ 32 | ERROR   | Expected next thing to be an escaping function (like
+    |         | esc_html_e() or esc_attr_e()), not '_e'
+ 33 | ERROR   | Expected next thing to be an escaping function (like
+    |         | esc_html_e() or esc_attr_e()), not '_e'
+ 54 | ERROR   | Use Yoda Condition checks, you must
+ 79 | WARNING | Detected access of super global var $_POST, probably
+    |         | needs manual inspection.
+ 79 | ERROR   | Detected usage of a non-validated input variable:
+    |         | $_POST
+ 79 | ERROR   | Missing wp_unslash() before sanitization.
+ 79 | ERROR   | Detected usage of a non-sanitized input variable:
+    |         | $_POST
+ 79 | ERROR   | Processing form data without nonce verification.
+----------------------------------------------------------------------
+
+
+FILE: ...www/mjvip/htdocs/wp-content/plugins/scaip/inc/scaip-settings.php
+----------------------------------------------------------------------
+FOUND 11 ERRORS AFFECTING 11 LINES
+----------------------------------------------------------------------
+ 50 | ERROR | Expected next thing to be an escaping function (see
+    |       | Codex for 'Data Validation'), not '__'
+ 51 | ERROR | Expected next thing to be an escaping function (see
+    |       | Codex for 'Data Validation'), not '$period'
+ 59 | ERROR | Expected next thing to be an escaping function (see
+    |       | Codex for 'Data Validation'), not '__'
+ 60 | ERROR | Expected next thing to be an escaping function (see
+    |       | Codex for 'Data Validation'), not '$repetitions'
+ 68 | ERROR | Expected next thing to be an escaping function (see
+    |       | Codex for 'Data Validation'), not '__'
+ 69 | ERROR | Expected next thing to be an escaping function (see
+    |       | Codex for 'Data Validation'), not '$min_paragraphs'
+ 71 | ERROR | Expected next thing to be an escaping function (like
+    |       | esc_html_e() or esc_attr_e()), not '_e'
+ 76 | ERROR | Expected next thing to be an escaping function (see
+    |       | Codex for 'Data Validation'), not '__'
+ 81 | ERROR | Expected next thing to be an escaping function (like
+    |       | esc_html_e() or esc_attr_e()), not '_e'
+ 91 | ERROR | Expected next thing to be an escaping function (see
+    |       | Codex for 'Data Validation'), not '__'
+ 92 | ERROR | Expected next thing to be an escaping function (see
+    |       | Codex for 'Data Validation'), not 'admin_url'
+----------------------------------------------------------------------
+
+
+FILE: ...htdocs/wp-content/plugins/scaip/inc/scaip-shortcode-inserter.php
+----------------------------------------------------------------------
+FOUND 2 ERRORS AND 2 WARNINGS AFFECTING 3 LINES
+----------------------------------------------------------------------
+ 20 | ERROR   | Use Yoda Condition checks, you must
+ 56 | WARNING | This comment is 42% valid code; is this commented out
+    |         | code?
+ 77 | WARNING | Found: ==. Use strict comparisons (=== or !==).
+ 77 | ERROR   | Use Yoda Condition checks, you must
+----------------------------------------------------------------------
+
+
+FILE: ...ww/mjvip/htdocs/wp-content/plugins/scaip/inc/scaip-shortcode.php
+----------------------------------------------------------------------
+FOUND 3 ERRORS AFFECTING 2 LINES
+----------------------------------------------------------------------
+ 29 | ERROR | Expected next thing to be an escaping function (see
+    |       | Codex for 'Data Validation'), not 'var_dump'
+ 29 | ERROR | var_dump Debug code is not allowed on VIP Production
+ 43 | ERROR | Expected next thing to be an escaping function (see
+    |       | Codex for 'Data Validation'), not '$args'
+----------------------------------------------------------------------
+
+
+FILE: ...VV/www/mjvip/htdocs/wp-content/plugins/scaip/tests/bootstrap.php
+----------------------------------------------------------------------
+FOUND 1 ERROR AFFECTING 1 LINE
+----------------------------------------------------------------------
+ 35 | ERROR | error_log Debug code is not allowed on VIP Production
+----------------------------------------------------------------------
+
+
+FILE: ...tdocs/wp-content/plugins/scaip/tests/inc/test-scaip-settings.php
+----------------------------------------------------------------------
+FOUND 1 ERROR AFFECTING 1 LINE
+----------------------------------------------------------------------
+ 3 | ERROR | Class name "scaip_settings_test_functions" is not in
+   |       | camel caps format
+----------------------------------------------------------------------
+
+
+FILE: ...ontent/plugins/scaip/tests/inc/test-scaip-shortcode-inserter.php
+----------------------------------------------------------------------
+FOUND 1 ERROR AFFECTING 1 LINE
+----------------------------------------------------------------------
+ 3 | ERROR | Class name "scaip_shortcode_inserter_test_functions" is
+   |       | not in camel caps format
+----------------------------------------------------------------------
+
+
+FILE: ...docs/wp-content/plugins/scaip/tests/inc/test-scaip-shortcode.php
+----------------------------------------------------------------------
+FOUND 1 ERROR AFFECTING 1 LINE
+----------------------------------------------------------------------
+ 3 | ERROR | Class name "scaip_shortcode_test_functions" is not in
+   |       | camel caps format
+----------------------------------------------------------------------
+
+
+FILE: ...V/www/mjvip/htdocs/wp-content/plugins/scaip/tests/test-scaip.php
+----------------------------------------------------------------------
+FOUND 1 ERROR AFFECTING 1 LINE
+----------------------------------------------------------------------
+ 3 | ERROR | Class name "scaipTestFunctions" is not in camel caps
+   |       | format
+----------------------------------------------------------------------
+
+
