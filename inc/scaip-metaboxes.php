@@ -25,7 +25,7 @@ function scaip_how_to_shortcode_callback( $post = null ) {
 	<?php
 
 	// Only show the override option on posts.
-	
+
 	if ( $post != null && current_user_can( 'edit_others_posts' ) ) {
 		$value = get_post_meta( $post->ID, 'scaip_prevent_shortcode_addition', true );
 		?>
@@ -49,12 +49,12 @@ register_meta( 'post', 'scaip_prevent_shortcode_addition', 'scaip_prevent_shortc
 /**
  * Sanitization callback for saving the scaip_prevent_shortcode_addition post meta option.
  */
-function scaip_prevent_shortcode_addition_sanitize($args) {
-	$args = sanitize_text_field($args);
+function scaip_prevent_shortcode_addition_sanitize( $args ) {
+	$args = sanitize_text_field( $args );
 	if ( $args === 'on' ) {
 		$ret = $args;
 	} else {
-		$ret =  false;
+		$ret = false;
 	}
 
 	return $ret;
@@ -63,14 +63,13 @@ function scaip_prevent_shortcode_addition_sanitize($args) {
 /**
  * Save the options set in the metabox.
  */
-function _scaip_meta_box_save($post_id) {
+function _scaip_meta_box_save( $post_id ) {
 	global $post;
 
 	// Bail if we're doing an auto save
 	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 		return;
 	}
-
 
 	// if our current user can't edit this post, bail
 	if ( ! current_user_can( 'edit_post' ) ) {
@@ -79,7 +78,7 @@ function _scaip_meta_box_save($post_id) {
 
 	$value = $_POST['scaip_prevent_shortcode_addition'];
 
-	if ( get_post_meta( $post->ID, 'scaip_prevent_shortcode_addition', FALSE ) ) {
+	if ( get_post_meta( $post->ID, 'scaip_prevent_shortcode_addition', false ) ) {
 		update_post_meta( $post->ID, 'scaip_prevent_shortcode_addition', $value ); //if the custom field already has a value, update it
 	} else {
 		add_post_meta( $post->ID, 'scaip_prevent_shortcode_addition', $value );//if the custom field doesn't have a value, add the data

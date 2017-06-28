@@ -45,34 +45,34 @@ function scaip_settings_section_header( $args ) {
 
 // This is the number of paragraphs after which SCAIP should insert a shortcode, counted in paragraphs since wither the beginning or the last time SCAIP inserted a shortcode
 function scaip_settings_period( $args ) {
-	$period = get_option( 'scaip_settings_period', 3);
+	$period = get_option( 'scaip_settings_period', 3 );
 	printf(
-		__('<input name="scaip_settings_period" id="scaip_settings_period" type="number" value="%1$s" />', 'scaip'),
+		__( '<input name="scaip_settings_period" id="scaip_settings_period" type="number" value="%1$s" />', 'scaip' ),
 		$period
 	);
 }
 
 // This is the number of times that SCAIP should insert a shortcode in a post
-function scaip_settings_repetitions($args) {
-	$repetitions = get_option( 'scaip_settings_repetitions', 2);
+function scaip_settings_repetitions( $args ) {
+	$repetitions = get_option( 'scaip_settings_repetitions', 2 );
 	printf(
-		__('<input name="scaip_settings_repetitions" id="scaip_settings_repetitions" type="number" value="%1$s" />', 'scaip'),
+		__( '<input name="scaip_settings_repetitions" id="scaip_settings_repetitions" type="number" value="%1$s" />', 'scaip' ),
 		$repetitions
 	);
 }
 
 // This is the minimum number of paragraphs in a post required for SCAIP to insert a shortcode in a post.
-function scaip_settings_min_paragraphs($args) {
-	$min_paragraphs = get_option( 'scaip_settings_min_paragraphs', 6);
+function scaip_settings_min_paragraphs( $args ) {
+	$min_paragraphs = get_option( 'scaip_settings_min_paragraphs', 6 );
 	printf(
-		__('<input name="scaip_settings_min_paragraphs" id="scaip_settings_min_paragraphs" type="number" value="%1$s" />', 'scaip'),
+		__( '<input name="scaip_settings_min_paragraphs" id="scaip_settings_min_paragraphs" type="number" value="%1$s" />', 'scaip' ),
 		$min_paragraphs
 	);
 	_e( '<p>If a post has fewer than this number of paragraphs, ads will not be inserted.</p>','scaip' );
 }
 
 function scaip_admin_page() {
-	if ( !current_user_can( 'manage_options' ) )  {
+	if ( ! current_user_can( 'manage_options' ) ) {
 		wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
 	}
 
@@ -89,7 +89,7 @@ function scaip_admin_page() {
 		<?php
 		echo sprintf(
 			__( '<p>To place ads or change ad placements, visit the <a href="%1$s">Widgets Settings</a>. For example, widgets in the first position will be in the "Inserted Ad Position 1" sidebar.</p>', 'scaip' ),
-			admin_url("widgets.php")
+			admin_url( 'widgets.php' )
 		);
 		scaip_how_to_shortcode_callback() ?>
 	</div>
@@ -105,14 +105,14 @@ function scaip_admin_page() {
  *
  */
 function scaip_register_sidebars() {
-	$sidebars = get_option( 'scaip_settings_repetitions', 2);
-	$i=1;
+	$sidebars = get_option( 'scaip_settings_repetitions', 2 );
+	$i = 1;
 
-	while ($i <= $sidebars) {
+	while ( $i <= $sidebars ) {
 		register_sidebar(array(
-			'name' => "Inserted Ad Position " . $i,
+			'name' => 'Inserted Ad Position ' . $i,
 			'description' => __( 'Widgets in this sidebar will be automatically inserted into posts. Please do not put more than one widget here.', 'scaip' ),
-			'id' => "scaip-".$i,
+			'id' => 'scaip-' . $i,
 			'before_widget' => '<aside id="%1$s" class="%2$s clearfix">',
 			'after_widget' => '</aside>',
 			'before_title' => '<h5 class="adtitle">',
@@ -121,4 +121,4 @@ function scaip_register_sidebars() {
 		$i++;
 	}
 }
-add_action( 'widgets_init', 'scaip_register_sidebars', 11); // 11 so these are added at the very bottom of the list.
+add_action( 'widgets_init', 'scaip_register_sidebars', 11 ); // 11 so these are added at the very bottom of the list.

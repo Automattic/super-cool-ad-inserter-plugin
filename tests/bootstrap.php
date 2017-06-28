@@ -7,7 +7,7 @@ $basename = basename( dirname( __DIR__ ) );
 
 $GLOBALS['wp_tests_options'] = array(
 	'stylesheet' => $basename,
-	'template' => $basename
+	'template' => $basename,
 );
 
 tests_add_filter( 'set_current_user', function( $arg ) {
@@ -21,16 +21,16 @@ tests_add_filter( 'filesystem_method', function( $arg ) {
 }, 1, 10);
 
 function _manually_load_environment() {
-	$plugins_to_active = array( ( basename( dirname( __DIR__ ) ) ) . "/scaip.php" );
+	$plugins_to_active = array( ( basename( dirname( __DIR__ ) ) ) . '/scaip.php' );
 
-	update_option( 'active_plugins', $plugins_to_active);
+	update_option( 'active_plugins', $plugins_to_active );
 
 }
 tests_add_filter( 'muplugins_loaded', '_manually_load_environment' );
 
 require $wp_tests_dir . '/includes/bootstrap.php';
 
-if ( !function_exists( 'var_log' ) ) {
+if ( ! function_exists( 'var_log' ) ) {
 	function var_log( $stuff ) {
 		error_log( var_export( $stuff, true ) );
 	}
