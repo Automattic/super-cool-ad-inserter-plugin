@@ -1,9 +1,11 @@
 <?php
 /**
  * The settings page for the Super Cool Ad Inserter Plugin, and setting up the sidebars used by the shortcode to display ads.
+ *
+ * @package WordPress
+ * @subpackage SCAIP
+ * @since 0.1
  */
-
-/**/
 
 /**
  * Adds the SCAIP settings to the WordPress menu systen, under "Plugins."
@@ -11,7 +13,7 @@
  * The capability 'manage_options' is limited to Super Admins on multisite WordPress, which might be a problem.
  */
 function scaip_add_admin_menu() {
-	add_submenu_page( 'plugins.php', 'Super Cool Ad Inserter Plugin', 'Ad Inserter', 'manage_options', 'scaip', 'scaip_admin_page' );
+	add_submenu_page( 'options-general.php', 'Super Cool Ad Inserter Plugin', 'Ad Inserter', 'manage_options', 'scaip', 'scaip_admin_page' );
 }
 add_action( 'admin_menu', 'scaip_add_admin_menu' );
 
@@ -23,12 +25,10 @@ add_action( 'admin_menu', 'scaip_add_admin_menu' );
 function scaip_register_settings() {
 	add_settings_section( 'scaip-settings', 'Control how often the ads appear', 'scaip_settings_section_header', 'scaip' );
 
-	// id, title, callback, slug of the menu page it's displayed on, section of the settings page,
 	add_settings_field( 'scaip_settings_period', 'Number of paragraphs before each insertion, and between insertions', 'scaip_settings_period', 'scaip', 'scaip-settings' );
 	add_settings_field( 'scaip_settings_repetitions', 'Number of times the ad should be inserted in a post', 'scaip_settings_repetitions', 'scaip', 'scaip-settings' );
 	add_settings_field( 'scaip_settings_min_paragraphs', 'Minimum number of paragraphs needed in a post to insert ads', 'scaip_settings_min_paragraphs', 'scaip', 'scaip-settings' );
 
-	// section, option name
 	register_setting( 'scaip-settings', 'scaip_settings_period' );
 	register_setting( 'scaip-settings', 'scaip_settings_repetitions' );
 	register_setting( 'scaip-settings', 'scaip_settings_min_paragraphs' );
@@ -41,44 +41,47 @@ add_action( 'admin_init', 'scaip_register_settings' );
  */
 
 function scaip_settings_section_header( $args ) {
+	return false;
 }
 
-// This is the number of paragraphs after which SCAIP should insert a shortcode, counted in paragraphs since wither the beginning or the last time SCAIP inserted a shortcode
+/**
+ * The number of paragraphs after which SCAIP should insert a shortcode,
+ * counted in paragraphs since either the beginning or the last time SCAIP inserted a shortcode.
+ */
 function scaip_settings_period( $args ) {
 	$period = get_option( 'scaip_settings_period', 3 );
-	printf(
-		__( '<input name="scaip_settings_period" id="scaip_settings_period" type="number" value="%1$s" />', 'scaip' ),
-		$period
-	);
+	echo '<input name="scaip_settings_period" id="scaip_settings_period" type="number" value="' . esc_attr( $period ) . '" />';
 }
 
-// This is the number of times that SCAIP should insert a shortcode in a post
+/**
+ * The number of times that SCAIP should insert a shortcode in a post.
+ */
 function scaip_settings_repetitions( $args ) {
 	$repetitions = get_option( 'scaip_settings_repetitions', 2 );
-	printf(
-		__( '<input name="scaip_settings_repetitions" id="scaip_settings_repetitions" type="number" value="%1$s" />', 'scaip' ),
-		$repetitions
-	);
+	echo '<input name="scaip_settings_repetitions" id="scaip_settings_repetitions" type="number" value="' . esc_attr( $repetitions ) . '" />';
 }
 
-// This is the minimum number of paragraphs in a post required for SCAIP to insert a shortcode in a post.
+/**
+ * The minimum number of paragraphs in a post required for SCAIP to insert a shortcode in a post.
+ */
 function scaip_settings_min_paragraphs( $args ) {
 	$min_paragraphs = get_option( 'scaip_settings_min_paragraphs', 6 );
-	printf(
-		__( '<input name="scaip_settings_min_paragraphs" id="scaip_settings_min_paragraphs" type="number" value="%1$s" />', 'scaip' ),
-		$min_paragraphs
-	);
-	_e( '<p>If a post has fewer than this number of paragraphs, ads will not be inserted.</p>','scaip' );
+	echo '<input name="scaip_settings_min_paragraphs" id="scaip_settings_min_paragraphs" type="number" value="' . esc_attr( $min_paragraphs ) . '" />';
+	?>
+	<p>
+		<?php esc_html_e( 'If a post has fewer than this number of paragraphs, ads will not be inserted.','scaip' ); ?>
+	</p>
+	<?php
 }
 
 function scaip_admin_page() {
 	if ( ! current_user_can( 'manage_options' ) ) {
-		wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+		wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'scaip' ) );
 	}
 
 	?>
 	<div class="wrap scaip-admin">
-		<h1><?php _e( 'Super Cool Ad Inserter Plugin Options', 'scaip' ); ?></h1>
+		<h1><?php esc_html_e( 'Super Cool Ad Inserter Plugin Options', 'scaip' ); ?></h1>
 		<form method="post" action="options.php">
 		<?php
 			settings_fields( 'scaip-settings' );
@@ -88,10 +91,18 @@ function scaip_admin_page() {
 		</form>
 		<?php
 		echo sprintf(
-			__( '<p>To place ads or change ad placements, visit the <a href="%1$s">Widgets Settings</a>. For example, widgets in the first position will be in the "Inserted Ad Position 1" sidebar.</p>', 'scaip' ),
-			admin_url( 'widgets.php' )
+			wp_kses(
+				__( '<p>To place ads or change ad placements, visit the <a href="%1$s">Widgets Settings</a>. For example, widgets in the first position will be in the "Inserted Ad Position 1" sidebar.</p>', 'scaip' ),
+				array(
+					'p' => array(),
+					'a' => array(
+						'href' => array(),
+					),
+				)
+			),
+			esc_url( admin_url( 'widgets.php' ) )
 		);
-		scaip_how_to_shortcode_callback() ?>
+		?>
 	</div>
 	<?php
 }

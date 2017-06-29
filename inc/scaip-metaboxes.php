@@ -1,7 +1,11 @@
 <?php
 
 /**
- * Short explanation of what the SCAIP shortcode is and how to use it in posts.
+ * A metabox that explains how many ads are inserted and where as well as how to override the default behavior on a per-post basis.
+ *
+ * @package WordPress
+ * @subpackage SCAIP
+ * @since 0.1
  */
 function scaip_how_to_shortcode_callback() {
 	global $post;
@@ -22,7 +26,16 @@ function scaip_how_to_shortcode_callback() {
 		?>
 	</p>
 	<p>
-		<?php echo wp_kses( __( 'If the automatic positioning causes problems for any given post, you can prevent automatic placement of the ads <a href="https://github.com/INN/super-cool-ad-inserter-plugin/blob/master/docs/display-settings.md">using a shortcode</a> or disable them completely by checking this box:', 'scaip' ), array( 'a' => array( 'href' => array() ) ) ); ?>
+		<?php
+		echo wp_kses(
+			__( 'If the automatic positioning causes problems for any given post, you can prevent automatic placement of the ads <a href="https://github.com/INN/super-cool-ad-inserter-plugin/blob/master/docs/display-settings.md">using a shortcode</a> or disable them completely by checking this box:', 'scaip' ),
+			array(
+				'a' => array(
+					'href' => array(),
+				),
+			)
+		);
+		?>
 	</p>
 	<?php
 	if ( current_user_can( 'edit_others_posts' ) ) {
