@@ -8,7 +8,7 @@
  */
 
 /**
- * Adds the SCAIP settings to the WordPress menu systen, under "Plugins."
+ * Adds the SCAIP settings to the WordPress menu systen, under "Settings."
  *
  * The capability 'manage_options' is limited to Super Admins on multisite WordPress, which might be a problem.
  */
@@ -19,8 +19,6 @@ add_action( 'admin_menu', 'scaip_add_admin_menu' );
 
 /**
  * Registers options for the plugin
- *
- * @since 0.2
  */
 function scaip_register_settings() {
 	add_settings_section( 'scaip-settings', 'Control how often the ads appear', 'scaip_settings_section_header', 'scaip' );
@@ -35,11 +33,15 @@ function scaip_register_settings() {
 }
 add_action( 'admin_init', 'scaip_register_settings' );
 
-
 /*
  * Here begin callbacks for settings sections and settings fields.
  */
 
+/**
+ * The section header has no additional explanatory text.
+ *
+ * @param array $args the callback args.
+ */
 function scaip_settings_section_header( $args ) {
 	return false;
 }
@@ -47,6 +49,8 @@ function scaip_settings_section_header( $args ) {
 /**
  * The number of paragraphs after which SCAIP should insert a shortcode,
  * counted in paragraphs since either the beginning or the last time SCAIP inserted a shortcode.
+ *
+ * @param array $args the callback args.
  */
 function scaip_settings_period( $args ) {
 	$period = get_option( 'scaip_settings_period', 3 );
@@ -55,6 +59,8 @@ function scaip_settings_period( $args ) {
 
 /**
  * The number of times that SCAIP should insert a shortcode in a post.
+ *
+ * @param array $args the callback args.
  */
 function scaip_settings_repetitions( $args ) {
 	$repetitions = get_option( 'scaip_settings_repetitions', 2 );
@@ -63,6 +69,8 @@ function scaip_settings_repetitions( $args ) {
 
 /**
  * The minimum number of paragraphs in a post required for SCAIP to insert a shortcode in a post.
+ *
+ * @param array $args the callback args.
  */
 function scaip_settings_min_paragraphs( $args ) {
 	$min_paragraphs = get_option( 'scaip_settings_min_paragraphs', 6 );
@@ -74,6 +82,9 @@ function scaip_settings_min_paragraphs( $args ) {
 	<?php
 }
 
+/**
+ * Generate the html for the admin page.
+ */
 function scaip_admin_page() {
 	if ( ! current_user_can( 'manage_options' ) ) {
 		wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'scaip' ) );
@@ -111,9 +122,6 @@ function scaip_admin_page() {
  * Create a number of sidebars equal to scaip_settings_min_repetitions
  *
  * To create no widgets, reduce the "Number of times the ad should be inserted in a post" to 0.
- *
- * @since 0.1
- *
  */
 function scaip_register_sidebars() {
 	$sidebars = get_option( 'scaip_settings_repetitions', 2 );

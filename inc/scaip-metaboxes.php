@@ -1,11 +1,14 @@
 <?php
-
 /**
  * A metabox that explains how many ads are inserted and where as well as how to override the default behavior on a per-post basis.
  *
  * @package WordPress
  * @subpackage SCAIP
  * @since 0.1
+ */
+
+/**
+ * Generate the contents of the metabox.
  */
 function scaip_how_to_shortcode_callback() {
 	global $post;
@@ -56,6 +59,8 @@ register_meta( 'post', 'scaip_prevent_shortcode_addition', array( 'sanitize_call
 
 /**
  * Sanitization callback for saving the scaip_prevent_shortcode_addition post meta option.
+ *
+ * @param array $args the callback args.
  */
 function scaip_prevent_shortcode_addition_sanitize( $args ) {
 	$args = sanitize_text_field( $args );
