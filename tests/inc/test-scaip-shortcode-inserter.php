@@ -1,6 +1,6 @@
 <?php
 
-class scaip_shortcode_inserter_test_functions extends WP_UnitTestCase {
+class ScaipShortcodeInserterTestFunctions extends WP_UnitTestCase {
 
 	function test_scaip_insert_shortcode() {
 		// Create a long test post thing, please.
