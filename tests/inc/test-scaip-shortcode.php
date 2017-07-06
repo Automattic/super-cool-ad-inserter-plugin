@@ -1,6 +1,6 @@
 <?php
 
-class scaip_shortcode_test_functions extends WP_UnitTestCase {
+class ScaipShortcodeTestFunctions extends WP_UnitTestCase {
 
 	function test_scaip_shortcode() {
 		$ret = scaip_shortcode( array( 'number' => 4 ), '', '' );

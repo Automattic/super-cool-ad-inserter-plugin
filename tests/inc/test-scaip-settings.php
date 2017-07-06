@@ -1,5 +1,5 @@
 <?php
 
-class scaip_settings_test_functions extends WP_UnitTestCase {
+class ScaipSettingsTestFunctions extends WP_UnitTestCase {
 
 }
