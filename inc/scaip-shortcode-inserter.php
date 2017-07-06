@@ -63,24 +63,24 @@ function scaip_insert_shortcode( $content = '' ) {
 
 	// If the total number of paragraphs is bigger than the minimum number of paragraphs
 	// It is assumed that $scaip_minimum_paragraphs > $scaip_period * $scaip_repetitions
-	if ( sizeof( $paragraph_positions ) >= $scaip_minimum_paragraphs ) {
+	if ( count( $paragraph_positions ) >= $scaip_minimum_paragraphs ) {
 
-		// How many shortcodes have been added;
+		// How many shortcodes have been added?
 		$n = 1;
 
-		// Safety check number: stores the position of the last insertion
+		// Safety check number: stores the position of the last insertion.
 		$previous_position = 0;
 
 		$i = 0;
 		while ( $i < sizeof( $paragraph_positions ) && $n <= $scaip_repetitions ) {
 			// Modulo math to only output shortcode after $scaip_period closing paragraph tags.
-			// +1 because of zero-based indexing
+			// +1 because of zero-based indexing.
 			if ( ( $i + 1 ) % 0 === $scaip_period && isset( $paragraph_positions[ $i ] ) ) {
 
 				// make a shortcode using the number of the shorcode that will be added.
-				// Using "" here so we can interpolate the variable
+				// Using "" here so we can interpolate the variable.
 				$shortcode = "[ad number=$n ]";
-				//error_log($shortcode);
+
 				$position = $paragraph_positions[ $i ] + 1;
 
 				// Safety check:
@@ -92,11 +92,11 @@ function scaip_insert_shortcode( $content = '' ) {
 					// Increase the saved last position.
 					$previous_position = $position;
 
-					// Increment number of shortcodes added to the post
+					// Increment number of shortcodes added to the post.
 					$n++;
 				}
 
-				// Increase the position of later shortcodes by the length of the current shortcode
+				// Increase the position of later shortcodes by the length of the current shortcode.
 				foreach ( $paragraph_positions as $j => $pp ) {
 					if ( $j > $i ) {
 						$paragraph_positions[ $j ] = $pp + strlen( $shortcode );
