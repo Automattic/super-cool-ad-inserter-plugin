@@ -29,9 +29,3 @@ function _manually_load_environment() {
 tests_add_filter( 'muplugins_loaded', '_manually_load_environment' );
 
 require $wp_tests_dir . '/includes/bootstrap.php';
-
-if ( ! function_exists( 'var_log' ) ) {
-	function var_log( $stuff ) {
-		error_log( var_export( $stuff, true ) );
-	}
-}
