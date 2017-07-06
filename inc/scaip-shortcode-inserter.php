@@ -10,32 +10,36 @@
  * @link https://plugins.trac.wordpress.org/browser/ad-inserter/trunk/ad-inserter.php#L1474
  */
 function scaip_insert_shortcode( $content = '' ) {
-	// abort if this is not being called In The Loop.
+	// Abort if this is not being called In The Loop.
 	if ( ! in_the_loop() || ! is_main_query() ) {
 		return $content;
 	}
 
-	// abort if this is not a normal post
+	// Abort if this is not a normal post.
 	global $wp_query;
-	if ( $wp_query->queried_object->post_type !== 'post' ) {
+	if ( 'post' !== $wp_query->queried_object->post_type ) {
 		return $content;
 	}
 
 	/*
 	 * Abort if this post has the option set to not add ads.
 	 */
-	if ( get_post_meta( $wp_query->queried_object->ID, 'scaip_prevent_shortcode_addition', true ) === 'on' ) {
+	$skip = get_post_meta( $wp_query->queried_object->ID, 'scaip_prevent_shortcode_addition', true );
+	/*
+	 * Usually the meta field won't exist unless the checkbox to skip ads on any given post is checked.
+	 * An older version of the plugin saved it even when the box wasn't checked
+	 * so we need an extra check here for backwards compatibility.
+	 * the previous version saved the meta value as "on" if checked and empty if not.
+	 */
+	if ( ! empty( $skip ) || 'on' === $skip ) {
 		return $content;
 	}
 
 	/*
-	 * Check that there isn't a line starting with `[ad`. If there is, abort! The content must be passed to the shortcode parser without adding more shortcodes. The user may have set a shortcode manually or set the `[ad no]` shortcode.
+	 * If we have a manual shortcode, bail.
+	 * (scaip was the older shortcode, retained here for backwards compatibility)
 	 */
-	if ( preg_match( '/^\[ad/m', $content ) ) {
-		return $content;
-	}
-	// Support for development-era `[scaip` shortcode.
-	if ( preg_match( '/^\[scaip/m', $content ) ) {
+	if ( has_shortcode( $content, 'ad' ) || has_shortcode( $content, 'scaip' ) ) {
 		return $content;
 	}
 
@@ -47,17 +51,14 @@ function scaip_insert_shortcode( $content = '' ) {
 	$last_position = -1;
 	$paragraph_end = '</p>';
 
+	// if we don't have an <p> tags, we probably need to apply wpautop().
+	if ( ! stripos( $content, $paragraph_end ) ) {
+		$content = wpautop( $content );
+	}
 	while ( stripos( $content, $paragraph_end, $last_position + 1 ) !== false ) {
 		// Get the position of the end of the next $paragraph_end.
 		$last_position = stripos( $content, $paragraph_end, $last_position + 1 ) + 3; // what does the 3 mean?
 		$paragraph_positions[] = $last_position;
-		// @todo
-		// Can this be simplified to just go off of: ?
-		//     $paragraph_positions[] = $last_position + 4
-		//
-		// Maybe? 1 + 3 is the length of '</p>', and putting it in the offset argument for strpos() would
-		// make the strpos start looking for the opening '<' after the ending '>' instead of in the middle of the '</p>'.
-		// Or it might not. Not going to mess with this today.
 	}
 
 	// If the total number of paragraphs is bigger than the minimum number of paragraphs
@@ -74,12 +75,12 @@ function scaip_insert_shortcode( $content = '' ) {
 		while ( $i < sizeof( $paragraph_positions ) && $n <= $scaip_repetitions ) {
 			// Modulo math to only output shortcode after $scaip_period closing paragraph tags.
 			// +1 because of zero-based indexing
-			if ( ( $i + 1 ) % $scaip_period == 0 && isset( $paragraph_positions[ $i ] ) ) {
+			if ( ( $i + 1 ) % 0 === $scaip_period && isset( $paragraph_positions[ $i ] ) ) {
 
 				// make a shortcode using the number of the shorcode that will be added.
 				// Using "" here so we can interpolate the variable
 				$shortcode = "[ad number=$n ]";
-
+				//error_log($shortcode);
 				$position = $paragraph_positions[ $i ] + 1;
 
 				// Safety check:
@@ -108,4 +109,4 @@ function scaip_insert_shortcode( $content = '' ) {
 	}
 	return $content;
 }
-add_filter( 'the_content', 'scaip_insert_shortcode' );
+add_filter( 'the_content', 'scaip_insert_shortcode', 10 );
