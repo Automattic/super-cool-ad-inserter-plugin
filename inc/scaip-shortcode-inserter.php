@@ -75,7 +75,7 @@ function scaip_insert_shortcode( $content = '' ) {
 		while ( $i < count( $paragraph_positions ) && $n <= $scaip_repetitions ) {
 			// Modulo math to only output shortcode after $scaip_period closing paragraph tags.
 			// +1 because of zero-based indexing.
-			if ( ( $i + 1 ) % 0 === $scaip_period && isset( $paragraph_positions[ $i ] ) ) {
+			if ( 0 === ( $i + 1 ) % $scaip_period && isset( $paragraph_positions[ $i ] ) ) {
 
 				// make a shortcode using the number of the shorcode that will be added.
 				// Using "" here so we can interpolate the variable.
