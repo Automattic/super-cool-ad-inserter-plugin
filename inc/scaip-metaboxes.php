@@ -42,8 +42,8 @@ function scaip_how_to_shortcode_callback() {
 	</p>
 	<?php
 	if ( current_user_can( 'edit_others_posts' ) ) {
-		$checked = ( 1 === intval( get_post_meta( $post->ID, 'scaip_prevent_shortcode_addition', true ) ) ) ? 'checked="checked"' : '';
-		echo '<p><label class="selectit"><input type="checkbox" value="true" name="scaip_prevent_shortcode_addition"' . esc_attr( $checked ) . '> ' . esc_html__( 'Prevent automatic addition of ads to this post.', 'scaip' ) . '</label></p>';
+		$checked = get_post_meta( $post->ID, 'scaip_prevent_shortcode_addition', true );
+		echo '<p><label class="selectit"><input type="checkbox" value="true" name="scaip_prevent_shortcode_addition"' . checked( $checked, 1, false  ) . '> ' . esc_html__( 'Prevent automatic addition of ads to this post.', 'scaip' ) . '</label></p>';
 	}
 }
 
