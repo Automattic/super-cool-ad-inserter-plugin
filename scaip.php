@@ -1,10 +1,14 @@
 <?php
 /*
 Plugin Name: Super Cool Ad Inserter Plugin
+Plugin URI: https://github.com/INN/super-cool-ad-inserter-plugin/tree/master/docs
 Description: A simple way to insert widgets after the nth paragraph
 Version: 0.1.1
-Author: The INN Nerds
-Author URI: http://github.com/inn
+Author: INN Labs
+Author URI: http://labs.inn.org/
+License: GPL Version 2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: scaip
 */
 
 // Plugin directory

@@ -17,7 +17,7 @@ We have [a helpful how-to](/how-to-work-with-us/via-github.md) that walks throug
 
 Additionally, you can [create issues](https://github.com/INN/docs/issues) on this repo to suggest changes or improvements.
 
-And of course you can always email us: [nerds@inn.org](mailto:nerds@inn.org).
+And of course you can always email us: [support@inn.org](mailto:support@inn.org).
 
 ### Standards
 

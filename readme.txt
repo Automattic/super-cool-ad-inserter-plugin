@@ -1,5 +1,5 @@
 === Super Cool Ad Inserter Plugin ===
-Contributors: inn_nerds
+Contributors: innlabs
 Donate link: https://inn.org/donate
 Tags: ads, advertising,  widget, shortcode, google, post, page
 Requires at least: 4.0.0
