@@ -35,4 +35,29 @@ add_action('scaip_shortcode', 'scaip_test_function');
 
 ### Disable the normal shortcodes
 
-Write a hook that hooks the shortcode ahead of the default scaip function and unregisters the default scaip function.
+If you wish to disable the shortcode that is inserted normally, in order to replace it with your own work, write a hook that hooks the shortcode ahead of the default scaip function (so, with priority number 9 or lower) that performs your desired output and then uses [`remove_action( 'scaip_shortcode', 'scaip_shortcode_do_sidebar', 10 )`](https://codex.wordpress.org/Function_Reference/remove_action) to remove the default SCAIP shortcode handler.
+
+If you wish to selectively disable programmatic shortcode insertion on a particular post, category of post, or other criteria, you can write a filter on `'scaip_whether_insert'`, accepting three parameters and returning `true` or `false`. The three parameters are:
+
+1. Bool $whether Whether to insert ads programmatically in this instance.
+2. String $content The post content.
+3. Mixed $queried_object `$wp_query->queried_object` in the context in which the programmatic shortcode inserter is running.
+
+An example filter would look like:
+
+```php
+function scaip_test_inserter_disabler( $whether, $content, $queried_object ) {
+	if ( isset( $queried_object->ID ) && 120 = $queried_object->ID ) {
+		return false;
+	}
+
+	return $whether;
+}
+add_filter( 'scaip_whether_insert', 'scaip_test_inserter_disabler', 10, 3 );
+```
+
+### Custom sidebar inserters
+
+First, disable the normal inserter as described above.
+
+Then, create a function that inserts the `[ad number=$n]` shortcode in your `post_content` where you want it to appears, where `n` is an integer between `1` and the value of `get_option( 'scaip_settings_repetitions' )`.
