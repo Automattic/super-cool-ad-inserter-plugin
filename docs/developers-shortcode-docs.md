@@ -54,3 +54,10 @@ function scaip_test_inserter_disabler( $whether, $content, $queried_object ) {
 	return $whether;
 }
 add_filter( 'scaip_whether_insert', 'scaip_test_inserter_disabler', 10, 3 );
+```
+
+### Custom sidebar inserters
+
+First, disable the normal inserter as described above.
+
+Then, create a function that inserts the `[ad number=$n]` shortcode in your `post_content` where you want it to appears, where `n` is an integer between `1` and the value of `get_option( 'scaip_settings_repetitions' )`.
