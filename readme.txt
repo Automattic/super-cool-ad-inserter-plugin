@@ -17,15 +17,22 @@ This WordPress plugin gives site administrators a way to insert widgets such as 
 == Installation ==
 
 1. Upload the plugin directory to your `/wp-content/plugins/` directory
-1. Activate the plugin through the 'Plugins' menu in WordPress
+2. Activate the plugin through the 'Plugins' menu in WordPress
 
 For more advanced documentation for developers and advanced users see [the official plugin docs](https://github.com/INN/super-cool-ad-inserter-plugin/tree/master/docs).
 
 == Changelog ==
 
+= 0.2 =
+
+* Partial WordPress VIP code approval, via [Adam Schweigert](https://github.com/aschweigert)'s work in [pull request #32](https://github.com/INN/super-cool-ad-inserter-plugin/pull/32).
+* Adds filter to programmatically disable ad insertion. Pull request [#39](https://github.com/INN/super-cool-ad-inserter-plugin/pull/39) for [issue #25](https://github.com/INN/super-cool-ad-inserter-plugin/issues/25).
+* Improves compliance with WordPress.com VIP PHP code standards
+* Removes some unneeded development files
+
 = 0.1.2 =
 * Removes the .visuallyhidden class from the widget title of inserted widgets
-* Improves compliance with Wordpress PHP code standards
+* Improves compliance with WordPress PHP code standards
 * Removes some unneeded development files
 
 = 0.1 =
