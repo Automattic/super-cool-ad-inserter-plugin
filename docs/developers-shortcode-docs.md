@@ -36,3 +36,15 @@ add_action('scaip_shortcode', 'scaip_test_function');
 ### Disable the normal shortcodes
 
 Write a hook that hooks the shortcode ahead of the default scaip function and unregisters the default scaip function.
+
+### Insert shortcodes in new and unusual places
+
+A simple three-step process:
+
+1. Identify the HTML content where you want the SCAIP widget areas to be inserted.
+2. Via a filter or other function, pass that HTML as the first parameter of the function `scaip_insert_shortcode( $content );`.
+3. That function will return the HTML string.
+
+For more information on the `scaip_insert_shortcode()` function, see [`inc/scaip-shortcode-inserter.php`](/inc/scaip-shortcode-inserter.php).
+
+As an example of a place where you might want to use the shortcode insertion function, consider that the default inserter does not insert the shortcode for the sidebar on the front page or on term archive pages.
