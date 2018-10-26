@@ -25,7 +25,14 @@ add_shortcode( 'ad', 'scaip_shortcode' );
  */
 function scaip_shortcode_do_sidebar( $args ) {
 	if ( isset( $args['number'] ) ) {
-		echo '<aside class="scaip scaip-' . esc_attr( $args['number'] ) . '">';
+		sprintf(
+			'<aside class="scaip scaip-%1$s %2$s %3$s %4$s %5$s">',
+			esc_attr( $args['number'] ),
+			( isset( $atts['align'] ) ) ? $atts['align'] : '',
+			( isset( $atts['class'] ) ) ? $atts['class'] : '',
+			( isset( $atts['className'] ) ) ? $atts['className'] : '',
+			( isset( $atts['customClassName'] ) ) ? $atts['customClassName'] : ''
+		);
 		dynamic_sidebar( 'scaip-' . $args['number'] );
 		echo '</aside>';
 	}

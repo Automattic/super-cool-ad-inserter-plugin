@@ -19,6 +19,7 @@ define( 'SCAIP_PLUGIN_FILE', __FILE__ );
  */
 require_once( __DIR__ . '/inc/scaip-shortcode-inserter.php' );
 require_once( __DIR__ . '/inc/scaip-shortcode.php' );
+require_once( __DIR__ . '/blocks/scaip-sidebar.php' );
 
 /**
  * Settings

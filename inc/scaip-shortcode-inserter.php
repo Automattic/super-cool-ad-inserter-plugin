@@ -47,6 +47,14 @@ function scaip_insert_shortcode( $content = '' ) {
 		return $content;
 	}
 
+	/*
+	 * If we have a Gutenberg Block, bail
+	 * @uses has_block https://github.com/WordPress/gutenberg/issues/3773
+	 */
+	if ( function_exists( 'has_block' ) && has_block( 'super-cool-ad-inserter-plugin/scaip-sidebar', $content ) ) {
+		return $content;
+	}
+
 	$scaip_period = get_option( 'scaip_settings_period', 3 );
 	$scaip_repetitions = get_option( 'scaip_settings_repetitions', 2 );
 	$scaip_minimum_paragraphs = get_option( 'scaip_settings_min_paragraphs', 6 );
