@@ -1,4 +1,7 @@
 <?php
+/**
+ * Functions for the automatic insertion of scaip shortcodes
+ */
 
 /**
  * Adds the scaip shortcode to post after predetermined number of paragraphs
@@ -8,53 +11,11 @@
  * Some questions in this code, because Ad-Inserter doesn't have inline docs at all.
  *
  * @link https://plugins.trac.wordpress.org/browser/ad-inserter/trunk/ad-inserter.php#L1474
+ * @since 0.1
+ * @param String $content The post content.
+ * @return String The post content, plus shortcodes.
  */
 function scaip_insert_shortcode( $content = '' ) {
-	// Abort if this is not being called In The Loop.
-	if ( ! in_the_loop() || ! is_main_query() ) {
-		return $content;
-	}
-
-	// Abort if this is not a normal post.
-	global $wp_query;
-	if (
-		! isset( $wp_query->queried_object )
-		|| ! isset( $wp_query->queried_object->post_type )
-		|| 'post' !== $wp_query->queried_object->post_type
-	) {
-		return $content;
-	}
-
-	/*
-	 * Abort if this post has the option set to not add ads.
-	 */
-	$skip = get_post_meta( $wp_query->queried_object->ID, 'scaip_prevent_shortcode_addition', true );
-	/*
-	 * Usually the meta field won't exist unless the checkbox to skip ads on any given post is checked.
-	 * An older version of the plugin saved it even when the box wasn't checked
-	 * so we need an extra check here for backwards compatibility.
-	 * the previous version saved the meta value as "on" if checked and empty if not.
-	 */
-	if ( ! empty( $skip ) || 'on' === $skip ) {
-		return $content;
-	}
-
-	/*
-	 * If we have a manual shortcode, bail.
-	 * (scaip was the older shortcode, retained here for backwards compatibility)
-	 */
-	if ( has_shortcode( $content, 'ad' ) || has_shortcode( $content, 'scaip' ) ) {
-		return $content;
-	}
-
-	/*
-	 * If we have a Gutenberg Block, bail
-	 * @uses has_block https://github.com/WordPress/gutenberg/issues/3773
-	 */
-	if ( function_exists( 'has_block' ) && has_block( 'super-cool-ad-inserter-plugin/scaip-sidebar', $content ) ) {
-		return $content;
-	}
-
 	$scaip_period = get_option( 'scaip_settings_period', 3 );
 	$scaip_repetitions = get_option( 'scaip_settings_repetitions', 2 );
 	$scaip_minimum_paragraphs = get_option( 'scaip_settings_min_paragraphs', 6 );
@@ -63,7 +24,7 @@ function scaip_insert_shortcode( $content = '' ) {
 	$last_position = -1;
 	$paragraph_end = '</p>';
 
-	// if we don't have an <p> tags, we probably need to apply wpautop().
+	// if we don't have any <p> tags, we probably need to apply wpautop().
 	if ( ! stripos( $content, $paragraph_end ) ) {
 		$content = wpautop( $content );
 	}
@@ -121,4 +82,71 @@ function scaip_insert_shortcode( $content = '' ) {
 	}
 	return $content;
 }
-add_filter( 'the_content', 'scaip_insert_shortcode', 10 );
+
+/**
+ * Function to determine whether to insert the shortcode
+ *
+ * @uses scaip_insert_shortcode
+ * @since 0.2
+ */
+function scaip_maybe_insert_shortcode( $content = '' ) {
+	// Abort if this is not being called In The Loop.
+	if ( ! in_the_loop() || ! is_main_query() ) {
+		return $content;
+	}
+
+	// Abort if this is not a normal post.
+	global $wp_query;
+	if ( 'post' !== $wp_query->queried_object->post_type ) {
+		return $content;
+	}
+
+	/*
+	 * Abort if this post has the option set to not add ads.
+	 */
+	$skip = get_post_meta( $wp_query->queried_object->ID, 'scaip_prevent_shortcode_addition', true );
+	/*
+	 * Usually the meta field won't exist unless the checkbox to skip ads on any given post is checked.
+	 * An older version of the plugin saved it even when the box wasn't checked
+	 * so we need an extra check here for backwards compatibility.
+	 * the previous version saved the meta value as "on" if checked and empty if not.
+	 */
+	if ( ! empty( $skip ) || 'on' === $skip ) {
+		return $content;
+	}
+
+	/*
+	 * If we have a manual shortcode, bail.
+	 * (scaip was the older shortcode, retained here for backwards compatibility)
+	 */
+	if ( has_shortcode( $content, 'ad' ) || has_shortcode( $content, 'scaip' ) ) {
+		return $content;
+	}
+
+	/*
+	 * If we have a Gutenberg Block, bail
+	 * @uses has_block https://github.com/WordPress/gutenberg/issues/3773
+	 */
+	if ( function_exists( 'has_block' ) && has_block( 'super-cool-ad-inserter-plugin/scaip-sidebar', $content ) ) {
+		return $content;
+	}
+
+	/*
+	 * Filter to determine whether to apply the shortcode to the given post content
+	 *
+	 * Filters on 'scaip_whether_insert' should accept three arguments, and return a boolean true or false. The default value is true: apply the filter. Use this filter to tell SCAIP to not programmatically insert the ad in this instance.
+	 *
+	 * @param Bool $whether Whether to insert ads programmatically in this instance.
+	 * @param String $content The post content.
+	 * @param Mixed $queried_object `$wp_query->queried_object` in the current context.
+	 *
+	 * @since 0.2
+	 * @link https://github.com/INN/super-cool-ad-inserter-plugin/issues/25
+	 */
+	if ( true !== apply_filters( 'scaip_whether_insert', true, $content, $wp_query->queried_object ) ) {
+		return $content;
+	}
+
+	return scaip_insert_shortcode( $content );
+}
+add_filter( 'the_content', 'scaip_maybe_insert_shortcode', 10 );
