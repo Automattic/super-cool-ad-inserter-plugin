@@ -5,7 +5,7 @@
  *
  * @return HTML
  */
-function scaip_shortcode( $atts, $content, $tag ) {
+function scaip_shortcode( $atts = array(), $content = '', $tag = '' ) {
 	if ( isset( $atts['no'] ) ) {
 		return '';
 	}
