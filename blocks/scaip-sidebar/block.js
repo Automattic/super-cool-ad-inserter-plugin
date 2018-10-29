@@ -42,6 +42,11 @@
 			className: true,
 			multiple: true,
 		},
+		attributes: {
+			no: {
+				type: 'number',
+			},
+		},
 
 		/**
 		 * The edit function describes the structure of your block in the context of the editor.
@@ -98,11 +103,20 @@
 		 * into the final markup, which is then serialized by Gutenberg into `post_content`.
 		 * @see https://wordpress.org/gutenberg/handbook/block-edit-save/#save
 		 *
+		 * Because this is a dynamic block, there's nothing returned here.
+		 * Yet, because this dynamic block draws from the attributes saved for its blockself
+		 * in the post_content, we must return *something* in order for the attributes
+		 * to be saved in the post.
+		 *
+		 * Thus, we return a Comment node via `new Comment`.
+		 * @todo This doesn't work in IE, which is sad and deserves further work.
+		 * @see https://developer.mozilla.org/en-US/docs/Web/API/Comment
+		 *
 		 * @return {Element}       Element to render.
 		 */
 		save: function( attributes ) {
 			// Rendering in PHP
-			return '';
+			return new Comment( attributes );
 		}
 	} );
 } )(
