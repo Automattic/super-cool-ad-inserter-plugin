@@ -132,10 +132,10 @@ function scaip_register_sidebars() {
 			'name' => 'Inserted Ad Position ' . $i,
 			'description' => __( 'Widgets in this sidebar will be automatically inserted into posts. Please do not put more than one widget here.', 'scaip' ),
 			'id' => 'scaip-' . $i,
-			'before_widget' => '<aside id="%1$s" class="%2$s clearfix">',
-			'after_widget' => '</aside>',
-			'before_title' => '<h5 class="adtitle">',
-			'after_title' => '</h5>',
+			'before_widget' => apply_filters( 'scaip_before_widget', '<aside id="%1$s" class="%2$s clearfix">', $i ),
+			'after_widget' => apply_filters( 'scaip_after_widget', '</aside>', $i ),
+			'before_title' => apply_filters( 'scaip_before_title', '<h5 class="adtitle">', $i ),
+			'after_title' => apply_filters( 'scaip_after_title', '</h5>', $i ),
 		));
 		$i++;
 	}
