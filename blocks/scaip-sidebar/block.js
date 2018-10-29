@@ -48,7 +48,7 @@
 		},
 		attributes: {
 			number: {
-				type: 'number',
+				type: 'string',
 			},
 		},
 
@@ -68,8 +68,8 @@
 			options_array=[];
 			for ( var i = 1; i <= window.scaip.repetitions; i++ ) {
 				options_array.push( {
-					label: i,
-					value: i
+					label: i.toString(),
+					value: i.toString()
 				} );
 			}
 
