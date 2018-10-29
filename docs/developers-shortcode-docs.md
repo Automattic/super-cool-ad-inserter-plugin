@@ -73,3 +73,55 @@ A simple three-step process:
 For more information on the `scaip_insert_shortcode()` function, see [`inc/scaip-shortcode-inserter.php`](/inc/scaip-shortcode-inserter.php).
 
 As an example of a place where you might want to use the shortcode insertion function, consider that the default inserter does not insert the shortcode for the sidebar on the front page or on term archive pages.
+
+### Change shortcode sidebar HTML
+
+When using [`register_sidebar()`](https://developer.wordpress.org/reference/functions/register_sidebar/), one normally passes an array `$args` of arguments which define the HTML markup of the sidebar:
+
+```php
+register_sidebar(array(
+	'name' => 'Example',
+	'description' => __( 'Example sidebar description', 'text-domain' ),
+	'id' => 'example',
+	'before_widget' => '<aside id="%1$s" class="%2$s clearfix">',
+	'after_widget' => '</aside>',
+	'before_title' => '<h5 class="adtitle">',
+	'after_title' => '</h5>',
+));
+```
+
+Because SCAIP handles the sidebar registration for you, you cannot directly manipulate the sidebar's `before_widget`, `after_widget`, `before_title`, or `after_title` HTML. To change that HTML, use the following filters:
+
+- `scaip_before_widget`
+- `scaip_after_widget`
+- `scaip_before_title`
+- `scaip_after_title`
+
+Callbacks hooked on these filters should accept two arguments:
+
+1. The HTML for the filtered tag
+2. A number `$i` which is the Inserted Ad Position sidebar number. This parameter is optional, but you may find it useful if you want to set the `before_widget` and `after_widget` differently for sidebar 1 compared to sidebar 3.
+
+If you put a filter on a "before" filter, **check whether you need to filter the "after" filter.** The following case outputs unbalanced HTML:
+
+```php
+function scaip_example_filter( $html, $i ) {
+	if ( isset( $i ) && 4 === $i ) {
+		$html = '<div id="%1$s" class="%2$s">';
+	}
+	return $html;
+}
+```
+
+That filter will produce the following output on the page, when a Text Widget is used as an example:
+
+```html
+<div id="text-7" class="widget_text clearfix">
+	<h5 class="adtitle">Text Widget, Sidebar 4</h5>
+	<div class="textwidget">
+		<p>An example text widget in the fourth sidebar</p>
+	</div>
+</aside>
+```
+
+Do you see the mismatch between the opening `div` tag and the closing `aside`? Many browsers will silently correct this, but some will throw errors, and your search engine ratings may be negatively affected.
