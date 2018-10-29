@@ -43,7 +43,7 @@
 			multiple: true,
 		},
 		attributes: {
-			no: {
+			number: {
 				type: 'number',
 			},
 		},
@@ -62,7 +62,7 @@
 			}
 
 			options_array=[];
-			for ( var i = 0; i < window.scaip.repetitions; i++ ) {
+			for ( var i = 1; i <= window.scaip.repetitions; i++ ) {
 				options_array.push( {
 					label: i,
 					value: i
@@ -89,8 +89,8 @@
 								__( 'Inserted Ad Position:' )
 							],
 							options: options_array,
-							value: props.attributes.no,
-							onChange: function( value ) { props.setAttributes( { no: value } ); },
+							value: props.attributes.number,
+							onChange: function( value ) { props.setAttributes( { number: value } ); },
 						}
 					)
 				),

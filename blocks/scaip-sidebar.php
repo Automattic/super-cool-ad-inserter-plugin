@@ -54,6 +54,11 @@ function scaip_sidebar_block_init() {
 		'editor_style'  => 'scaip-sidebar-block-editor',
 		'style'         => 'scaip-sidebar-block',
 		'render_callback' => 'scaip_shortcode',
+		'attributes' => array(
+			'number' => array(
+				'type' => 'string',
+			),
+		),
 	) );
 }
 add_action( 'init', 'scaip_sidebar_block_init' );
