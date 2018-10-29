@@ -6,9 +6,11 @@
  * @return HTML
  */
 function scaip_shortcode( $atts = array(), $content = '', $tag = '' ) {
+	// This is the shortcode that disables doing shortcodes.
 	if ( isset( $atts['no'] ) ) {
 		return '';
 	}
+
 	ob_start();
 	do_action( 'scaip_shortcode', $atts );
 	$ret = ob_get_clean();
