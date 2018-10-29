@@ -27,7 +27,7 @@ add_shortcode( 'ad', 'scaip_shortcode' );
  */
 function scaip_shortcode_do_sidebar( $args ) {
 	if ( isset( $args['number'] ) ) {
-		sprintf(
+		printf(
 			'<aside class="scaip scaip-%1$s %2$s %3$s %4$s %5$s">',
 			esc_attr( $args['number'] ),
 			( isset( $args['align'] ) ) ? 'align' . $args['align'] : '',
