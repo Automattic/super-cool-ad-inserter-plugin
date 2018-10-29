@@ -61,6 +61,9 @@ function scaip_sidebar_block_init() {
 			'align' => array(
 				'type' => 'string',
 			),
+			'class' => array(
+				'type' => 'string',
+			),
 		),
 	) );
 }
