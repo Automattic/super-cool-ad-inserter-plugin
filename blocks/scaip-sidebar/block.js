@@ -44,12 +44,12 @@
 			alignWide: true,
 			customClassName: true,
 			className: true,
-			multiple: true,
+			multiple: true
 		},
 		attributes: {
 			number: {
-				type: 'string',
-			},
+				type: 'string'
+			}
 		},
 
 		/**
@@ -65,10 +65,12 @@
 				return "Something is wrong with the Super Cool Ad Inserter Plugin.";
 			}
 
-			options_array=[];
-			for ( var i = 1; i <= window.scaip.repetitions; i++ ) {
+			var options_array = [] ;
+
+			for ( var i = 1; i <= window.scaip.repetitions; i += 1 ) {
 				options_array.push( {
 					label: i.toString(),
+					key: i.toString(),
 					value: i.toString()
 				} );
 			}
@@ -78,7 +80,7 @@
 					'div',
 					{
 						className: props.className,
-						align: props.align,
+						align: props.align
 					},
 					el(
 						SelectControl,
@@ -88,13 +90,13 @@
 									dashicon,
 									{
 										icon: 'welcome-widgets-menus'
-									},
+									}
 								),
 								__( 'Inserted Ad Position:' )
 							],
 							options: options_array,
-							value: props.attributes.number,
-							onChange: function( value ) { props.setAttributes( { number: value } ); },
+							value: props.attributes.number.toString(),
+							onChange: function( value ) { props.setAttributes( { number: value.toString() } ); }
 						}
 					)
 				),
@@ -107,7 +109,7 @@
 							],
 							options: options_array,
 							value: props.attributes.number,
-							onChange: function( value ) { props.setAttributes( { number: value } ); },
+							onChange: function( value ) { props.setAttributes( { number: value.toString() } ); },
 							help: [
 								__( 'Which Inserted Ad Position sidebar should be displayed in this area? ' ), // trailing space is important.
 								el(
@@ -116,12 +118,11 @@
 										href: 'https://github.com/INN/super-cool-ad-inserter-plugin/blob/master/docs/configuration.md'
 									},
 									'View the documentation.'
-								),
-							],
+								)
+							]
 						}
-					),
-				),
-				// @todo InspectorControls with a help thing pointing users to the widget settings.
+					)
+				)
 			];
 		},
 
