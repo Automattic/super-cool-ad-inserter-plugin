@@ -12,7 +12,7 @@ You can check the box to "prevent automatic addition of ads to this post" or add
 
 ## Manual Ad Placement
 
-You can override automatic placement of ads by inserting shortcodes in the body of the post wherever you want the ads placed. Sites using Gutenberg may use blocks; all WordPress sites may use shortcodes.
+You can override automatic placement of ads by inserting ad placements in the body of the post, wherever you want the ads placed. Sites using Gutenberg may use blocks; all WordPress sites may use shortcodes.
 
 ### Blocks
 

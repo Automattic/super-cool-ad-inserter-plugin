@@ -21,7 +21,7 @@ Higher-numbered Inserted Ad Positions may not display in shorter posts. The mini
     6
   + 1   A paragraph is needed after the last ad inserted
  -----
-    7   Minumum number of paragraphs to display all ads
+    7   Minimum number of paragraphs to display all ads
 ```
 
 Note that you don't have to fill all the available Widget Areas with actual ads. If a position doesn't have any widgets, then it will remain blank on the post page. This provides additional flexibility for placing ads where you want without disrupting the flow of the post content.
