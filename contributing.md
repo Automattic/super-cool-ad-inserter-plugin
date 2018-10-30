@@ -21,6 +21,6 @@ And of course you can always email us: [support@inn.org](mailto:support@inn.org)
 
 ### Standards
 
-- Use [markdown syntax](http://daringfireball.net/projects/markdown/syntax) for all documents
+- Use [markdown syntax](https://daringfireball.net/projects/markdown/syntax) for all documents
 - Follow all INN documentation standards
 - If your pull request changes a file's name or the location of a file within the repository, please check all other files in the repository for links to the former filename. (`git grep "old-filename-here.md"`)

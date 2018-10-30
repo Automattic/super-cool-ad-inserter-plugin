@@ -24,7 +24,7 @@ function scaip_register_settings() {
 	add_settings_section( 'scaip-settings', 'Control how often the ads appear', 'scaip_settings_section_header', 'scaip' );
 
 	add_settings_field( 'scaip_settings_period', 'Number of paragraphs before each insertion, and between insertions', 'scaip_settings_period', 'scaip', 'scaip-settings' );
-	add_settings_field( 'scaip_settings_repetitions', 'Number of times the ad should be inserted in a post', 'scaip_settings_repetitions', 'scaip', 'scaip-settings' );
+	add_settings_field( 'scaip_settings_repetitions', 'Number of times an ad widget area should be inserted in a post', 'scaip_settings_repetitions', 'scaip', 'scaip-settings' );
 	add_settings_field( 'scaip_settings_min_paragraphs', 'Minimum number of paragraphs needed in a post to insert ads', 'scaip_settings_min_paragraphs', 'scaip', 'scaip-settings' );
 
 	register_setting( 'scaip-settings', 'scaip_settings_period' );
@@ -65,6 +65,10 @@ function scaip_settings_period( $args ) {
 function scaip_settings_repetitions( $args ) {
 	$repetitions = get_option( 'scaip_settings_repetitions', 2 );
 	echo '<input name="scaip_settings_repetitions" id="scaip_settings_repetitions" type="number" value="' . esc_attr( $repetitions ) . '" />';
+	printf(
+		'<p>%1$s</p>',
+		esc_html__( 'This is the maximum number of widget areas that will be automatically inserted in any post.', 'scaip' )
+	);
 }
 
 /**
@@ -101,7 +105,7 @@ function scaip_admin_page() {
 		?>
 		</form>
 		<?php
-		echo sprintf(
+		printf(
 			wp_kses(
 				__( '<p>To place ads or change ad placements, visit the <a href="%1$s">Widgets Settings</a>. For example, widgets in the first position will be in the "Inserted Ad Position 1" sidebar.</p>', 'scaip' ),
 				array(
@@ -112,6 +116,13 @@ function scaip_admin_page() {
 				)
 			),
 			esc_url( admin_url( 'widgets.php' ) )
+		);
+		printf(
+			'<p>%1$s</p>',
+			sprintf(
+				__( 'For more information about these settings, and about the Super Cool Ad Inserter Plugin in general, <a href="%1$s">see the plugin\'s documentation on GitHub</a>.', 'scaip' ),
+				'https://github.com/INN/super-cool-ad-inserter-plugin/tree/master/docs'
+			)
 		);
 		?>
 	</div>
@@ -132,10 +143,10 @@ function scaip_register_sidebars() {
 			'name' => 'Inserted Ad Position ' . $i,
 			'description' => __( 'Widgets in this sidebar will be automatically inserted into posts. Please do not put more than one widget here.', 'scaip' ),
 			'id' => 'scaip-' . $i,
-			'before_widget' => '<aside id="%1$s" class="%2$s clearfix">',
-			'after_widget' => '</aside>',
-			'before_title' => '<h5 class="adtitle">',
-			'after_title' => '</h5>',
+			'before_widget' => apply_filters( 'scaip_before_widget', '<aside id="%1$s" class="%2$s clearfix">', $i ),
+			'after_widget' => apply_filters( 'scaip_after_widget', '</aside>', $i ),
+			'before_title' => apply_filters( 'scaip_before_title', '<h5 class="adtitle">', $i ),
+			'after_title' => apply_filters( 'scaip_after_title', '</h5>', $i ),
 		));
 		$i++;
 	}

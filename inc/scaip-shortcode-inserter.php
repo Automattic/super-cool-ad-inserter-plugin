@@ -142,3 +142,24 @@ function scaip_maybe_insert_shortcode( $content = '' ) {
 	return scaip_insert_shortcode( $content );
 }
 add_filter( 'the_content', 'scaip_maybe_insert_shortcode', 10 );
+
+/**
+ * Remove the scaip_maybe_insert_shortcode filter on the_content when there are blocks
+ *
+ *
+ * This is necessary because the filter scaip_maybe_insert_shortcode runs after do_blocks has run, which means there are no blocks left for has_blocks( $content ) to detect.
+ * This action should run before Gutenberg's do_blocks filter, which runs at priority 7.
+ * @link https://github.com/WordPress/gutenberg/blob/a696e508ad5d3566b447fc48f355e91953a17c4a/lib/blocks.php#L266
+ *
+ * @since 0.2
+ * @see scaip_maybe_insert_shortcode
+ * @uses has_blocks
+ */
+function scaip_maybe_remove_shortcode_inserter( $content ) {
+	if ( function_exists( 'has_block' ) && has_block( 'super-cool-ad-inserter-plugin/scaip-sidebar', $content ) ) {
+		remove_filter( 'the_content', 'scaip_maybe_insert_shortcode', 10 );
+	}
+
+	return $content;
+}
+add_filter( 'the_content', 'scaip_maybe_remove_shortcode_inserter', 5 );
