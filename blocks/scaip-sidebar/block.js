@@ -135,15 +135,17 @@
 		 * in the post_content, we must return *something* in order for the attributes
 		 * to be saved in the post.
 		 *
-		 * Thus, we return a Comment node via `new Comment`.
-		 * @todo This doesn't work in IE, which is sad and deserves further work.
-		 * @see https://developer.mozilla.org/en-US/docs/Web/API/Comment
+		 * Can't use https://developer.mozilla.org/en-US/docs/Web/API/Comment/Comment because
+		 * that constructor isn't supported in IE.
+		 *
+		 * Therefore, use https://developer.mozilla.org/en-US/docs/Web/API/Document/createComment because
+		 * that particular function has been around since 2000: https://www.w3.org/TR/2000/WD-DOM-Level-1-20000929/level-one-core.html#ID-1334481328
 		 *
 		 * @return {Element}       Element to render.
 		 */
 		save: function( attributes ) {
 			// Rendering in PHP
-			return new Comment( attributes );
+			return document.createComment( attributes );
 		}
 	} );
 } )(
