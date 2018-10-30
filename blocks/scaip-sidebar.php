@@ -23,6 +23,8 @@ function scaip_sidebar_block_init() {
 			'wp-blocks',
 			'wp-i18n',
 			'wp-element',
+			'wp-components',
+			'wp-editor',
 		),
 		filemtime( "$dir/$block_js" )
 	);
