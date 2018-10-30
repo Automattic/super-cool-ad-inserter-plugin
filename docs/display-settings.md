@@ -12,7 +12,17 @@ You can check the box to "prevent automatic addition of ads to this post" or add
 
 ## Manual Ad Placement
 
-You can override automatic placement of ads by inserting shortcodes in the body of the post wherever you want the ads placed. For example, to display the Inserted Ad Position 2 in a custom location in your post, you would use the following shortcode:
+You can override automatic placement of ads by inserting shortcodes in the body of the post wherever you want the ads placed. Sites using Gutenberg may use blocks; all WordPress sites may use shortcodes.
+
+### Blocks
+
+Each block requires you to set the sidebar that will be output. You can optionally set the widget area's alignment using Gutenberg's alignment tools, or set additional CSS classes to be output on the `aside` that contains the sidebar output.
+
+![A screenshot of the Inserted Ad Position Block showing its settings in use.](./img/block.png)
+
+### Shortcodes
+
+For example, to display the Inserted Ad Position 2 in a custom location in your post, you would use the following shortcode:
 
 ```
 
@@ -30,6 +40,12 @@ You can also reorder the display of Inserted Ad Positions by placing shortcodes 
 
 Shortcodes must have an empty line between the shortcode and anything before or after the shortcode.
 
+The full set of shortcode arguments is as follows:
+
+- `number=""`: required, a number from one to the value set in **Settings > Ad Inserter**, under "Number of times the ad should be inserted in a post."
+- `align=""`: optional, any of WordPress' [alignment classes](https://codex.wordpress.org/CSS) with the 'align' prfix removed: `left`, `right`, `center`, `wide`, `full`, `none`.
+- `class=""`: optional, CSS class names.
+
 ## Ad Spacing Using Empty Inserted Ad Positions
 
 You can add  Widgets to each and every numbered Inserted Ad Position, and they will display every nth paragraph based on the number of paragraphs you defined in **Plugins** > **Ad Inserter**  [options](configuration.md).
@@ -41,3 +57,7 @@ But sometimes you might want to use the default automatic ad insertion but prote
 Note that we haven't even added an empty Text Widget to this Ad Position, but simply left it as an empty widget area. On the post page, the first ad won't display until after 6 paragraphs:
 
 ![post with six paragraphs before the first ad](./img/scaip-ad-after-six-paras.png)
+
+## Developer options
+
+For more customizability, see [the developer documentation](./developers-shortcode-docs.md).

@@ -3,7 +3,14 @@
 1. You activate the plugin.
 2. You configure the plugin.
 3. The plugin registers a number of sidebars equal to the number of times that ads should be inserted into the post.
-4. Users add widgets to those sidebars, which are then automatically inserted in posts based on the configuration.
+4. Users add widgets to those sidebars
+5. When `the_content()` is called on a post:
+    1. A filter on `the_content` with priority `5` checks to see if there are any SCAIP blocks in the post, and if so, removes step #3 below.
+    2. Gutenberg (if enabled) converts SCAIP blocks into HTML content, passing the block arguments to the function `scaip_shortcode` which runs the `scaip_shortcode` action. On the `scaip_shortcode` action is hooked a function that outputs the sidebar for that block.
+    3. A filter on `the_content` with priority `10` checks to see if there are any SCAIP shortcodes in the post, and if so, skips step #4 below.
+    4. The filter from step #3 above then automatically inserts the plugin's shortcodes.
+    5. WordPress converts shortcodes into HTML content, passing the shortcode arguments to the function `scaip_shortcode`, described above.
+
 
 ## Customization!
 
@@ -17,6 +24,8 @@ For example, to display the "Inserted Ad Position 2" in a custom location in you
 
 Using this method, you can reorder inserted widget areas or manually limit the number of inserted ad positions on a per-post basis without having to define a callback to determine what gets placed in the widget area.
 
+A shortcode without a number specified will be ignored, as will a shortcode with a number higher than the plugin's settings allow.
+
 ### Define your own behavior.
 
 Of course, if you need to do something that is more complex than place a widget or SCAIP-inserted widget area, you can write your own hooks on the SCAIP shortcode.
@@ -25,13 +34,16 @@ Of course, if you need to do something that is more complex than place a widget 
 2. You attach that function to the `scaip_shortcode` WordPress action:
 
 ```php
-function scaip_test_function($args) {
+function scaip_test_function( $args ) {
 	echo "<p>SCAIP was here, with these arguments: ";
-	echo var_dump($args);
+	echo var_dump( $args );
 	echo "</p>";
 }
-add_action('scaip_shortcode', 'scaip_test_function');
+add_action( 'scaip_shortcode', 'scaip_test_function' );
+remove_action( 'scaip_shortcode', 'scaip_shortcode_do_sidebar', 10 );
 ```
+
+The remove_action call is necessary to prevent the default sidebar output from occurring.
 
 ### Disable the normal shortcodes
 
