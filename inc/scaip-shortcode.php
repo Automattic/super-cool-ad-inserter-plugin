@@ -1,9 +1,16 @@
 <?php
+/**
+ * The [ad] shortcode and its related functions
+ */
 
 /**
  * The SCAIP shortcode function
  *
+ * @param Array $atts Shortcode attributes or block properties.
+ * @param String $content Shortcode wrapped text; not used in this shortcode.
+ * @param String $tag The complete shortcode tag; not used in this shortcode.
  * @return HTML
+ * @since 0.1
  */
 function scaip_shortcode( $atts = array(), $content = '', $tag = '' ) {
 	// This is the shortcode that disables doing shortcodes.
@@ -23,6 +30,8 @@ add_shortcode( 'ad', 'scaip_shortcode' );
  * Outputs the sidebar 'scaip-#' where # is the 'number' argument on the shortcode.
  *
  * To prevent this happening, decrease the number of ads that should be inserted to 0, remove the ad widgets form the sidebar, or remove_action('scaip_shortcode', 'scaip_shortcode_do_sidebar');
+ *
+ * @param Array $args Shortcode attributes or block properties.
  * @since 0.1
  */
 function scaip_shortcode_do_sidebar( $args ) {
