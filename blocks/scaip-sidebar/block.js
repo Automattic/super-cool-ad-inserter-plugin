@@ -67,12 +67,24 @@
 
 			var options_array = [] ;
 
+			options_array.push( {
+				label: __( 'Pick one:' ),
+				disabled: true,
+				value: 0,
+			} );
+
 			for ( var i = 1; i <= window.scaip.repetitions; i += 1 ) {
 				options_array.push( {
 					label: i.toString(),
 					key: i.toString(),
 					value: i.toString()
 				} );
+			}
+
+			if ( typeof props.attributes.number !== 'undefined' ) {
+				var value = props.attributes.number.toString();
+			} else {
+				var value = 0;
 			}
 
 			return [
@@ -95,8 +107,12 @@
 								__( 'Inserted Ad Position:' )
 							],
 							options: options_array,
-							value: props.attributes.number.toString(),
-							onChange: function( value ) { props.setAttributes( { number: value.toString() } ); }
+							value: value,
+							onChange: function( value ) {
+								if ( value > 0 ) {
+									props.setAttributes( { number: value.toString() } );
+								}
+							}
 						}
 					)
 				),
