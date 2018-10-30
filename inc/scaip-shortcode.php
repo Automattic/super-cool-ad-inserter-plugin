@@ -30,12 +30,12 @@ function scaip_shortcode_do_sidebar( $args ) {
 		printf(
 			'<aside class="scaip scaip-%1$s %2$s %3$s %4$s %5$s">',
 			esc_attr( $args['number'] ),
-			( isset( $args['align'] ) ) ? 'align' . $args['align'] : '',
-			( isset( $args['class'] ) ) ? $args['class'] : '',
-			( isset( $args['className'] ) ) ? $args['className'] : '',
-			( isset( $args['customClassName'] ) ) ? $args['customClassName'] : ''
+			( isset( $args['align'] ) ) ? esc_attr( 'align' . $args['align'] ) : '',
+			( isset( $args['class'] ) ) ? esc_attr( $args['class'] ) : '',
+			( isset( $args['className'] ) ) ? esc_attr( $args['className'] ) : '',
+			( isset( $args['customClassName'] ) ) ? esc_attr( $args['customClassName'] ) : ''
 		);
-		dynamic_sidebar( 'scaip-' . $args['number'] );
+		dynamic_sidebar( 'scaip-' . esc_attr( $args['number'] ) );
 		echo '</aside>';
 	}
 }
