@@ -21,7 +21,7 @@ Shortcode tests
 
 Gutenberg tests
 
-- [ ] the block, when inserted, inserts ad position 1
+- [ ] the block, when inserted, prompts people to choose an ad position.
 - [ ] the existence of the block in the post prevents the automatic inserter from running
 - [ ] the block's ad position selector, custom classes, and alignment options are respected.
 - [ ] on a site with Gutenberg not installed, the plugin functions
