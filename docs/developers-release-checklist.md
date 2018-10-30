@@ -8,18 +8,18 @@ Plugin settings:
 
 - [ ] Does the settings page work?
 
-## Post meta boxes
+Post meta boxes
 
 - [ ] The metabox checkbox disabling automatic ad insertion should work.
 
-## Shortcode tests
+Shortcode tests
 
 - [ ] The `[ad no]` shortcode should suppress automatic ad insertion.
 - [ ] A `[ad]` shortcode should not display.
 - [ ] An `[ad number=1]` or `[ad number=2]` shortcode should display the relevant sidebar.
 - [ ] An `[ad number=2 align=left]` shortcode should have the class `alignleft`.
 
-## Gutenberg tests
+Gutenberg tests
 
 - [ ] the block, when inserted, inserts ad position 1
 - [ ] the existence of the block in the post prevents the automatic inserter from running
