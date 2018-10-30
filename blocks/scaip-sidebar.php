@@ -13,6 +13,10 @@
  * @see https://wordpress.org/gutenberg/handbook/blocks/writing-your-first-block-type/#enqueuing-block-scripts
  */
 function scaip_sidebar_block_init() {
+	if ( ! function_exists( 'register_block_type' ) ) {
+		return false;
+	}
+
 	$dir = dirname( __FILE__ );
 
 	$block_js = 'scaip-sidebar/block.js';
@@ -23,6 +27,8 @@ function scaip_sidebar_block_init() {
 			'wp-blocks',
 			'wp-i18n',
 			'wp-element',
+			'wp-components',
+			'wp-editor',
 		),
 		filemtime( "$dir/$block_js" )
 	);

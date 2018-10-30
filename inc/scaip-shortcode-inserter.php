@@ -97,7 +97,11 @@ function scaip_maybe_insert_shortcode( $content = '' ) {
 
 	// Abort if this is not a normal post.
 	global $wp_query;
-	if ( 'post' !== $wp_query->queried_object->post_type ) {
+	if (
+		! isset( $wp_query->queried_object )
+		|| !isset( $wp_query->queried_object->post_type )
+		|| 'post' !== $wp_query->queried_object->post_type
+	) {
 		return $content;
 	}
 

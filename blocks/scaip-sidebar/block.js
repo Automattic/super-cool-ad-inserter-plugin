@@ -44,12 +44,12 @@
 			alignWide: true,
 			customClassName: true,
 			className: true,
-			multiple: true,
+			multiple: true
 		},
 		attributes: {
 			number: {
-				type: 'string',
-			},
+				type: 'string'
+			}
 		},
 
 		/**
@@ -65,12 +65,26 @@
 				return "Something is wrong with the Super Cool Ad Inserter Plugin.";
 			}
 
-			options_array=[];
-			for ( var i = 1; i <= window.scaip.repetitions; i++ ) {
+			var options_array = [] ;
+
+			options_array.push( {
+				label: __( 'Pick one:' ),
+				disabled: true,
+				value: 0,
+			} );
+
+			for ( var i = 1; i <= window.scaip.repetitions; i += 1 ) {
 				options_array.push( {
 					label: i.toString(),
+					key: i.toString(),
 					value: i.toString()
 				} );
+			}
+
+			if ( typeof props.attributes.number !== 'undefined' ) {
+				var value = props.attributes.number.toString();
+			} else {
+				var value = 0;
 			}
 
 			return [
@@ -78,7 +92,7 @@
 					'div',
 					{
 						className: props.className,
-						align: props.align,
+						align: props.align
 					},
 					el(
 						SelectControl,
@@ -88,13 +102,17 @@
 									dashicon,
 									{
 										icon: 'welcome-widgets-menus'
-									},
+									}
 								),
 								__( 'Inserted Ad Position:' )
 							],
 							options: options_array,
-							value: props.attributes.number,
-							onChange: function( value ) { props.setAttributes( { number: value } ); },
+							value: value,
+							onChange: function( value ) {
+								if ( value > 0 ) {
+									props.setAttributes( { number: value.toString() } );
+								}
+							}
 						}
 					)
 				),
@@ -107,7 +125,7 @@
 							],
 							options: options_array,
 							value: props.attributes.number,
-							onChange: function( value ) { props.setAttributes( { number: value } ); },
+							onChange: function( value ) { props.setAttributes( { number: value.toString() } ); },
 							help: [
 								__( 'Which Inserted Ad Position sidebar should be displayed in this area? ' ), // trailing space is important.
 								el(
@@ -116,12 +134,11 @@
 										href: 'https://github.com/INN/super-cool-ad-inserter-plugin/blob/master/docs/configuration.md'
 									},
 									'View the documentation.'
-								),
-							],
+								)
+							]
 						}
-					),
-				),
-				// @todo InspectorControls with a help thing pointing users to the widget settings.
+					)
+				)
 			];
 		},
 
@@ -135,15 +152,17 @@
 		 * in the post_content, we must return *something* in order for the attributes
 		 * to be saved in the post.
 		 *
-		 * Thus, we return a Comment node via `new Comment`.
-		 * @todo This doesn't work in IE, which is sad and deserves further work.
-		 * @see https://developer.mozilla.org/en-US/docs/Web/API/Comment
+		 * Can't use https://developer.mozilla.org/en-US/docs/Web/API/Comment/Comment because
+		 * that constructor isn't supported in IE.
+		 *
+		 * Therefore, use https://developer.mozilla.org/en-US/docs/Web/API/Document/createComment because
+		 * that particular function has been around since 2000: https://www.w3.org/TR/2000/WD-DOM-Level-1-20000929/level-one-core.html#ID-1334481328
 		 *
 		 * @return {Element}       Element to render.
 		 */
 		save: function( attributes ) {
 			// Rendering in PHP
-			return new Comment( attributes );
+			return document.createComment( attributes );
 		}
 	} );
 } )(
