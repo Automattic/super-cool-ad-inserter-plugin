@@ -5,7 +5,7 @@ Plugin URI: https://github.com/INN/super-cool-ad-inserter-plugin/tree/master/doc
 Description: A simple way to insert widgets after the nth paragraph
 Version: 0.1.1
 Author: INN Labs
-Author URI: http://labs.inn.org/
+Author URI: https://labs.inn.org/
 License: GPL Version 2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: scaip
