@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
+#
+# This file is a WordPress.org plugin release script.
+# For more about how it works, see the documentation at
+# https://github.com/INN/docs/blob/master/projects/wordpress-plugins/release.sh.md
+#
 RELEASE_DIR=release;
 SVN_PATH=$RELEASE_DIR/svn;
 SVN_REPO="https://plugins.svn.wordpress.org/super-cool-ad-inserter/";
@@ -17,6 +22,7 @@ release/\*
 tests/\*
 node_modules/\*
 docs/\*
+./\*\*/.\*
 );
 
 function ensure_release_dir() {
@@ -279,6 +285,9 @@ function help_text() {
   echo "";
   echo "--help:    Display this help screen and exit.";
   echo "";
+  echo "For more information about this script, see:
+  https://github.com/INN/docs/blob/master/projects/wordpress-plugins/release.sh.md";
+  echo "";
   exit 0;
 }
 
@@ -313,3 +322,5 @@ then
   write_trunk "$SVN_PATH";
   write_tag "$SVN_PATH";
 fi
+
+echo "Release process finished."
