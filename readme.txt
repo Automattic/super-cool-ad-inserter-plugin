@@ -4,7 +4,7 @@ Donate link: https://inn.org/donate
 Tags: ads, advertising,  widget, shortcode, google, post, page
 Requires at least: 4.0.0
 Tested up to: 5.4
-Stable tag: 0.2
+Stable tag: 0.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -24,6 +24,10 @@ For more advanced documentation for developers and advanced users see [the offic
 For support, contact [mailto:support@inn.org](support@inn.org).
 
 == Changelog ==
+
+= 0.2.1 =
+
+* Updates the stable "Tested up to" number.
 
 = 0.2 =
 

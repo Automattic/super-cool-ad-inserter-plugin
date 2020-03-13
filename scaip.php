@@ -3,7 +3,7 @@
 Plugin Name: Super Cool Ad Inserter Plugin
 Plugin URI: https://github.com/INN/super-cool-ad-inserter-plugin/tree/master/docs
 Description: A simple way to insert widgets after the nth paragraph
-Version: 0.2
+Version: 0.2.1
 Author: INN Labs
 Author URI: https://labs.inn.org/
 License: GPL Version 2 or later
