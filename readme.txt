@@ -13,7 +13,13 @@ This plugin enables the insertion of widget areas in your post's content via pro
 
 == Description ==
 
-This WordPress plugin gives site administrators a way to insert widgets such as ads, newsletter signups, or calls to action into posts at set intervals. This setting can be overridden on a per-post basis.
+This WordPress plugin gives site administrators a way to insert widgets such as ads, newsletter signups, or calls to action into posts at set intervals.
+
+The plugin registers a configurable number of widget areas.
+
+The plugin can programmatically insert these widget areas into posts when the page is rendered. This setting can be overridden on a per-post basis via a post meta box or a filter.
+
+If the programmatic insertion doesn't work for a particular post, users can choose to place specific widget areas at specific spots in the post using shortcodes or blocks.
 
 == Installation ==
 
