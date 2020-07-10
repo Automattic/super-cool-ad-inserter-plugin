@@ -8,7 +8,7 @@ Stable tag: 0.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Insert widgets into posts, and override their placement with shortcodes
+This plugin enables the insertion of widget areas in your post's content via programmatic insertion at display time, via a shortcode, or via blocks. Use these widget areas for ads, newsletter signups, calls to action, or anything else!
 
 == Description ==
 
