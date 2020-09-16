@@ -4,15 +4,22 @@ Donate link: https://inn.org/donate
 Tags: ads, advertising,  widget, shortcode, google, post, page
 Requires at least: 4.0.0
 Tested up to: 5.4
+Requires PHP: 5.3
 Stable tag: 0.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Insert widgets into posts, and override their placement with shortcodes
+This plugin enables the insertion of widget areas in your post's content via programmatic insertion at display time, via a shortcode, or via blocks. Use these widget areas for ads, newsletter signups, calls to action, or anything else!
 
 == Description ==
 
-This WordPress plugin gives site administrators a way to insert widgets such as ads, newsletter signups, or calls to action into posts at set intervals. This setting can be overridden on a per-post basis.
+This WordPress plugin gives site administrators a way to insert widgets such as ads, newsletter signups, or calls to action into posts at set intervals.
+
+The plugin registers a configurable number of widget areas.
+
+The plugin can programmatically insert these widget areas into posts when the page is rendered. This setting can be overridden on a per-post basis via a post meta box or a filter.
+
+If the programmatic insertion doesn't work for a particular post, users can choose to place specific widget areas at specific spots in the post using shortcodes or blocks.
 
 == Installation ==
 

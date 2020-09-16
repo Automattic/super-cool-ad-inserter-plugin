@@ -27,3 +27,8 @@ Gutenberg tests
 - [ ] on a site with Gutenberg not installed, the plugin functions
 - [ ] on a 4.9 site with Gutenberg installed, the plugin functions
 - [ ] on a 5.0 site, the plugin functions
+
+Readme tests
+
+- [ ] Update WordPress "Tested up to:" line
+- [ ] Update "Requires PHP:" line, using tools mentioned in https://github.com/INN/super-cool-ad-inserter-plugin/issues/52
