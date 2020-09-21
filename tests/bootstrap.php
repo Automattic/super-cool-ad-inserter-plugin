@@ -1,31 +1,31 @@
 <?php
+/**
+ * PHPUnit bootstrap file
+ *
+ * @package SCAIP
+ */
 
-$wp_tests_dir = getenv( 'WP_TESTS_DIR' );
-require_once $wp_tests_dir . '/includes/functions.php';
+$_tests_dir = getenv( 'WP_TESTS_DIR' );
 
-$basename = basename( dirname( __DIR__ ) );
-
-$GLOBALS['wp_tests_options'] = array(
-	'stylesheet' => $basename,
-	'template' => $basename,
-);
-
-tests_add_filter( 'set_current_user', function( $arg ) {
-	$user = wp_get_current_user();
-	$user->set_role( 'administrator' );
-	return $arg;
-}, 1, 10);
-
-tests_add_filter( 'filesystem_method', function( $arg ) {
-	return 'direct';
-}, 1, 10);
-
-function _manually_load_environment() {
-	$plugins_to_active = array( ( basename( dirname( __DIR__ ) ) ) . '/scaip.php' );
-
-	update_option( 'active_plugins', $plugins_to_active );
-
+if ( ! $_tests_dir ) {
+	$_tests_dir = rtrim( sys_get_temp_dir(), '/\\' ) . '/wordpress-tests-lib';
 }
-tests_add_filter( 'muplugins_loaded', '_manually_load_environment' );
 
-require $wp_tests_dir . '/includes/bootstrap.php';
+if ( ! file_exists( $_tests_dir . '/includes/functions.php' ) ) {
+	echo "Could not find $_tests_dir/includes/functions.php, have you run bin/install-wp-tests.sh ?" . PHP_EOL; // phpcs:ignore
+	exit( 1 );
+}
+
+// Give access to tests_add_filter() function.
+require_once $_tests_dir . '/includes/functions.php';
+
+/**
+ * Manually load the plugin being tested.
+ */
+function _manually_load_plugin() {
+	require dirname( dirname( __FILE__ ) ) . '/scaip.php';
+}
+tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
+
+// Start up the WP testing environment.
+require $_tests_dir . '/includes/bootstrap.php';
