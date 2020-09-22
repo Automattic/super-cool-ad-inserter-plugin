@@ -6,9 +6,11 @@ After installing the Super Cool Ad Inserter Plugin, a link to the Ad Inserter co
 
 The settings on this page control the placement and number of automatic ad zone insertions.
 
-"**Number of paragraphs before each insertion, and between insertions**": The automatic ad inserter will wait this number of paragraphs after the start of the article, insert the first ad zone, count this many more paragraphs, insert the second ad zone, and so on.
+"**Number of paragraphs before first insertion**": The automatic ad inserter will wait this number of paragraphs before inserting the first ad zone.
 
-"**Number of times the ad should be inserted in a post**": The absolute maximum number of ad zones that can be inserted in any post. This  will set the number of Widget Areas available for ads in a post. So if you set it to 6, you'll have 6 Widget areas available for different ads:
+"**Number of paragraphs between insertions**": After the first ad zone has been inserted, the automatic ad inserter will wait this number of paragraphs between inserting each subsequent ad zone.
+
+"**Number of times the ad should be inserted in a post**": The absolute maximum number of ad zones that can be inserted in any post. This will set the number of Widget Areas available for ads in a post. So if you set it to 6, you'll have 6 Widget areas available for different ads:
 
 ![Widget areas for the scaip plugin](./img/scaip-widgets-panel2.png)
 
