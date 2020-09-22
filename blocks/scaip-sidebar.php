@@ -35,6 +35,7 @@ function scaip_sidebar_block_init() {
 
 	// Provide SCAIP's settings to the editor JS
 	$scaip_settings = array(
+		'start' => get_option( 'scaip_settings_start', 3 ),
 		'period' => get_option( 'scaip_settings_period', 3 ),
 		'repetitions' => get_option( 'scaip_settings_repetitions', 2 ),
 		'minimum_paragraphs' => get_option( 'scaip_settings_min_paragraphs', 6 ),

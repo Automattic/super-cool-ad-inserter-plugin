@@ -23,10 +23,12 @@ add_action( 'admin_menu', 'scaip_add_admin_menu' );
 function scaip_register_settings() {
 	add_settings_section( 'scaip-settings', 'Control how often the ads appear', 'scaip_settings_section_header', 'scaip' );
 
-	add_settings_field( 'scaip_settings_period', 'Number of paragraphs before each insertion, and between insertions', 'scaip_settings_period', 'scaip', 'scaip-settings' );
+	add_settings_field( 'scaip_settings_start', 'Number of paragraphs before first insertion', 'scaip_settings_start', 'scaip', 'scaip-settings' );
+	add_settings_field( 'scaip_settings_period', 'Number of paragraphs between insertions', 'scaip_settings_period', 'scaip', 'scaip-settings' );
 	add_settings_field( 'scaip_settings_repetitions', 'Number of times an ad widget area should be inserted in a post', 'scaip_settings_repetitions', 'scaip', 'scaip-settings' );
 	add_settings_field( 'scaip_settings_min_paragraphs', 'Minimum number of paragraphs needed in a post to insert ads', 'scaip_settings_min_paragraphs', 'scaip', 'scaip-settings' );
 
+	register_setting( 'scaip-settings', 'scaip_settings_start' );
 	register_setting( 'scaip-settings', 'scaip_settings_period' );
 	register_setting( 'scaip-settings', 'scaip_settings_repetitions' );
 	register_setting( 'scaip-settings', 'scaip_settings_min_paragraphs' );
@@ -47,8 +49,19 @@ function scaip_settings_section_header( $args ) {
 }
 
 /**
+ * The number of paragraphs before which SCAIP should insert the first shortcode,
+ * counted in paragraphs from the beginning of the post.
+ *
+ * @param array $args the callback args.
+ */
+function scaip_settings_start( $args ) {
+	$start = get_option( 'scaip_settings_start', 3 );
+	echo '<input name="scaip_settings_start" id="scaip_settings_start" type="number" value="' . esc_attr( $start ) . '" />';
+}
+
+/**
  * The number of paragraphs after which SCAIP should insert a shortcode,
- * counted in paragraphs since either the beginning or the last time SCAIP inserted a shortcode.
+ * counted in paragraphs since the last time SCAIP inserted a shortcode.
  *
  * @param array $args the callback args.
  */
