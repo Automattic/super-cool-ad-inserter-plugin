@@ -16,10 +16,10 @@
  * @return String The post content, plus shortcodes.
  */
 function scaip_insert_shortcode( $content = '' ) {
-	$scaip_start = get_option( 'scaip_settings_start', 3 );
-	$scaip_period = get_option( 'scaip_settings_period', 3 );
-	$scaip_repetitions = get_option( 'scaip_settings_repetitions', 2 );
-	$scaip_minimum_paragraphs = get_option( 'scaip_settings_min_paragraphs', 6 );
+	$scaip_start = (int) get_option( 'scaip_settings_start', 3 );
+	$scaip_period = (int) get_option( 'scaip_settings_period', 3 );
+	$scaip_repetitions = (int) get_option( 'scaip_settings_repetitions', 2 );
+	$scaip_minimum_paragraphs = (int) get_option( 'scaip_settings_min_paragraphs', 6 );
 
 	$paragraph_positions = array();
 	$last_position = -1;
@@ -39,9 +39,12 @@ function scaip_insert_shortcode( $content = '' ) {
 	// and greater than the number of paragraphs before first insertion,
 	// it is assumed that $scaip_minimum_paragraphs > $scaip_start + $scaip_period * $scaip_repetitions
 	$number_of_paragraphs  = count( $paragraph_positions );
-	$has_enough_paragraphs = $number_of_paragraphs >= $scaip_minimum_paragraphs && $number_of_paragraphs > $scaip_start;
+	$has_enough_paragraphs = $number_of_paragraphs > $scaip_minimum_paragraphs && $number_of_paragraphs > $scaip_start;
 
 	if ( $has_enough_paragraphs ) {
+
+		// Start outputting shortcodes only after hitting $scaip_start.
+		$paragraph_positions = array_slice( $paragraph_positions, $scaip_start - 1 );
 
 		// How many shortcodes have been added?
 		$n = 1;
@@ -51,12 +54,9 @@ function scaip_insert_shortcode( $content = '' ) {
 
 		$i = 0;
 		while ( $i < count( $paragraph_positions ) && $n <= $scaip_repetitions ) {
-			// Start outputting shortcodes only after hitting $scaip_start.
-			$inserted_first_ad = $i + 1 >= $scaip_start;
-
 			// Modulo math to only output shortcode after $scaip_period closing paragraph tags.
 			// +1 because of zero-based indexing.
-			$insert_next_ad = $inserted_first_ad && 0 === ( $i + 1 + $scaip_start ) % $scaip_period && isset( $paragraph_positions[ $i ] );
+			$insert_next_ad = 0 === $i % $scaip_period && isset( $paragraph_positions[ $i ] );
 
 			if ( $insert_next_ad ) {
 
