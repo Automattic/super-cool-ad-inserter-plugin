@@ -116,27 +116,34 @@
 						}
 					)
 				),
-				el( InspectorControls, {},
+				el(
+					InspectorControls, {},
 					el(
-						SelectControl,
+						'div',
 						{
-							label: [
-								__( 'Inserted Ad Position:' )
-							],
-							options: options_array,
-							value: props.attributes.number,
-							onChange: function( value ) { props.setAttributes( { number: value.toString() } ); },
-							help: [
-								__( 'Which Inserted Ad Position sidebar should be displayed in this area? ' ), // trailing space is important.
-								el(
-									'a',
-									{
-										href: 'https://github.com/INN/super-cool-ad-inserter-plugin/blob/master/docs/configuration.md'
-									},
-									'View the documentation.'
-								)
-							]
-						}
+							className: 'components-panel__super-cool-ad-inserter-plugin-scaip-sidebar'
+						},
+						el(
+							SelectControl,
+							{
+								label: [
+									__( 'Inserted Ad Position:' )
+								],
+								options: options_array,
+								value: props.attributes.number,
+								onChange: function( value ) { props.setAttributes( { number: value.toString() } ); },
+								help: [
+									__( 'Which Inserted Ad Position sidebar should be displayed in this area? ' ), // trailing space is important.
+									el(
+										'a',
+										{
+											href: 'https://github.com/INN/super-cool-ad-inserter-plugin/blob/master/docs/configuration.md'
+										},
+										'View the documentation.'
+									)
+								]
+							}
+						)
 					)
 				)
 			];

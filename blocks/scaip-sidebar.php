@@ -50,7 +50,7 @@ function scaip_sidebar_block_init() {
 		'scaip-sidebar-block-editor',
 		plugins_url( $editor_css, __FILE__ ),
 		array(
-			'wp-blocks',
+			'wp-edit-blocks',
 		),
 		filemtime( "$dir/$editor_css" )
 	);
