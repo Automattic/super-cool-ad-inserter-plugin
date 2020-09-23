@@ -16,9 +16,10 @@
  * @return String The post content, plus shortcodes.
  */
 function scaip_insert_shortcode( $content = '' ) {
-	$scaip_period = get_option( 'scaip_settings_period', 3 );
-	$scaip_repetitions = get_option( 'scaip_settings_repetitions', 2 );
-	$scaip_minimum_paragraphs = get_option( 'scaip_settings_min_paragraphs', 6 );
+	$scaip_start = (int) get_option( 'scaip_settings_start', 3 );
+	$scaip_period = (int) get_option( 'scaip_settings_period', 3 );
+	$scaip_repetitions = (int) get_option( 'scaip_settings_repetitions', 2 );
+	$scaip_minimum_paragraphs = (int) get_option( 'scaip_settings_min_paragraphs', 6 );
 
 	$paragraph_positions = array();
 	$last_position = -1;
@@ -34,9 +35,16 @@ function scaip_insert_shortcode( $content = '' ) {
 		$paragraph_positions[] = $last_position;
 	}
 
-	// If the total number of paragraphs is bigger than the minimum number of paragraphs
-	// It is assumed that $scaip_minimum_paragraphs > $scaip_period * $scaip_repetitions
-	if ( count( $paragraph_positions ) >= $scaip_minimum_paragraphs ) {
+	// If the total number of paragraphs is at least the minimum number of paragraphs
+	// and greater than the number of paragraphs before first insertion,
+	// it is assumed that $scaip_minimum_paragraphs > $scaip_start + $scaip_period * $scaip_repetitions
+	$number_of_paragraphs  = count( $paragraph_positions );
+	$has_enough_paragraphs = $number_of_paragraphs > $scaip_minimum_paragraphs && $number_of_paragraphs > $scaip_start;
+
+	if ( $has_enough_paragraphs ) {
+
+		// Start outputting shortcodes only after hitting $scaip_start.
+		$paragraph_positions = array_slice( $paragraph_positions, $scaip_start - 1 );
 
 		// How many shortcodes have been added?
 		$n = 1;
@@ -47,8 +55,9 @@ function scaip_insert_shortcode( $content = '' ) {
 		$i = 0;
 		while ( $i < count( $paragraph_positions ) && $n <= $scaip_repetitions ) {
 			// Modulo math to only output shortcode after $scaip_period closing paragraph tags.
-			// +1 because of zero-based indexing.
-			if ( 0 === ( $i + 1 ) % $scaip_period && isset( $paragraph_positions[ $i ] ) ) {
+			$insert_next_ad = 0 === $i % $scaip_period && isset( $paragraph_positions[ $i ] );
+
+			if ( $insert_next_ad ) {
 
 				// make a shortcode using the number of the shorcode that will be added.
 				// Using "" here so we can interpolate the variable.

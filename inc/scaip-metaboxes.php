@@ -13,6 +13,7 @@
 function scaip_how_to_shortcode_callback() {
 	global $post;
 
+	$scaip_start = get_option( 'scaip_settings_start', 3 );
 	$scaip_period = get_option( 'scaip_settings_period', 3 );
 	$scaip_repetitions = get_option( 'scaip_settings_repetitions', 2 );
 	$scaip_minimum_paragraphs = get_option( 'scaip_settings_min_paragraphs', 6 );
@@ -21,8 +22,9 @@ function scaip_how_to_shortcode_callback() {
 	<p>
 		<?php
 			printf(
-				esc_html__( 'By default, %1$s ads will be inserted in a post, beginning %2$s paragraphs after the beginning and every %2$s paragraphs after that. They will not appear if this post is shorter than %3$s paragraphs long.', 'scaip' ),
+				esc_html__( 'By default, %1$s ads will be inserted in a post, beginning %2$s paragraphs after the beginning and every %3$s paragraphs after that. They will not appear if this post is shorter than %4$s paragraphs long.', 'scaip' ),
 				esc_html( $scaip_repetitions ),
+				esc_html( $scaip_start ),
 				esc_html( $scaip_period ),
 				esc_html( $scaip_minimum_paragraphs )
 			);
