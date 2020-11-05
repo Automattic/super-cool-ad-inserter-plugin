@@ -15,15 +15,20 @@
 	 */
 	var __ = wp.i18n.__;
 	/**
+	 * Placeholder element
+	 * @link https://github.com/WordPress/gutenberg/tree/master/packages/components/src/placeholder
+	 */
+	var Placeholder = wp.components.Placeholder;
+	/**
 	 * Dropdown <select> element
 	 * @link https://github.com/WordPress/gutenberg/tree/master/packages/components/src/select-control
 	 */
 	var SelectControl = wp.components.SelectControl;
 	/**
-	 * Sidebar controls for the block
-	 * @link https://github.com/WordPress/gutenberg/tree/master/packages/editor/src/components/inspector-controls
+	 * External Link element
+	 * @link https://github.com/WordPress/gutenberg/tree/master/packages/components/src/external-link
 	 */
-	var InspectorControls = wp.editor.InspectorControls;
+	var ExternalLink = wp.components.ExternalLink;
 	/**
 	 * Literally just for a fancy dashicon
 	 * @see https://github.com/WordPress/gutenberg/blob/master/packages/components/src/dashicon/README.md
@@ -95,48 +100,41 @@
 						align: props.align
 					},
 					el(
-						SelectControl,
+						Placeholder,
 						{
-							label: [
-								el(
-									dashicon,
-									{
-										icon: 'welcome-widgets-menus'
-									}
-								),
-								__( 'Inserted Ad Position:' )
-							],
-							options: options_array,
-							value: value,
-							onChange: function( value ) {
-								if ( value > 0 ) {
-									props.setAttributes( { number: value.toString() } );
+							icon: el(
+								dashicon,
+								{
+									icon: 'welcome-widgets-menus'
 								}
-							}
-						}
-					)
-				),
-				el( InspectorControls, {},
-					el(
-						SelectControl,
-						{
-							label: [
-								__( 'Inserted Ad Position:' )
-							],
-							options: options_array,
-							value: props.attributes.number,
-							onChange: function( value ) { props.setAttributes( { number: value.toString() } ); },
-							help: [
+							),
+							label: __( 'Inserted Ad Position Sidebar' ),
+							instructions: [
 								__( 'Which Inserted Ad Position sidebar should be displayed in this area? ' ), // trailing space is important.
 								el(
-									'a',
+									ExternalLink,
 									{
 										href: 'https://github.com/INN/super-cool-ad-inserter-plugin/blob/master/docs/configuration.md'
 									},
 									'View the documentation.'
 								)
 							]
-						}
+						},
+						el(
+							SelectControl,
+							{
+								label: __( 'Inserted Ad Position:' ),
+								labelPosition: 'top',
+								hideLabelFromVision: true,
+								options: options_array,
+								value: value,
+								onChange: function( value ) {
+									if ( value > 0 ) {
+										props.setAttributes( { number: value.toString() } );
+									}
+								}
+							}
+						)
 					)
 				)
 			];

@@ -46,16 +46,6 @@ function scaip_sidebar_block_init() {
 		$scaip_settings
 	);
 
-	$editor_css = 'scaip-sidebar/editor.css';
-	wp_register_style(
-		'scaip-sidebar-block-editor',
-		plugins_url( $editor_css, __FILE__ ),
-		array(
-			'wp-blocks',
-		),
-		filemtime( "$dir/$editor_css" )
-	);
-
 	register_block_type( 'super-cool-ad-inserter-plugin/scaip-sidebar', array(
 		'editor_script' => 'scaip-sidebar-block-editor',
 		'editor_style'  => 'scaip-sidebar-block-editor',
