@@ -30,3 +30,5 @@ _build
 *.exe
 *.o
 *.so
+
+vendor

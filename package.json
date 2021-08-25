@@ -1,10 +1,10 @@
 {
-  "name": "super-cool-ad-inserter",
+  "name": "super-cool-ad-inserter-plugin",
   "version": "0.2.1",
   "author": "Automattic",
   "scripts": {
     "semantic-release": "semantic-release",
-    "release:archive": "rm -rf release && mkdir -p release && rsync -r . ./release/super-cool-ad-inserter --exclude-from='./.distignore' && cd release && zip -r super-cool-ad-inserter.zip super-cool-ad-inserter",
+    "release:archive": "rm -rf release && mkdir -p release && rsync -r . ./release/super-cool-ad-inserter-plugin --exclude-from='./.distignore' && cd release && zip -r super-cool-ad-inserter-plugin.zip super-cool-ad-inserter-plugin",
     "release": "npm run semantic-release"
   },
   "release": {
@@ -21,14 +21,14 @@
       [
         "semantic-release-version-bump",
         {
-          "files": "super-cool-ad-inserter.php",
+          "files": "super-cool-ad-inserter-plugin.php",
           "callback": "npm run release:archive"
         }
       ],
       {
         "path": "@semantic-release/git",
         "assets": [
-          "super-cool-ad-inserter.php",
+          "super-cool-ad-inserter-plugin.php",
           "package.json",
           "package-lock.json",
           "CHANGELOG.md"
@@ -51,8 +51,8 @@
         {
           "assets": [
             {
-              "path": "./release/super-cool-ad-inserter.zip",
-              "label": "super-cool-ad-inserter.zip"
+              "path": "./release/super-cool-ad-inserter-plugin.zip",
+              "label": "super-cool-ad-inserter-plugin.zip"
             }
           ]
         }
@@ -66,11 +66,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Automattic/super-cool-ad-inserter.git"
+    "url": "git+https://github.com/Automattic/super-cool-ad-inserter-plugin.git"
   },
   "license": "GPL-2.0-or-later",
   "bugs": {
-    "url": "https://github.com/Automattic/super-cool-ad-inserter/issues"
+    "url": "https://github.com/Automattic/super-cool-ad-inserter-plugin/issues"
   },
   "devDependencies": {
     "@commitlint/cli": "^12.0.1",

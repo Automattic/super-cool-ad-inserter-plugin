@@ -38,7 +38,7 @@ jobs:
 
   release_github:
     docker:
-      - image: circleci/php:7.4
+      - image: circleci/php:7.4-node-browsers
     steps:
       - checkout_with_workspace
       - run:
@@ -58,7 +58,7 @@ jobs:
 
   release_wporg:
     docker:
-      - image: circleci/php:7.4
+      - image: circleci/php:7.4-node-browsers
     steps:
       - checkout_with_workspace
       - run:
@@ -69,7 +69,7 @@ jobs:
 
   post_release:
     docker:
-      - image: circleci/php:7.4
+      - image: circleci/php:7.4-node-browsers
     steps:
       - checkout_with_workspace
       - run:
