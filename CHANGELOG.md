@@ -1,3 +1,10 @@
+## [0.3.1](https://github.com/Automattic/super-cool-ad-inserter-plugin/compare/v0.3.0...v0.3.1) (2021-08-25)
+
+
+### Bug Fixes
+
+* trigger release and wporg rebuild ([de21447](https://github.com/Automattic/super-cool-ad-inserter-plugin/commit/de21447d58434899ee5c159e9e50779a7dee93b6))
+
 # [0.3.0](https://github.com/Automattic/super-cool-ad-inserter-plugin/compare/v0.2.1...v0.3.0) (2021-08-25)
 
 
