@@ -114,7 +114,7 @@
 								el(
 									ExternalLink,
 									{
-										href: 'https://github.com/INN/super-cool-ad-inserter-plugin/blob/master/docs/configuration.md'
+										href: 'https://github.com/Automattic/super-cool-ad-inserter-plugin/blob/master/docs/configuration.md'
 									},
 									'View the documentation.'
 								)
