@@ -1,6 +1,6 @@
 {
   "name": "super-cool-ad-inserter-plugin",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "author": "Automattic",
   "scripts": {
     "semantic-release": "semantic-release",
