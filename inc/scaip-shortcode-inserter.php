@@ -4,92 +4,181 @@
  */
 
 /**
- * Adds the scaip shortcode to post after predetermined number of paragraphs
+ * Adds the scaip shortcode to post after predetermined number of blocks.
  *
- * Borrows heavily from the GPL3 plugin Ad-Inserter's function ai_generateAfterParagraph
+ * Borrows heavily from Newspack Campaigns.
  *
- * Some questions in this code, because Ad-Inserter doesn't have inline docs at all.
- *
- * @link https://plugins.trac.wordpress.org/browser/ad-inserter/trunk/ad-inserter.php#L1474
  * @since 0.1
  * @param String $content The post content.
  * @return String The post content, plus shortcodes.
  */
 function scaip_insert_shortcode( $content = '' ) {
-	$scaip_start = (int) get_option( 'scaip_settings_start', 3 );
-	$scaip_period = (int) get_option( 'scaip_settings_period', 3 );
-	$scaip_repetitions = (int) get_option( 'scaip_settings_repetitions', 2 );
-	$scaip_minimum_paragraphs = (int) get_option( 'scaip_settings_min_paragraphs', 6 );
+	$scaip_start          = (int) get_option( 'scaip_settings_start', 3 );
+	$scaip_period         = (int) get_option( 'scaip_settings_period', 3 );
+	$scaip_repetitions    = (int) get_option( 'scaip_settings_repetitions', 2 );
+	$scaip_minimum_blocks = (int) get_option( 'scaip_settings_min_paragraphs', 6 );
 
-	$paragraph_positions = array();
-	$last_position = -1;
-	$paragraph_end = '</p>';
+	$inserted_shortcode_index = 1;
+	$block_index              = 1;
 
-	// if we don't have any <p> tags, we probably need to apply wpautop().
-	if ( ! stripos( $content, $paragraph_end ) ) {
-		$content = wpautop( $content );
+	// For certain types of blocks, their innerHTML is not a good representation of the length of their content.
+	// For example, slideshows may have an arbitrary amount of slide content, but only show one slide at a time.
+	// For these blocks, let's ignore their length for purposes of inserting prompts.
+	$blacklisted_blocks = [ 'jetpack/slideshow', 'newspack-blocks/carousel', 'newspack-popups/single-prompt' ];
+	$parsed_blocks      = parse_blocks( $content );
+
+	$has_a_classic_block = false;
+
+	$total_length = 0;
+
+	// Compute total length of the block-based content.
+	foreach ( $parsed_blocks as $block ) {
+		if ( ! in_array( $block['blockName'], $blacklisted_blocks ) ) {
+			$is_classic_block = null === $block['blockName'] || 'core/freeform' === $block['blockName']; // Classic block doesn't have a block name.
+			$block_content    = $is_classic_block ? force_balance_tags( wpautop( $block['innerHTML'] ) ) : $block['innerHTML'];
+			$block_length     = strlen( wp_strip_all_tags( $block_content ) );
+			if ( $is_classic_block && 0 < $block_length ) {
+				$has_a_classic_block = true;
+			}
+			$total_length += $block_length;
+		} else {
+			// Give blacklisted blocks a length so that prompts at 0% can still be inserted before them.
+			$total_length++;
+		}
 	}
-	while ( stripos( $content, $paragraph_end, $last_position + 1 ) !== false ) {
-		// Get the position of the end of the next $paragraph_end.
-		$last_position = stripos( $content, $paragraph_end, $last_position + 1 ) + 3; // what does the 3 mean?
-		$paragraph_positions[] = $last_position;
+
+	if ( ! $has_a_classic_block && $scaip_minimum_blocks > count( $parsed_blocks ) ) {
+		return $content;
 	}
 
-	// If the total number of paragraphs is at least the minimum number of paragraphs
-	// and greater than the number of paragraphs before first insertion,
-	// it is assumed that $scaip_minimum_paragraphs > $scaip_start + $scaip_period * $scaip_repetitions
-	$number_of_paragraphs  = count( $paragraph_positions );
-	$has_enough_paragraphs = $number_of_paragraphs > $scaip_minimum_paragraphs && $number_of_paragraphs > $scaip_start;
+	$pos    = 0;
+	$output = '';
 
-	if ( $has_enough_paragraphs ) {
+	foreach ( $parsed_blocks as $block ) {
+		$is_empty = empty( trim( $block['innerHTML'] ) );
+		if ( $is_empty ) {
+			continue;
+		}
+		$is_classic_block = null === $block['blockName']; // Classic block doesn't have a block name.
 
-		// Start outputting shortcodes only after hitting $scaip_start.
-		$paragraph_positions = array_slice( $paragraph_positions, $scaip_start - 1 );
+		// Classic block content: insert prompts between block-level HTML elements.
+		if ( $is_classic_block ) {
+			$classic_content = force_balance_tags( wpautop( $block['innerHTML'] ) ); // Ensure we have paragraph tags and valid HTML.
+			if ( 0 === strlen( wp_strip_all_tags( $classic_content ) ) ) {
+				continue;
+			}
+			$positions     = [];
+			$last_position = -1;
+			$block_endings = [ // Block-level elements eligble for prompt insertion.
+				'</p>',
+				'</ol>',
+				'</ul>',
+				'</h1>',
+				'</h2>',
+				'</h3>',
+				'</h4>',
+				'</h5>',
+				'</h6>',
+				'</div>',
+				'</figure>',
+				'</aside>',
+				'</dl>',
+				'</pre>',
+				'</section>',
+				'</table>',
+			];
 
-		// How many shortcodes have been added?
-		$n = 1;
-
-		// Safety check number: stores the position of the last insertion.
-		$previous_position = 0;
-
-		$i = 0;
-		while ( $i < count( $paragraph_positions ) && $n <= $scaip_repetitions ) {
-			// Modulo math to only output shortcode after $scaip_period closing paragraph tags.
-			$insert_next_ad = 0 === $i % $scaip_period && isset( $paragraph_positions[ $i ] );
-
-			if ( $insert_next_ad ) {
-
-				// make a shortcode using the number of the shorcode that will be added.
-				// Using "" here so we can interpolate the variable.
-				$shortcode = "[ad number=$n ]";
-
-				$position = $paragraph_positions[ $i ] + 1;
-
-				// Safety check:
-				// If the position we're adding the shortcode is at a lower point in the story than the position we're adding,
-				// Then something has gone wrong and we should insert no more shortcodes.
-				if ( $position > $previous_position ) {
-					$content = substr_replace( $content, $shortcode, $paragraph_positions[ $i ] + 1, 0 );
-
-					// Increase the saved last position.
-					$previous_position = $position;
-
-					// Increment number of shortcodes added to the post.
-					$n++;
-				}
-
-				// Increase the position of later shortcodes by the length of the current shortcode.
-				foreach ( $paragraph_positions as $j => $pp ) {
-					if ( $j > $i ) {
-						$paragraph_positions[ $j ] = $pp + strlen( $shortcode );
-					}
+			// Parse the classic content string by block endings.
+			foreach ( $block_endings as $block_ending ) {
+				$last_position = -1;
+				while ( stripos( $classic_content, $block_ending, $last_position + 1 ) ) {
+					// Get the position of the end of the next $block_ending.
+					$last_position = stripos( $classic_content, $block_ending, $last_position + 1 ) + strlen( $block_ending );
+					$positions[]   = $last_position;
 				}
 			}
 
-			$i++;
+			sort( $positions, SORT_NUMERIC );
+			$last_position = 0;
+
+			// Insert prompts between block-level elements.
+			foreach ( $positions as $position_index => $position ) {
+				if (
+					scaip_should_insert(
+						$scaip_start,
+						$position_index + 1,
+						$inserted_shortcode_index,
+						$scaip_repetitions,
+						$scaip_period
+					)
+				) {
+					$output .= scaip_generate_shortcode( $inserted_shortcode_index );
+					$inserted_shortcode_index++;
+				}
+
+				$output       .= substr( $classic_content, $last_position, $position - $last_position );
+				$last_position = $position;
+			}
+
+			$pos += strlen( $classic_content );
+			continue;
 		}
+
+		// Regular block content: insert prompts between blocks.
+		if ( ! in_array( $block['blockName'], $blacklisted_blocks ) ) {
+			$pos += strlen( wp_strip_all_tags( $block['innerHTML'] ) );
+		} else {
+			$pos++;
+		}
+
+		if (
+			scaip_should_insert(
+				$scaip_start,
+				$block_index,
+				$inserted_shortcode_index,
+				$scaip_repetitions,
+				$scaip_period
+			)
+		) {
+			$output .= scaip_generate_shortcode( $inserted_shortcode_index );
+			$inserted_shortcode_index++;
+		}
+
+		$block_content = render_block( $block );
+		$output       .= $block_content;
+		$block_index++;
 	}
-	return $content;
+
+	return $output;
+}
+
+/**
+ * Generate shortcode markup.
+ *
+ * @param string $index Shortcode index.
+ */
+function scaip_generate_shortcode( $index ) {
+	return '<!-- wp:shortcode -->[ad number="' . $index . '"]<!-- /wp:shortcode -->';
+}
+
+/**
+ * Should shortcode be inserted?
+ *
+ * @param number $start Min. index to insert at.
+ * @param number $block_index Current block index.
+ * @param number $insertion_index Current insertion index.
+ * @param number $repetitions Max. no. of insertions.
+ * @param number $period Period between insertions.
+ */
+function scaip_should_insert( $start, $block_index, $insertion_index, $repetitions, $period ) {
+	return ( $start < $block_index
+	&& $insertion_index <= $repetitions
+	&& (
+		// First insertion should not take period into account.
+		1 === $insertion_index
+		||
+		0 === ( $block_index + $start ) % $period
+	) );
 }
 
 /**
@@ -108,7 +197,7 @@ function scaip_maybe_insert_shortcode( $content = '' ) {
 	global $wp_query;
 	if (
 		! isset( $wp_query->queried_object )
-		|| !isset( $wp_query->queried_object->post_type )
+		|| ! isset( $wp_query->queried_object->post_type )
 		|| 'post' !== $wp_query->queried_object->post_type
 	) {
 		return $content;
@@ -154,14 +243,14 @@ function scaip_maybe_insert_shortcode( $content = '' ) {
 
 	return scaip_insert_shortcode( $content );
 }
-add_filter( 'the_content', 'scaip_maybe_insert_shortcode', 10 );
+add_filter( 'the_content', 'scaip_maybe_insert_shortcode', 1 );
 
 /**
  * Remove the scaip_maybe_insert_shortcode filter on the_content when there are blocks
  *
- *
  * This is necessary because the filter scaip_maybe_insert_shortcode runs after do_blocks has run, which means there are no blocks left for has_blocks( $content ) to detect.
  * This action should run before Gutenberg's do_blocks filter, which runs at priority 7.
+ *
  * @link https://github.com/WordPress/gutenberg/blob/a696e508ad5d3566b447fc48f355e91953a17c4a/lib/blocks.php#L266
  *
  * @since 0.2

@@ -22,7 +22,7 @@ function scaip_how_to_shortcode_callback() {
 	<p>
 		<?php
 			printf(
-				esc_html__( 'By default, %1$s ads will be inserted in a post, beginning %2$s paragraphs after the beginning and every %3$s paragraphs after that. They will not appear if this post is shorter than %4$s paragraphs long.', 'scaip' ),
+				esc_html__( 'By default, %1$s ads will be inserted in a post, beginning %2$s blocks after the beginning and every %3$s paragraphs after that. They will not appear if this post is shorter than %4$s paragraphs long.', 'scaip' ),
 				esc_html( $scaip_repetitions ),
 				esc_html( $scaip_start ),
 				esc_html( $scaip_period ),
