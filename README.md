@@ -6,6 +6,6 @@ For detailed examples, ➡️  [read the docs!](./docs) ⬅️
 
 For a detailed changelog, [read readme.txt](./readme.txt)!
 
-For the most-recent release, [see the list of releases](https://github.com/INN/super-cool-ad-inserter-plugin/releases).
+For the most-recent release, [see the list of releases](https://github.com/Automattic/super-cool-adinserter-plugin/releases).
 
 Install the plugin [from the WordPress.org plugin repository](https://wordpress.org/plugins/super-cool-ad-inserter/).

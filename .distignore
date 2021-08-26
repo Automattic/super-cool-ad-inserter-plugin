@@ -33,5 +33,4 @@ node_modules
 .circleci
 contributing.md
 docs
-release.sh
 release

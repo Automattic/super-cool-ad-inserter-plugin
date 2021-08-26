@@ -146,7 +146,7 @@ function scaip_maybe_insert_shortcode( $content = '' ) {
 	 * @param Mixed $queried_object `$wp_query->queried_object` in the current context.
 	 *
 	 * @since 0.2
-	 * @link https://github.com/INN/super-cool-ad-inserter-plugin/issues/25
+	 * @link https://github.com/Automattic/super-cool-adinserter-plugin/issues/25
 	 */
 	if ( true !== apply_filters( 'scaip_whether_insert', true, $content, $wp_query->queried_object ) ) {
 		return $content;

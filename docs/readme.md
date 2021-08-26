@@ -18,9 +18,3 @@
 	- Using empty ad positions to change apparent ad placement within posts
 - [Developer Docs: Creating Ad Placements](developers-shortcode-docs.md)
 	- Example code
-
-You can contribute to the development of this plugin by filing an issue or submitting a pull request on its GitHub repository, [INN/super-cool-ad-inserter](https://github.com/INN/super-cool-ad-inserter-plugin).
-
-If this plugin is causing problems, please [file an issue](https://github.com/INN/super-cool-ad-inserter-plugin/issues) or contact us at [mailto:support@inn.org](support@inn.org).
-
-This plugin is released under the [GNU GPL, versions 2 or later](http://www.gnu.org/licenses/gpl-2.0.html) by [the Institute for Nonprofit News](https://inn.org). Follow the developers on Twitter [@innnerds](https://twitter.com/INNnerds/).
