@@ -7,6 +7,7 @@
  * Adds the scaip shortcode to post after predetermined number of blocks.
  *
  * Borrows heavily from Newspack Campaigns.
+ * https://github.com/Automattic/newspack-popups/blob/91d48a4ae09afb468367db9857eb425e33b668d1/includes/class-newspack-popups-inserter.php#L133-L138
  *
  * @since 0.1
  * @param String $content The post content.
@@ -27,27 +28,53 @@ function scaip_insert_shortcode( $content = '' ) {
 	$blacklisted_blocks = [ 'jetpack/slideshow', 'newspack-blocks/carousel', 'newspack-popups/single-prompt' ];
 	$parsed_blocks      = parse_blocks( $content );
 
-	$has_a_classic_block = false;
-
 	$total_length = 0;
+
+	// Turn classic content into HTML blocks.
+	$parsed_blocks = array_reduce(
+		$parsed_blocks,
+		function( $blocks, $block ) {
+			$is_classic_block = null === $block['blockName'] || 'core/freeform' === $block['blockName']; // Classic content results in a block without a block name.
+			$is_empty         = empty( trim( $block['innerHTML'] ) );
+			if ( $is_classic_block && ! $is_empty ) {
+				$classic_content = force_balance_tags( wpautop( $block['innerHTML'] ) ); // Ensure we have paragraph tags and valid HTML.
+				$dom             = new DomDocument();
+				@$dom->loadHTML( $classic_content ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
+				$dom_body = $dom->getElementsByTagName( 'body' );
+				if ( 0 < $dom_body->length ) {
+					$dom_body_elements = $dom_body->item( 0 )->childNodes;
+					foreach ( $dom_body_elements as $index => $entry ) {
+						$block_html = $dom->saveHtml( $entry );
+						$blocks[]   = [
+							'blockName'    => 'core/html',
+							'attrs'        => [],
+							'innerBlocks'  => [],
+							'innerHTML'    => $block_html,
+							'innerContent' => [
+								$block_html,
+							],
+						];
+					}
+				}
+			} else {
+				$blocks[] = $block;
+			}
+			return $blocks;
+		},
+		[]
+	);
 
 	// Compute total length of the block-based content.
 	foreach ( $parsed_blocks as $block ) {
 		if ( ! in_array( $block['blockName'], $blacklisted_blocks ) ) {
-			$is_classic_block = null === $block['blockName'] || 'core/freeform' === $block['blockName']; // Classic block doesn't have a block name.
-			$block_content    = $is_classic_block ? force_balance_tags( wpautop( $block['innerHTML'] ) ) : $block['innerHTML'];
-			$block_length     = strlen( wp_strip_all_tags( $block_content ) );
-			if ( $is_classic_block && 0 < $block_length ) {
-				$has_a_classic_block = true;
-			}
-			$total_length += $block_length;
+			$total_length += strlen( wp_strip_all_tags( $block['innerHTML'] ) );
 		} else {
-			// Give blacklisted blocks a length so that prompts at 0% can still be inserted before them.
+			// Give blacklisted blocks a length of 1 so that prompts at 0% can still be inserted before them.
 			$total_length++;
 		}
 	}
 
-	if ( ! $has_a_classic_block && $scaip_minimum_blocks > count( $parsed_blocks ) ) {
+	if ( $scaip_minimum_blocks > count( $parsed_blocks ) ) {
 		return $content;
 	}
 
@@ -57,70 +84,6 @@ function scaip_insert_shortcode( $content = '' ) {
 	foreach ( $parsed_blocks as $block ) {
 		$is_empty = empty( trim( $block['innerHTML'] ) );
 		if ( $is_empty ) {
-			continue;
-		}
-		$is_classic_block = null === $block['blockName']; // Classic block doesn't have a block name.
-
-		// Classic block content: insert prompts between block-level HTML elements.
-		if ( $is_classic_block ) {
-			$classic_content = force_balance_tags( wpautop( $block['innerHTML'] ) ); // Ensure we have paragraph tags and valid HTML.
-			if ( 0 === strlen( wp_strip_all_tags( $classic_content ) ) ) {
-				continue;
-			}
-			$positions     = [];
-			$last_position = -1;
-			$block_endings = [ // Block-level elements eligble for prompt insertion.
-				'</p>',
-				'</ol>',
-				'</ul>',
-				'</h1>',
-				'</h2>',
-				'</h3>',
-				'</h4>',
-				'</h5>',
-				'</h6>',
-				'</div>',
-				'</figure>',
-				'</aside>',
-				'</dl>',
-				'</pre>',
-				'</section>',
-				'</table>',
-			];
-
-			// Parse the classic content string by block endings.
-			foreach ( $block_endings as $block_ending ) {
-				$last_position = -1;
-				while ( stripos( $classic_content, $block_ending, $last_position + 1 ) ) {
-					// Get the position of the end of the next $block_ending.
-					$last_position = stripos( $classic_content, $block_ending, $last_position + 1 ) + strlen( $block_ending );
-					$positions[]   = $last_position;
-				}
-			}
-
-			sort( $positions, SORT_NUMERIC );
-			$last_position = 0;
-
-			// Insert prompts between block-level elements.
-			foreach ( $positions as $position_index => $position ) {
-				if (
-					scaip_should_insert(
-						$scaip_start,
-						$position_index + 1,
-						$inserted_shortcode_index,
-						$scaip_repetitions,
-						$scaip_period
-					)
-				) {
-					$output .= scaip_generate_shortcode( $inserted_shortcode_index );
-					$inserted_shortcode_index++;
-				}
-
-				$output       .= substr( $classic_content, $last_position, $position - $last_position );
-				$last_position = $position;
-			}
-
-			$pos += strlen( $classic_content );
 			continue;
 		}
 
@@ -243,7 +206,7 @@ function scaip_maybe_insert_shortcode( $content = '' ) {
 
 	return scaip_insert_shortcode( $content );
 }
-add_filter( 'the_content', 'scaip_maybe_insert_shortcode', 1 );
+add_filter( 'the_content', 'scaip_maybe_insert_shortcode', 10 );
 
 /**
  * Remove the scaip_maybe_insert_shortcode filter on the_content when there are blocks
