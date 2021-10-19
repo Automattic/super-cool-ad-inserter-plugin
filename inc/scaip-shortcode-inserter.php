@@ -39,7 +39,8 @@ function scaip_insert_shortcode( $content = '' ) {
 			if ( $is_classic_block && ! $is_empty ) {
 				$classic_content = force_balance_tags( wpautop( $block['innerHTML'] ) ); // Ensure we have paragraph tags and valid HTML.
 				$dom             = new DomDocument();
-				@$dom->loadHTML( $classic_content ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
+				libxml_use_internal_errors( true );
+				$dom->loadHTML( mb_convert_encoding( $classic_content, 'HTML-ENTITIES', get_bloginfo( 'charset' ) ) );
 				$dom_body = $dom->getElementsByTagName( 'body' );
 				if ( 0 < $dom_body->length ) {
 					$dom_body_elements = $dom_body->item( 0 )->childNodes;
@@ -140,7 +141,7 @@ function scaip_should_insert( $start, $block_index, $insertion_index, $repetitio
 		// First insertion should not take period into account.
 		1 === $insertion_index
 		||
-		0 === ( $block_index + $start ) % $period
+		0 === ( $block_index - $start - 1 ) % $period
 	) );
 }
 
