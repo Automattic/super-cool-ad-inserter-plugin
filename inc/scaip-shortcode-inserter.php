@@ -48,6 +48,11 @@ function scaip_insert_shortcode( $content = '' ) {
 				if ( 0 < $dom_body->length ) {
 					$dom_body_elements = $dom_body->item( 0 )->childNodes;
 					foreach ( $dom_body_elements as $index => $entry ) {
+						// Trim whitespace, including non-breaking space.
+						$text_length = strlen( trim( $entry->textContent, "\xC2\xA0\n" ) );
+						if ( 0 === $text_length ) {
+							continue;
+						}
 						$block_html = $dom->saveHtml( $entry );
 						$blocks[]   = [
 							'blockName'    => 'core/html',
