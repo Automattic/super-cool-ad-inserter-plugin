@@ -25,8 +25,11 @@ function scaip_insert_shortcode( $content = '' ) {
 	// For certain types of blocks, their innerHTML is not a good representation of the length of their content.
 	// For example, slideshows may have an arbitrary amount of slide content, but only show one slide at a time.
 	// For these blocks, let's ignore their length for purposes of inserting prompts.
-	$blacklisted_blocks = [ 'jetpack/slideshow', 'newspack-blocks/carousel', 'newspack-popups/single-prompt' ];
-	$parsed_blocks      = parse_blocks( $content );
+	$length_ignored_blocks = apply_filters(
+		'scaip_length_ignored_blocks',
+		[ 'jetpack/slideshow', 'newspack-blocks/carousel', 'newspack-popups/single-prompt' ]
+	);
+	$parsed_blocks         = parse_blocks( $content );
 
 	$total_length = 0;
 
@@ -67,10 +70,10 @@ function scaip_insert_shortcode( $content = '' ) {
 
 	// Compute total length of the block-based content.
 	foreach ( $parsed_blocks as $block ) {
-		if ( ! in_array( $block['blockName'], $blacklisted_blocks ) ) {
+		if ( ! in_array( $block['blockName'], $length_ignored_blocks ) ) {
 			$total_length += strlen( wp_strip_all_tags( $block['innerHTML'] ) );
 		} else {
-			// Give blacklisted blocks a length of 1 so that prompts at 0% can still be inserted before them.
+			// Give length-ignored blocks a length of 1 so that prompts at 0% can still be inserted before them.
 			$total_length++;
 		}
 	}
@@ -89,7 +92,7 @@ function scaip_insert_shortcode( $content = '' ) {
 		}
 
 		// Regular block content: insert prompts between blocks.
-		if ( ! in_array( $block['blockName'], $blacklisted_blocks ) ) {
+		if ( ! in_array( $block['blockName'], $length_ignored_blocks ) ) {
 			$pos += strlen( wp_strip_all_tags( $block['innerHTML'] ) );
 		} else {
 			$pos++;
