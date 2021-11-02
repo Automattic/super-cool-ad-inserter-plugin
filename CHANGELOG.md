@@ -1,3 +1,10 @@
+# [0.4.0-alpha.1](https://github.com/Automattic/super-cool-ad-inserter-plugin/compare/v0.3.3...v0.4.0-alpha.1) (2021-11-02)
+
+
+### Features
+
+* block-based insertion ([#65](https://github.com/Automattic/super-cool-ad-inserter-plugin/issues/65)) ([5d3a3ca](https://github.com/Automattic/super-cool-ad-inserter-plugin/commit/5d3a3ca6e08a46f915519e8c1468904ebfc6a62a)), closes [#54](https://github.com/Automattic/super-cool-ad-inserter-plugin/issues/54)
+
 ## [0.3.3](https://github.com/Automattic/super-cool-ad-inserter-plugin/compare/v0.3.2...v0.3.3) (2021-08-26)
 
 
