@@ -1,6 +1,6 @@
 # Adding Ads for Display in Posts
 
-After you [configure the plugin](configuration.md) to set the number of paragraphs before each ad insertion, and the number of available ad insertions, in the Dashboard go to **Appearance > Widgets** to create the ads themselves. You'll see a number of Inserted Ad Positions as widget areas where you can place widgets. You can set the number of available Inserted Ad Positions in the [plugin options panel](configuration.md). Generally speaking, each Inserted Ad Position widget area should have only one widget in it.
+After you [configure the plugin](configuration.md) to set the number of blocks before each ad insertion, and the number of available ad insertions, in the Dashboard go to **Appearance > Widgets** to create the ads themselves. You'll see a number of Inserted Ad Positions as widget areas where you can place widgets. You can set the number of available Inserted Ad Positions in the [plugin options panel](configuration.md). Generally speaking, each Inserted Ad Position widget area should have only one widget in it.
 
 ## Using ad plugins
 
