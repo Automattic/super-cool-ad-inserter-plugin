@@ -23,10 +23,10 @@ add_action( 'admin_menu', 'scaip_add_admin_menu' );
 function scaip_register_settings() {
 	add_settings_section( 'scaip-settings', 'Control how often the ads appear', 'scaip_settings_section_header', 'scaip' );
 
-	add_settings_field( 'scaip_settings_start', 'Number of paragraphs before first insertion', 'scaip_settings_start', 'scaip', 'scaip-settings' );
-	add_settings_field( 'scaip_settings_period', 'Number of paragraphs between insertions', 'scaip_settings_period', 'scaip', 'scaip-settings' );
+	add_settings_field( 'scaip_settings_start', 'Number of blocks before first insertion', 'scaip_settings_start', 'scaip', 'scaip-settings' );
+	add_settings_field( 'scaip_settings_period', 'Number of blocks between insertions', 'scaip_settings_period', 'scaip', 'scaip-settings' );
 	add_settings_field( 'scaip_settings_repetitions', 'Number of times an ad widget area should be inserted in a post', 'scaip_settings_repetitions', 'scaip', 'scaip-settings' );
-	add_settings_field( 'scaip_settings_min_paragraphs', 'Minimum number of paragraphs needed in a post to insert ads', 'scaip_settings_min_paragraphs', 'scaip', 'scaip-settings' );
+	add_settings_field( 'scaip_settings_min_paragraphs', 'Minimum number of blocks needed in a post to insert ads', 'scaip_settings_min_paragraphs', 'scaip', 'scaip-settings' );
 
 	register_setting( 'scaip-settings', 'scaip_settings_start' );
 	register_setting( 'scaip-settings', 'scaip_settings_period' );
@@ -49,8 +49,8 @@ function scaip_settings_section_header( $args ) {
 }
 
 /**
- * The number of paragraphs before which SCAIP should insert the first shortcode,
- * counted in paragraphs from the beginning of the post.
+ * The number of blocks before which SCAIP should insert the first shortcode,
+ * counted in blocks from the beginning of the post.
  *
  * @param array $args the callback args.
  */
@@ -60,8 +60,8 @@ function scaip_settings_start( $args ) {
 }
 
 /**
- * The number of paragraphs after which SCAIP should insert a shortcode,
- * counted in paragraphs since the last time SCAIP inserted a shortcode.
+ * The number of blocks after which SCAIP should insert a shortcode,
+ * counted in blocks since the last time SCAIP inserted a shortcode.
  *
  * @param array $args the callback args.
  */
@@ -85,7 +85,7 @@ function scaip_settings_repetitions( $args ) {
 }
 
 /**
- * The minimum number of paragraphs in a post required for SCAIP to insert a shortcode in a post.
+ * The minimum number of blocks in a post required for SCAIP to insert a shortcode in a post.
  *
  * @param array $args the callback args.
  */
@@ -94,7 +94,7 @@ function scaip_settings_min_paragraphs( $args ) {
 	echo '<input name="scaip_settings_min_paragraphs" id="scaip_settings_min_paragraphs" type="number" value="' . esc_attr( $min_paragraphs ) . '" />';
 	?>
 	<p>
-		<?php esc_html_e( 'If a post has fewer than this number of paragraphs, ads will not be inserted.','scaip' ); ?>
+		<?php esc_html_e( 'If a post has fewer than this number of blocks, ads will not be inserted.','scaip' ); ?>
 	</p>
 	<?php
 }
