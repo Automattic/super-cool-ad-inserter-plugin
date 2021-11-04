@@ -1,3 +1,10 @@
+## [0.4.1](https://github.com/Automattic/super-cool-ad-inserter-plugin/compare/v0.4.0...v0.4.1) (2021-11-04)
+
+
+### Bug Fixes
+
+* execute filter before block rendering ([#70](https://github.com/Automattic/super-cool-ad-inserter-plugin/issues/70)) ([3e4869e](https://github.com/Automattic/super-cool-ad-inserter-plugin/commit/3e4869e231230b03d075bf2111fb969c12504cad))
+
 # [0.4.0](https://github.com/Automattic/super-cool-ad-inserter-plugin/compare/v0.3.3...v0.4.0) (2021-11-03)
 
 
