@@ -188,7 +188,7 @@ function scaip_maybe_insert_shortcode( $content = '' ) {
 
 	return scaip_insert_shortcode( $content );
 }
-add_filter( 'the_content', 'scaip_maybe_insert_shortcode', 10 );
+add_filter( 'the_content', 'scaip_maybe_insert_shortcode', 5 );
 
 /**
  * Remove the scaip_maybe_insert_shortcode filter on the_content when there are blocks
@@ -204,7 +204,7 @@ add_filter( 'the_content', 'scaip_maybe_insert_shortcode', 10 );
  */
 function scaip_maybe_remove_shortcode_inserter( $content ) {
 	if ( function_exists( 'has_block' ) && has_block( 'super-cool-ad-inserter-plugin/scaip-sidebar', $content ) ) {
-		remove_filter( 'the_content', 'scaip_maybe_insert_shortcode', 10 );
+		remove_filter( 'the_content', 'scaip_maybe_insert_shortcode', 5 );
 	}
 
 	return $content;
