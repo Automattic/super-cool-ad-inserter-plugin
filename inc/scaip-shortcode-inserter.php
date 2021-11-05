@@ -70,9 +70,16 @@ function scaip_insert_shortcode( $content = '' ) {
 
 	$output = '';
 
+	$default_count_blocks = [ 'core/paragraph' ];
+
 	foreach ( $parsed_blocks as $block ) {
 		$is_empty = empty( trim( $block['innerHTML'] ) );
 		if ( $is_empty ) {
+			continue;
+		}
+
+		if ( true !== apply_filters( 'scaip_count_block', in_array( $block['blockName'], $default_count_blocks, true ), $block ) ) {
+			$output .= render_block( $block );
 			continue;
 		}
 
