@@ -87,7 +87,7 @@ function scaip_insert_shortcode( $content = '' ) {
 			isset( $blocks_allowing_insertion['core/paragraph'] ) &&
 			! isset( $blocks_allowing_insertion['core/html'] ) &&
 			'core/html' === $block['blockName'] &&
-			str_starts_with( $block['innerHTML'], '<p' )
+			'<p' === substr( $block['innerHTML'], 0, 2 )
 		) {
 			$skip_blocks_allow_insertion = true;
 		}
