@@ -75,6 +75,24 @@ function scaip_insert_shortcode( $content = '' ) {
 	foreach ( $parsed_blocks as $block ) {
 
 		/**
+		 * Whether to skip `$blocks_allowing_insertion` check.
+		 */
+		$force_insert = false;
+
+		/**
+		 * Force ad insertion for HTML blocks that is wrapped in a paragraph tag
+		 * when 'core/paragraph' is allowed.
+		 */
+		if (
+			isset( $blocks_allowing_insertion['core/paragraph'] ) &&
+			! isset( $blocks_allowing_insertion['core/html'] ) &&
+			'core/html' === $block['blockName'] &&
+			str_starts_with( $block['innerHTML'], '<p' )
+		) {
+			$force_insert = true;
+		}
+
+		/**
 		 * Skip insertion for empty paragraphs.
 		 */
 		if ( 'core/paragraph' === $block['blockName'] && empty( trim( $block['innerHTML'] ) ) ) {
@@ -85,7 +103,7 @@ function scaip_insert_shortcode( $content = '' ) {
 		/**
 		 * Skip insertion if the block is not on the allowing-insertion list.
 		 */
-		if ( ! isset( $blocks_allowing_insertion[ $block['blockName'] ] ) ) {
+		if ( false === $force_insert && ! isset( $blocks_allowing_insertion[ $block['blockName'] ] ) ) {
 			$output .= serialize_block( $block );
 			continue;
 		}
