@@ -82,7 +82,7 @@ function scaip_insert_shortcode( $content = '' ) {
 		 * Skip insertion if the block is not on the allowing-insertion list.
 		 */
 		if ( ! isset( $blocks_allowing_insertion[ $block['blockName'] ] ) ) {
-			$output .= render_block( $block );
+			$output .= serialize_block( $block );
 			continue;
 		}
 
@@ -99,7 +99,7 @@ function scaip_insert_shortcode( $content = '' ) {
 			$inserted_shortcode_index++;
 		}
 
-		$output .= render_block( $block );
+		$output .= serialize_block( $block );
 		$block_index++;
 	}
 
@@ -118,11 +118,11 @@ function scaip_generate_shortcode( $index ) {
 /**
  * Should shortcode be inserted?
  *
- * @param number $start Min. index to insert at.
- * @param number $block_index Current block index.
- * @param number $insertion_index Current insertion index.
- * @param number $repetitions Max. no. of insertions.
- * @param number $period Period between insertions.
+ * @param int $start Min. index to insert at.
+ * @param int $block_index Current block index.
+ * @param int $insertion_index Current insertion index.
+ * @param int $repetitions Max. no. of insertions.
+ * @param int $period Period between insertions.
  */
 function scaip_should_insert( $start, $block_index, $insertion_index, $repetitions, $period ) {
 	return ( $start < $block_index
