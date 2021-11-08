@@ -70,7 +70,7 @@ function scaip_insert_shortcode( $content = '' ) {
 
 	$output = '';
 
-	$default_count_blocks = [ 'core/paragraph' ];
+	$blocks_allowing_insertion = array_flip( apply_filters( 'scaip_allowing_insertion_blocks', [ 'core/paragraph' ] ) );
 
 	foreach ( $parsed_blocks as $block ) {
 		$is_empty = empty( trim( $block['innerHTML'] ) );
@@ -78,7 +78,10 @@ function scaip_insert_shortcode( $content = '' ) {
 			continue;
 		}
 
-		if ( true !== apply_filters( 'scaip_count_block', in_array( $block['blockName'], $default_count_blocks, true ), $block ) ) {
+		/**
+		 * Skip insertion if the block is not on the allowing-insertion list.
+		 */
+		if ( ! isset( $blocks_allowing_insertion[ $block['blockName'] ] ) ) {
 			$output .= render_block( $block );
 			continue;
 		}
@@ -96,8 +99,7 @@ function scaip_insert_shortcode( $content = '' ) {
 			$inserted_shortcode_index++;
 		}
 
-		$block_content = render_block( $block );
-		$output       .= $block_content;
+		$output .= render_block( $block );
 		$block_index++;
 	}
 
