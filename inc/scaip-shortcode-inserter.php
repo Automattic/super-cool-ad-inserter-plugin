@@ -73,8 +73,12 @@ function scaip_insert_shortcode( $content = '' ) {
 	$blocks_allowing_insertion = array_flip( apply_filters( 'scaip_allowing_insertion_blocks', [ 'core/paragraph' ] ) );
 
 	foreach ( $parsed_blocks as $block ) {
-		$is_empty = empty( trim( $block['innerHTML'] ) );
-		if ( $is_empty ) {
+
+		/**
+		 * Skip insertion for empty paragraphs.
+		 */
+		if ( 'core/paragraph' === $block['blockName'] && empty( trim( $block['innerHTML'] ) ) ) {
+			$output .= serialize_block( $block );
 			continue;
 		}
 
