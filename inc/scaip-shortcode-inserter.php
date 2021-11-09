@@ -70,9 +70,41 @@ function scaip_insert_shortcode( $content = '' ) {
 
 	$output = '';
 
+	$blocks_allowing_insertion = array_flip( apply_filters( 'scaip_allowing_insertion_blocks', [ 'core/paragraph' ] ) );
+
 	foreach ( $parsed_blocks as $block ) {
-		$is_empty = empty( trim( $block['innerHTML'] ) );
-		if ( $is_empty ) {
+
+		/**
+		 * Whether to skip `$blocks_allowing_insertion` check.
+		 */
+		$skip_blocks_allow_insertion = false;
+
+		/**
+		 * Force ad insertion for HTML blocks that are wrapped in a paragraph tag
+		 * when 'core/paragraph' is allowed.
+		 */
+		if (
+			isset( $blocks_allowing_insertion['core/paragraph'] ) &&
+			! isset( $blocks_allowing_insertion['core/html'] ) &&
+			'core/html' === $block['blockName'] &&
+			'<p' === substr( $block['innerHTML'], 0, 2 )
+		) {
+			$skip_blocks_allow_insertion = true;
+		}
+
+		/**
+		 * Skip insertion for empty paragraphs.
+		 */
+		if ( 'core/paragraph' === $block['blockName'] && empty( trim( $block['innerHTML'] ) ) ) {
+			$output .= serialize_block( $block );
+			continue;
+		}
+
+		/**
+		 * Skip insertion if the block is not on the allowing-insertion list.
+		 */
+		if ( false === $skip_blocks_allow_insertion && ! isset( $blocks_allowing_insertion[ $block['blockName'] ] ) ) {
+			$output .= serialize_block( $block );
 			continue;
 		}
 
@@ -89,8 +121,7 @@ function scaip_insert_shortcode( $content = '' ) {
 			$inserted_shortcode_index++;
 		}
 
-		$block_content = render_block( $block );
-		$output       .= $block_content;
+		$output .= serialize_block( $block );
 		$block_index++;
 	}
 
@@ -109,11 +140,11 @@ function scaip_generate_shortcode( $index ) {
 /**
  * Should shortcode be inserted?
  *
- * @param number $start Min. index to insert at.
- * @param number $block_index Current block index.
- * @param number $insertion_index Current insertion index.
- * @param number $repetitions Max. no. of insertions.
- * @param number $period Period between insertions.
+ * @param int $start Min. index to insert at.
+ * @param int $block_index Current block index.
+ * @param int $insertion_index Current insertion index.
+ * @param int $repetitions Max. no. of insertions.
+ * @param int $period Period between insertions.
  */
 function scaip_should_insert( $start, $block_index, $insertion_index, $repetitions, $period ) {
 	return ( $start < $block_index
