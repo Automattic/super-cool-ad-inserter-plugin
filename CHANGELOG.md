@@ -1,3 +1,15 @@
+# [0.5.0-alpha.1](https://github.com/Automattic/super-cool-ad-inserter-plugin/compare/v0.4.1...v0.5.0-alpha.1) (2021-11-09)
+
+
+### Bug Fixes
+
+* serialize block, allow empty innerHTML and html paragraphs ([#75](https://github.com/Automattic/super-cool-ad-inserter-plugin/issues/75)) ([227aad8](https://github.com/Automattic/super-cool-ad-inserter-plugin/commit/227aad86d0ad64520b5490d46c2fbf49fc59bf82))
+
+
+### Features
+
+* filter blocks to be counted on ad insertion ([#74](https://github.com/Automattic/super-cool-ad-inserter-plugin/issues/74)) ([bfcc1cc](https://github.com/Automattic/super-cool-ad-inserter-plugin/commit/bfcc1cc7372eb94281cc9b1051da3785b74d2c16))
+
 ## [0.4.1](https://github.com/Automattic/super-cool-ad-inserter-plugin/compare/v0.4.0...v0.4.1) (2021-11-04)
 
 
