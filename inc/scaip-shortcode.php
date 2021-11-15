@@ -5,8 +5,9 @@
 
 /**
  * The SCAIP shortcode function
+ * Outputs an aside 'scaip-#' where # is the 'number' argument on the shortcode.
  *
- * @param Array $atts Shortcode attributes or block properties.
+ * @param Array  $atts Shortcode attributes or block properties.
  * @param String $content Shortcode wrapped text; not used in this shortcode.
  * @param String $tag The complete shortcode tag; not used in this shortcode.
  * @return HTML
@@ -17,17 +18,34 @@ function scaip_shortcode( $atts = array(), $content = '', $tag = '' ) {
 	if ( isset( $atts['no'] ) ) {
 		return '';
 	}
+	
+	if ( ! isset( $atts['number'] ) ) {
+		return '';
+	}
 
 	ob_start();
 	do_action( 'scaip_shortcode', $atts );
-	$ret = ob_get_clean();
-	return $ret;
+	$ad = ob_get_clean();
+
+	if ( empty( trim( $ad ) ) ) {
+		return '';
+	}
+
+	return sprintf(
+		'<aside class="scaip scaip-%1$s %2$s %3$s %4$s %5$s">%6$s</aside>',
+		esc_attr( $atts['number'] ),
+		isset( $atts['align'] ) ? esc_attr( 'align' . $atts['align'] ) : '',
+		isset( $atts['class'] ) ? esc_attr( $atts['class'] ) : '',
+		isset( $atts['className'] ) ? esc_attr( $atts['className'] ) : '',
+		isset( $atts['customClassName'] ) ? esc_attr( $atts['customClassName'] ) : '',
+		$ad
+	);
 }
 add_shortcode( 'scaip', 'scaip_shortcode' );
 add_shortcode( 'ad', 'scaip_shortcode' );
 
 /**
- * Outputs the sidebar 'scaip-#' where # is the 'number' argument on the shortcode.
+ * Outputs the SCAIP sidebar from the shortcode attributes.
  *
  * To prevent this happening, decrease the number of ads that should be inserted to 0, remove the ad widgets form the sidebar, or remove_action('scaip_shortcode', 'scaip_shortcode_do_sidebar');
  *
@@ -35,17 +53,6 @@ add_shortcode( 'ad', 'scaip_shortcode' );
  * @since 0.1
  */
 function scaip_shortcode_do_sidebar( $args ) {
-	if ( isset( $args['number'] ) ) {
-		printf(
-			'<aside class="scaip scaip-%1$s %2$s %3$s %4$s %5$s">',
-			esc_attr( $args['number'] ),
-			( isset( $args['align'] ) ) ? esc_attr( 'align' . $args['align'] ) : '',
-			( isset( $args['class'] ) ) ? esc_attr( $args['class'] ) : '',
-			( isset( $args['className'] ) ) ? esc_attr( $args['className'] ) : '',
-			( isset( $args['customClassName'] ) ) ? esc_attr( $args['customClassName'] ) : ''
-		);
-		dynamic_sidebar( 'scaip-' . esc_attr( $args['number'] ) );
-		echo '</aside>';
-	}
+	dynamic_sidebar( 'scaip-' . esc_attr( $args['number'] ) );
 }
 add_action( 'scaip_shortcode', 'scaip_shortcode_do_sidebar' );
