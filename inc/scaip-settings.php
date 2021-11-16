@@ -94,7 +94,7 @@ function scaip_settings_min_paragraphs( $args ) {
 	echo '<input name="scaip_settings_min_paragraphs" id="scaip_settings_min_paragraphs" type="number" value="' . esc_attr( $min_paragraphs ) . '" />';
 	?>
 	<p>
-		<?php esc_html_e( 'If a post has fewer than this number of blocks, ads will not be inserted.','scaip' ); ?>
+		<?php esc_html_e( 'If a post has fewer than this number of blocks, ads will not be inserted.', 'scaip' ); ?>
 	</p>
 	<?php
 }
@@ -149,18 +149,26 @@ function scaip_admin_page() {
  */
 function scaip_register_sidebars() {
 	$sidebars = get_option( 'scaip_settings_repetitions', 2 );
-	$i = 1;
+	$i        = 1;
+
+	$scaip_disable_sidebars = apply_filters( 'scaip_disable_sidebars', false );
+
+	if ( true === $scaip_disable_sidebars ) {
+		return false;
+	}
 
 	while ( $i <= $sidebars ) {
-		register_sidebar(array(
-			'name' => 'Inserted Ad Position ' . $i,
-			'description' => __( 'Widgets in this sidebar will be automatically inserted into posts. Please do not put more than one widget here.', 'scaip' ),
-			'id' => 'scaip-' . $i,
-			'before_widget' => apply_filters( 'scaip_before_widget', '<aside id="%1$s" class="%2$s clearfix">', $i ),
-			'after_widget' => apply_filters( 'scaip_after_widget', '</aside>', $i ),
-			'before_title' => apply_filters( 'scaip_before_title', '<h5 class="adtitle">', $i ),
-			'after_title' => apply_filters( 'scaip_after_title', '</h5>', $i ),
-		));
+		register_sidebar(
+			array(
+				'name'          => 'Inserted Ad Position ' . $i,
+				'description'   => __( 'Widgets in this sidebar will be automatically inserted into posts. Please do not put more than one widget here.', 'scaip' ),
+				'id'            => 'scaip-' . $i,
+				'before_widget' => apply_filters( 'scaip_before_widget', '<aside id="%1$s" class="%2$s clearfix">', $i ),
+				'after_widget'  => apply_filters( 'scaip_after_widget', '</aside>', $i ),
+				'before_title'  => apply_filters( 'scaip_before_title', '<h5 class="adtitle">', $i ),
+				'after_title'   => apply_filters( 'scaip_after_title', '</h5>', $i ),
+			)
+		);
 		$i++;
 	}
 }

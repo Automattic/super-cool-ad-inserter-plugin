@@ -19,8 +19,8 @@ function scaip_insert_shortcode( $content = '' ) {
 	$scaip_repetitions    = (int) get_option( 'scaip_settings_repetitions', 2 );
 	$scaip_minimum_blocks = (int) get_option( 'scaip_settings_min_paragraphs', 6 );
 
-	$inserted_shortcode_index = 1;
-	$block_index              = 1;
+	$inserted_shortcode_index = 0;
+	$block_index              = 0;
 
 	$parsed_blocks = parse_blocks( $content );
 
@@ -74,6 +74,13 @@ function scaip_insert_shortcode( $content = '' ) {
 
 	foreach ( $parsed_blocks as $block ) {
 
+		if ( 0 === $scaip_start && 0 === $inserted_shortcode_index ) {
+			$output .= scaip_generate_shortcode( '1' );
+			$inserted_shortcode_index++;
+		}
+
+		$output .= serialize_block( $block );
+
 		/**
 		 * Whether to skip `$blocks_allowing_insertion` check.
 		 */
@@ -96,7 +103,6 @@ function scaip_insert_shortcode( $content = '' ) {
 		 * Skip insertion for empty paragraphs.
 		 */
 		if ( 'core/paragraph' === $block['blockName'] && empty( trim( $block['innerHTML'] ) ) ) {
-			$output .= serialize_block( $block );
 			continue;
 		}
 
@@ -104,9 +110,10 @@ function scaip_insert_shortcode( $content = '' ) {
 		 * Skip insertion if the block is not on the allowing-insertion list.
 		 */
 		if ( false === $skip_blocks_allow_insertion && ! isset( $blocks_allowing_insertion[ $block['blockName'] ] ) ) {
-			$output .= serialize_block( $block );
 			continue;
 		}
+
+		$block_index++;
 
 		if (
 			scaip_should_insert(
@@ -117,12 +124,9 @@ function scaip_insert_shortcode( $content = '' ) {
 				$scaip_period
 			)
 		) {
-			$output .= scaip_generate_shortcode( $inserted_shortcode_index );
+			$output .= scaip_generate_shortcode( $inserted_shortcode_index + 1 );
 			$inserted_shortcode_index++;
 		}
-
-		$output .= serialize_block( $block );
-		$block_index++;
 	}
 
 	return $output;
@@ -147,13 +151,13 @@ function scaip_generate_shortcode( $index ) {
  * @param int $period Period between insertions.
  */
 function scaip_should_insert( $start, $block_index, $insertion_index, $repetitions, $period ) {
-	return ( $start < $block_index
-	&& $insertion_index <= $repetitions
+	return ( $start <= $block_index
+	&& $insertion_index < $repetitions
 	&& (
 		// First insertion should not take period into account.
-		1 === $insertion_index
+		0 === $insertion_index
 		||
-		0 === ( $block_index - $start - 1 ) % $period
+		0 === ( $block_index - $start ) % $period
 	) );
 }
 
