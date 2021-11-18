@@ -1,3 +1,15 @@
+# [0.6.0-alpha.1](https://github.com/Automattic/super-cool-ad-inserter-plugin/compare/v0.5.0...v0.6.0-alpha.1) (2021-11-16)
+
+
+### Bug Fixes
+
+* insertion logic ([#78](https://github.com/Automattic/super-cool-ad-inserter-plugin/issues/78)) ([907b069](https://github.com/Automattic/super-cool-ad-inserter-plugin/commit/907b06920d53c67c95893ea0f55a7116aba98dff))
+
+
+### Features
+
+* shortcode container and sidebar registration hook ([#79](https://github.com/Automattic/super-cool-ad-inserter-plugin/issues/79)) ([b199a70](https://github.com/Automattic/super-cool-ad-inserter-plugin/commit/b199a70692d6c21070d0e0d2c14611237603d3c3))
+
 # [0.5.0](https://github.com/Automattic/super-cool-ad-inserter-plugin/compare/v0.4.1...v0.5.0) (2021-11-09)
 
 
