@@ -73,7 +73,7 @@
     "url": "https://github.com/Automattic/super-cool-ad-inserter-plugin/issues"
   },
   "devDependencies": {
-    "@commitlint/cli": "^12.0.1",
+    "@commitlint/cli": "^16.0.2",
     "@commitlint/config-conventional": "^12.0.1",
     "@semantic-release/changelog": "^5.0.1",
     "@semantic-release/git": "^9.0.0",
