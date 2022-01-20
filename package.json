@@ -3,6 +3,7 @@
   "version": "0.6.0",
   "author": "Automattic",
   "scripts": {
+    "start": "npm ci",
     "cm": "newspack-scripts commit",
     "semantic-release": "newspack-scripts release --files=newspack-new-plugin-boilerplate.php",
     "release:archive": "rm -rf release && mkdir -p release && rsync -r . ./release/super-cool-ad-inserter-plugin --exclude-from='./.distignore' && cd release && zip -r super-cool-ad-inserter-plugin.zip super-cool-ad-inserter-plugin",
