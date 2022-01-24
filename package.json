@@ -5,7 +5,7 @@
   "scripts": {
     "start": "npm ci",
     "cm": "newspack-scripts commit",
-    "semantic-release": "newspack-scripts release --files=newspack-new-plugin-boilerplate.php",
+    "semantic-release": "newspack-scripts release --files=super-cool-ad-inserter-plugin.php",
     "release:archive": "rm -rf release && mkdir -p release && rsync -r . ./release/super-cool-ad-inserter-plugin --exclude-from='./.distignore' && cd release && zip -r super-cool-ad-inserter-plugin.zip super-cool-ad-inserter-plugin",
     "release": "npm run semantic-release"
   },
