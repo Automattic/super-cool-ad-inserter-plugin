@@ -17,6 +17,10 @@ function scaip_sidebar_block_init() {
 		return false;
 	}
 
+	if ( apply_filters( 'scaip_disable_sidebars', false ) ) {
+		return false;
+	}
+
 	$dir = dirname( __FILE__ );
 
 	$block_js = 'scaip-sidebar/block.js';
@@ -28,7 +32,6 @@ function scaip_sidebar_block_init() {
 			'wp-i18n',
 			'wp-element',
 			'wp-components',
-			'wp-editor',
 		),
 		filemtime( "$dir/$block_js" )
 	);
