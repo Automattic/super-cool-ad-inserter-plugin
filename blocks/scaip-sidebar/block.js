@@ -25,6 +25,11 @@
 	 */
 	var SelectControl = wp.components.SelectControl;
 	/**
+	 * Notice element
+	 * @link https://github.com/WordPress/gutenberg/tree/master/packages/components/src/notice
+	 */
+	var Notice = wp.components.Notice;
+	/**
 	 * External Link element
 	 * @link https://github.com/WordPress/gutenberg/tree/master/packages/components/src/external-link
 	 */
@@ -92,6 +97,22 @@
 				var value = 0;
 			}
 
+			var notices = [];
+
+			if ( window.scaip.sidebar_disabled ) {
+				notices.push(
+					el(
+						Notice,
+						{
+							status: "error",
+							isDismissible: false,
+							children: __( 'The block is disabled due to a custom method for ad positioning and rendering being used.' ),
+						}
+					)
+				);
+			}
+
+
 			return [
 				el(
 					'div',
@@ -109,7 +130,8 @@
 								}
 							),
 							label: __( 'Inserted Ad Position Sidebar' ),
-							instructions: [
+							notices: notices,
+							instructions: ! notices.length ? [
 								__( 'Which Inserted Ad Position sidebar should be displayed in this area? ' ), // trailing space is important.
 								el(
 									ExternalLink,
@@ -118,9 +140,9 @@
 									},
 									'View the documentation.'
 								)
-							]
+							] : null
 						},
-						el(
+						! window.scaip.sidebar_disabled && el(
 							SelectControl,
 							{
 								label: __( 'Inserted Ad Position:' ),
