@@ -59,7 +59,7 @@ An example filter would look like:
 
 ```php
 function scaip_test_inserter_disabler( $whether, $content, $queried_object ) {
-	if ( isset( $queried_object->ID ) && 120 = $queried_object->ID ) {
+	if ( isset( $queried_object->ID ) && 120 == $queried_object->ID ) {
 		return false;
 	}
 

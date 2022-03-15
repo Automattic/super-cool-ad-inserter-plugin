@@ -3,66 +3,11 @@
   "version": "0.6.0",
   "author": "Automattic",
   "scripts": {
-    "semantic-release": "semantic-release",
+    "start": "npm ci",
+    "cm": "newspack-scripts commit",
+    "semantic-release": "newspack-scripts release --files=super-cool-ad-inserter-plugin.php",
     "release:archive": "rm -rf release && mkdir -p release && rsync -r . ./release/super-cool-ad-inserter-plugin --exclude-from='./.distignore' && cd release && zip -r super-cool-ad-inserter-plugin.zip super-cool-ad-inserter-plugin",
     "release": "npm run semantic-release"
-  },
-  "release": {
-    "branches": [
-      "release",
-      {
-        "name": "alpha",
-        "prerelease": "alpha"
-      }
-    ],
-    "prepare": [
-      "@semantic-release/changelog",
-      "@semantic-release/npm",
-      [
-        "semantic-release-version-bump",
-        {
-          "files": "super-cool-ad-inserter-plugin.php",
-          "callback": "npm run release:archive"
-        }
-      ],
-      {
-        "path": "@semantic-release/git",
-        "assets": [
-          "super-cool-ad-inserter-plugin.php",
-          "package.json",
-          "package-lock.json",
-          "CHANGELOG.md"
-        ],
-        "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
-      }
-    ],
-    "plugins": [
-      "@semantic-release/commit-analyzer",
-      "@semantic-release/release-notes-generator",
-      [
-        "@semantic-release/npm",
-        {
-          "npmPublish": false
-        }
-      ],
-      "semantic-release-version-bump",
-      [
-        "@semantic-release/github",
-        {
-          "assets": [
-            {
-              "path": "./release/super-cool-ad-inserter-plugin.zip",
-              "label": "super-cool-ad-inserter-plugin.zip"
-            }
-          ]
-        }
-      ]
-    ]
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
   },
   "repository": {
     "type": "git",
@@ -73,15 +18,6 @@
     "url": "https://github.com/Automattic/super-cool-ad-inserter-plugin/issues"
   },
   "devDependencies": {
-    "@commitlint/cli": "^12.0.1",
-    "@commitlint/config-conventional": "^12.0.1",
-    "@semantic-release/changelog": "^5.0.1",
-    "@semantic-release/git": "^9.0.0",
-    "cz-conventional-changelog": "^3.3.0",
-    "grunt": "~0.4.5",
-    "grunt-wp-i18n": "~0.5.0",
-    "grunt-wp-readme-to-markdown": "~1.0.0",
-    "semantic-release": "^17.4.1",
-    "semantic-release-version-bump": "^1.4.1"
+    "newspack-scripts": "^3.1.1"
   }
 }
