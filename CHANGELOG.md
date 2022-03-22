@@ -1,3 +1,19 @@
+## [0.6.1](https://github.com/Automattic/super-cool-ad-inserter-plugin/compare/v0.6.0...v0.6.1) (2022-03-22)
+
+
+### Bug Fixes
+
+* disable block if not using sidebars ([#99](https://github.com/Automattic/super-cool-ad-inserter-plugin/issues/99)) ([30ef844](https://github.com/Automattic/super-cool-ad-inserter-plugin/commit/30ef8446f3680ccc1645c6336632899bee520565))
+* syntax error on sample code ([#98](https://github.com/Automattic/super-cool-ad-inserter-plugin/issues/98)) ([57a1133](https://github.com/Automattic/super-cool-ad-inserter-plugin/commit/57a11337656ee0a7fa5486794fa5af72ea5af265))
+
+## [0.6.1-alpha.1](https://github.com/Automattic/super-cool-ad-inserter-plugin/compare/v0.6.0...v0.6.1-alpha.1) (2022-03-15)
+
+
+### Bug Fixes
+
+* disable block if not using sidebars ([#99](https://github.com/Automattic/super-cool-ad-inserter-plugin/issues/99)) ([30ef844](https://github.com/Automattic/super-cool-ad-inserter-plugin/commit/30ef8446f3680ccc1645c6336632899bee520565))
+* syntax error on sample code ([#98](https://github.com/Automattic/super-cool-ad-inserter-plugin/issues/98)) ([57a1133](https://github.com/Automattic/super-cool-ad-inserter-plugin/commit/57a11337656ee0a7fa5486794fa5af72ea5af265))
+
 # [0.6.0](https://github.com/Automattic/super-cool-ad-inserter-plugin/compare/v0.5.0...v0.6.0) (2021-11-18)
 
 
