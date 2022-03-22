@@ -143,6 +143,15 @@ function scaip_admin_page() {
 }
 
 /**
+ * Whether SCAIP should use sidebars for ad placement.
+ *
+ * @return bool Whether SCAIP should use sidebars for ad placement.
+ */
+function scaip_is_sidebar_disabled() {
+	return apply_filters( 'scaip_disable_sidebars', false );
+}
+
+/**
  * Create a number of sidebars equal to scaip_settings_min_repetitions
  *
  * To create no widgets, reduce the "Number of times the ad should be inserted in a post" to 0.
@@ -151,7 +160,7 @@ function scaip_register_sidebars() {
 	$sidebars = get_option( 'scaip_settings_repetitions', 2 );
 	$i        = 1;
 
-	$scaip_disable_sidebars = apply_filters( 'scaip_disable_sidebars', false );
+	$scaip_disable_sidebars = scaip_is_sidebar_disabled();
 
 	if ( true === $scaip_disable_sidebars ) {
 		return false;

@@ -28,7 +28,6 @@ function scaip_sidebar_block_init() {
 			'wp-i18n',
 			'wp-element',
 			'wp-components',
-			'wp-editor',
 		),
 		filemtime( "$dir/$block_js" )
 	);
@@ -39,6 +38,7 @@ function scaip_sidebar_block_init() {
 		'period' => get_option( 'scaip_settings_period', 3 ),
 		'repetitions' => get_option( 'scaip_settings_repetitions', 2 ),
 		'minimum_paragraphs' => get_option( 'scaip_settings_min_paragraphs', 6 ),
+		'sidebar_disabled' => scaip_is_sidebar_disabled(),
 	);
 	wp_localize_script(
 		'scaip-sidebar-block-editor',
@@ -50,7 +50,7 @@ function scaip_sidebar_block_init() {
 		'editor_script' => 'scaip-sidebar-block-editor',
 		'editor_style'  => 'scaip-sidebar-block-editor',
 		'style'         => 'scaip-sidebar-block',
-		'render_callback' => 'scaip_shortcode',
+		'render_callback' => 'scaip_sidebar_block_render',
 		'attributes' => array(
 			'number' => array(
 				'type' => 'string',
@@ -65,3 +65,13 @@ function scaip_sidebar_block_init() {
 	) );
 }
 add_action( 'init', 'scaip_sidebar_block_init' );
+
+/**
+ * Renders the block on front-end.
+ */
+function scaip_sidebar_block_render( $attrs ) {
+	if ( scaip_is_sidebar_disabled() ) {
+		return;
+	}
+	return scaip_shortcode( $attrs );
+}
