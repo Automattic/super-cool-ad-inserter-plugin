@@ -1,3 +1,17 @@
+## [0.6.2](https://github.com/Automattic/super-cool-ad-inserter-plugin/compare/v0.6.1...v0.6.2) (2022-08-16)
+
+
+### Bug Fixes
+
+* ensure node is before stripping from content ([#113](https://github.com/Automattic/super-cool-ad-inserter-plugin/issues/113)) ([f495614](https://github.com/Automattic/super-cool-ad-inserter-plugin/commit/f495614bf7e71568fb6f71da8a7911d89870e179))
+
+## [0.6.2-alpha.1](https://github.com/Automattic/super-cool-ad-inserter-plugin/compare/v0.6.1...v0.6.2-alpha.1) (2022-08-12)
+
+
+### Bug Fixes
+
+* ensure node is before stripping from content ([#113](https://github.com/Automattic/super-cool-ad-inserter-plugin/issues/113)) ([f495614](https://github.com/Automattic/super-cool-ad-inserter-plugin/commit/f495614bf7e71568fb6f71da8a7911d89870e179))
+
 ## [0.6.1](https://github.com/Automattic/super-cool-ad-inserter-plugin/compare/v0.6.0...v0.6.1) (2022-03-22)
 
 
