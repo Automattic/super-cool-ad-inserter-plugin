@@ -12,6 +12,6 @@ class ScaipShortcodeTestFunctions extends WP_UnitTestCase {
 			}
 		);
 		$ret = scaip_shortcode( array( 'number' => $scaip_index ), '', '' );
-		$this->assertRegExp( "/{$text}/", $ret );
+		$this->assertMatchesRegularExpression( "/{$text}/", $ret );
 	}
 }
