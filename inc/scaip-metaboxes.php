@@ -94,7 +94,7 @@ function _scaip_meta_box_save( $post_id, $post ) {
 	}
 
 	// If our current user can't edit this post, bail.
-	if ( ! current_user_can( 'edit_post' ) ) {
+	if ( ! current_user_can( 'edit_post', $post->ID ) ) {
 		return;
 	}
 
