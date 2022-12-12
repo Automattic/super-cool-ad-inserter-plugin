@@ -1,3 +1,10 @@
+## [0.6.3](https://github.com/Automattic/super-cool-ad-inserter-plugin/compare/v0.6.2...v0.6.3) (2022-12-12)
+
+
+### Bug Fixes
+
+* save "prevent shortcode" meta ([#134](https://github.com/Automattic/super-cool-ad-inserter-plugin/issues/134)) ([61112d1](https://github.com/Automattic/super-cool-ad-inserter-plugin/commit/61112d15d4b08c9e6685147126e3cb0599d01f6e))
+
 ## [0.6.3-alpha.1](https://github.com/Automattic/super-cool-ad-inserter-plugin/compare/v0.6.2...v0.6.3-alpha.1) (2022-12-01)
 
 
