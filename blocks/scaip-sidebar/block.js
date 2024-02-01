@@ -1,42 +1,42 @@
 ( function( wp ) {
 	/**
 	 * Registers a new block provided a unique name and an object defining its behavior.
-	 * @see https://github.com/WordPress/gutenberg/tree/master/blocks#api
+	 * @see https://github.com/WordPress/gutenberg/tree/trunk/blocks#api
 	 */
 	var registerBlockType = wp.blocks.registerBlockType;
 	/**
 	 * Returns a new element of given type. Element is an abstraction layer atop React.
-	 * @see https://github.com/WordPress/gutenberg/tree/master/element#element
+	 * @see https://github.com/WordPress/gutenberg/tree/trunk/element#element
 	 */
 	var el = wp.element.createElement;
 	/**
 	 * Retrieves the translation of text.
-	 * @see https://github.com/WordPress/gutenberg/tree/master/i18n#api
+	 * @see https://github.com/WordPress/gutenberg/tree/trunk/i18n#api
 	 */
 	var __ = wp.i18n.__;
 	/**
 	 * Placeholder element
-	 * @link https://github.com/WordPress/gutenberg/tree/master/packages/components/src/placeholder
+	 * @link https://github.com/WordPress/gutenberg/tree/trunk/packages/components/src/placeholder
 	 */
 	var Placeholder = wp.components.Placeholder;
 	/**
 	 * Dropdown <select> element
-	 * @link https://github.com/WordPress/gutenberg/tree/master/packages/components/src/select-control
+	 * @link https://github.com/WordPress/gutenberg/tree/trunk/packages/components/src/select-control
 	 */
 	var SelectControl = wp.components.SelectControl;
 	/**
 	 * Notice element
-	 * @link https://github.com/WordPress/gutenberg/tree/master/packages/components/src/notice
+	 * @link https://github.com/WordPress/gutenberg/tree/trunk/packages/components/src/notice
 	 */
 	var Notice = wp.components.Notice;
 	/**
 	 * External Link element
-	 * @link https://github.com/WordPress/gutenberg/tree/master/packages/components/src/external-link
+	 * @link https://github.com/WordPress/gutenberg/tree/trunk/packages/components/src/external-link
 	 */
 	var ExternalLink = wp.components.ExternalLink;
 	/**
 	 * Literally just for a fancy dashicon
-	 * @see https://github.com/WordPress/gutenberg/blob/master/packages/components/src/dashicon/README.md
+	 * @see https://github.com/WordPress/gutenberg/blob/trunk/packages/components/src/dashicon/README.md
 	 */
 	var dashicon = wp.components.Dashicon;
 	/**
@@ -136,7 +136,7 @@
 								el(
 									ExternalLink,
 									{
-										href: 'https://github.com/Automattic/super-cool-ad-inserter-plugin/blob/master/docs/configuration.md'
+										href: 'https://github.com/Automattic/super-cool-ad-inserter-plugin/blob/trunk/docs/configuration.md'
 									},
 									'View the documentation.'
 								)
