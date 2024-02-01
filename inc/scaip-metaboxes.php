@@ -33,7 +33,7 @@ function scaip_how_to_shortcode_callback() {
 	<p>
 		<?php
 		echo wp_kses(
-			__( 'If the automatic positioning causes problems for any given post, you can prevent automatic placement of the ads <a href="https://github.com/Automattic/super-cool-adinserter-plugin/blob/master/docs/display-settings.md">using a shortcode</a> or disable them completely by checking this box:', 'scaip' ),
+			__( 'If the automatic positioning causes problems for any given post, you can prevent automatic placement of the ads <a href="https://github.com/Automattic/super-cool-adinserter-plugin/blob/trunk/docs/display-settings.md">using a shortcode</a> or disable them completely by checking this box:', 'scaip' ),
 			array(
 				'a' => array(
 					'href' => array(),
