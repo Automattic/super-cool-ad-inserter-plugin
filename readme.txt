@@ -1,9 +1,9 @@
 === Super Cool Ad Inserter Plugin ===
 Contributors: innlabs, automattic
 Tags: ads, advertising,  widget, shortcode, google, post, page
-Requires at least: 4.0.0
-Tested up to: 5.8.0
-Requires PHP: 5.3
+Requires at least: 5.3
+Tested up to: 6.4.3
+Requires PHP: 7.4
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -25,8 +25,8 @@ If the programmatic insertion doesn't work for a particular post, users can choo
 1. Upload the plugin directory to your `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 
-For more advanced documentation for developers and advanced users see [the official plugin docs](https://github.com/Automattic/super-cool-ad-inserter-plugin/tree/master/docs).
+For more advanced documentation for developers and advanced users see [the official plugin docs](https://github.com/Automattic/super-cool-ad-inserter-plugin/tree/trunk/docs).
 
 == Changelog ==
 
-See https://github.com/Automattic/super-cool-ad-inserter-plugin/blob/master/CHANGELOG.md
+See https://github.com/Automattic/super-cool-ad-inserter-plugin/blob/trunk/CHANGELOG.md
