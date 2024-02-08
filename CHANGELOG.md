@@ -1,3 +1,10 @@
+# [0.7.0-alpha.1](https://github.com/Automattic/super-cool-ad-inserter-plugin/compare/v0.6.3...v0.7.0-alpha.1) (2024-02-08)
+
+
+### Features
+
+* **ci:** add epic/* release workflow and rename `master` to `trunk` ([#170](https://github.com/Automattic/super-cool-ad-inserter-plugin/issues/170)) ([bf6d042](https://github.com/Automattic/super-cool-ad-inserter-plugin/commit/bf6d04236764c7ebe9c1bda51adc8daf36aebcd4))
+
 ## [0.6.3](https://github.com/Automattic/super-cool-ad-inserter-plugin/compare/v0.6.2...v0.6.3) (2022-12-12)
 
 
