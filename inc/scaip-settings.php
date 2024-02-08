@@ -134,7 +134,7 @@ function scaip_admin_page() {
 			'<p>%1$s</p>',
 			sprintf(
 				__( 'For more information about these settings, and about the Super Cool Ad Inserter Plugin in general, <a href="%1$s">see the plugin\'s documentation on GitHub</a>.', 'scaip' ),
-				'https://github.com/Automattic/super-cool-adinserter-plugin/tree/master/docs'
+				'https://github.com/Automattic/super-cool-adinserter-plugin/tree/trunk/docs'
 			)
 		);
 		?>
