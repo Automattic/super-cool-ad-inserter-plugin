@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Super Cool Ad Inserter Plugin
-Plugin URI: https://github.com/Automattic/super-cool-adinserter-plugin/tree/trunk/docs
+Plugin URI: https://github.com/Automattic/super-cool-ad-inserter-plugin/tree/trunk/docs
 Description: A simple way to insert widgets after the nth paragraph
 Version: 0.7.2
 Author: Automattic
