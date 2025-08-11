@@ -1,3 +1,10 @@
+## [0.7.3](https://github.com/Automattic/super-cool-ad-inserter-plugin/compare/v0.7.2...v0.7.3) (2025-08-11)
+
+
+### Bug Fixes
+
+* correct plugin URI and links in docs ([#216](https://github.com/Automattic/super-cool-ad-inserter-plugin/issues/216)) ([fe4a7e1](https://github.com/Automattic/super-cool-ad-inserter-plugin/commit/fe4a7e1b87abf855758e4be3b9432bf0deeca215))
+
 ## [0.7.2](https://github.com/Automattic/super-cool-ad-inserter-plugin/compare/v0.7.1...v0.7.2) (2024-08-13)
 
 
