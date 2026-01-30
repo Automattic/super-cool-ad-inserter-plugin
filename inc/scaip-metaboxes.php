@@ -22,6 +22,7 @@ function scaip_how_to_shortcode_callback() {
 	<p>
 		<?php
 			printf(
+				// translators: %1$s is the number of ads that will be inserted, %2$s is the number of blocks before the first insertion, %3$s is the number of blocks between insertions, %4$s is the number of paragraphs required for the ads to appear.
 				esc_html__( 'By default, %1$s ads will be inserted in a post, beginning %2$s blocks after the beginning and every %3$s paragraphs after that. They will not appear if this post is shorter than %4$s paragraphs long.', 'scaip' ),
 				esc_html( $scaip_repetitions ),
 				esc_html( $scaip_start ),
@@ -45,16 +46,19 @@ function scaip_how_to_shortcode_callback() {
 	<?php
 	if ( current_user_can( 'edit_others_posts' ) ) {
 		$checked = get_post_meta( $post->ID, 'scaip_prevent_shortcode_addition', true );
-		echo '<p><label class="selectit"><input type="checkbox" value="true" name="scaip_prevent_shortcode_addition"' . checked( $checked, 1, false  ) . '> ' . esc_html__( 'Prevent automatic addition of ads to this post.', 'scaip' ) . '</label></p>';
+		echo '<p><label class="selectit"><input type="checkbox" value="true" name="scaip_prevent_shortcode_addition"' . checked( $checked, 1, false ) . '> ' . esc_html__( 'Prevent automatic addition of ads to this post.', 'scaip' ) . '</label></p>';
 	}
 }
 
-// Only register the meta box if the user is an editor or greater
-add_action( 'add_meta_boxes', function() {
-	if ( current_user_can( 'edit_others_posts' ) ) {
-		add_meta_box( 'scaip_docs_and_options', __( 'Super Cool Ad Inserter', 'scaip' ), 'scaip_how_to_shortcode_callback', 'post', 'normal', 'low' );
+// Only register the meta box if the user is an editor or greater.
+add_action(
+	'add_meta_boxes',
+	function() {
+		if ( current_user_can( 'edit_others_posts' ) ) {
+			add_meta_box( 'scaip_docs_and_options', __( 'Super Cool Ad Inserter', 'scaip' ), 'scaip_how_to_shortcode_callback', 'post', 'normal', 'low' );
+		}
 	}
-});
+);
 
 // But always register the meta.
 register_meta( 'post', 'scaip_prevent_shortcode_addition', array( 'sanitize_callback' => 'scaip_prevent_shortcode_addition_sanitize' ) );
@@ -84,7 +88,8 @@ function scaip_prevent_shortcode_addition_sanitize( $args ) {
 function _scaip_meta_box_save( $post_id, $post ) {
 
 	// Verify the nonce before proceeding.
-	if ( ! isset( $_POST['scaip_metabox_nonce'] ) || ! wp_verify_nonce( $_POST['scaip_metabox_nonce'], 'scaip_metabox' ) ) {
+	$nonce = isset( $_POST['scaip_metabox_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['scaip_metabox_nonce'] ) ) : '';
+	if ( ! $nonce || ! wp_verify_nonce( $nonce, 'scaip_metabox' ) ) {
 		return false;
 	}
 
