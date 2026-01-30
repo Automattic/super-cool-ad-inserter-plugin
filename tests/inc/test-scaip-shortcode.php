@@ -1,8 +1,18 @@
 <?php
+/**
+ * Test shortcode.
+ *
+ * @package super-cool-ad-inserter-plugin
+ */
 
+/**
+ * Test shortcode functions.
+ */
 class ScaipShortcodeTestFunctions extends WP_UnitTestCase {
-
-	function test_scaip_shortcode() {
+	/**
+	 * Test the scaip_shortcode function.
+	 */
+	public function test_scaip_shortcode() {
 		$scaip_index = 1;
 		$text        = 'Ad ' . $scaip_index;
 		add_action(

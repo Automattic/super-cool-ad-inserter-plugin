@@ -2,8 +2,7 @@
 /**
  * The settings page for the Super Cool Ad Inserter Plugin, and setting up the sidebars used by the shortcode to display ads.
  *
- * @package WordPress
- * @subpackage SCAIP
+ * @package super-cool-ad-inserter-plugin
  * @since 0.1
  */
 
@@ -117,27 +116,30 @@ function scaip_admin_page() {
 			submit_button();
 		?>
 		</form>
+		<p>
 		<?php
 		printf(
-			wp_kses(
-				__( '<p>To place ads or change ad placements, visit the <a href="%1$s">Widgets Settings</a>. For example, widgets in the first position will be in the "Inserted Ad Position 1" sidebar.</p>', 'scaip' ),
-				array(
-					'p' => array(),
-					'a' => array(
-						'href' => array(),
-					),
-				)
+			wp_kses_post(
+				// translators: %1$s is the URL to the widgets settings page.
+				__( 'To place ads or change ad placements, visit the <a href="%1$s">Widgets Settings</a>. For example, widgets in the first position will be in the "Inserted Ad Position 1" sidebar.', 'scaip' )
 			),
 			esc_url( admin_url( 'widgets.php' ) )
 		);
+		?>
+		</p>
+		<p>
+		<?php
 		printf(
-			'<p>%1$s</p>',
-			sprintf(
-				__( 'For more information about these settings, and about the Super Cool Ad Inserter Plugin in general, <a href="%1$s">see the plugin\'s documentation on GitHub</a>.', 'scaip' ),
-				'https://github.com/Automattic/super-cool-ad-inserter-plugin/tree/trunk/docs'
+			wp_kses_post(
+				sprintf(
+					// translators: %1$s is the URL to the plugin's documentation on GitHub.
+					__( 'For more information about these settings, and about the Super Cool Ad Inserter Plugin in general, <a href="%1$s">see the plugin\'s documentation on GitHub</a>.', 'scaip' ),
+					'https://github.com/Automattic/super-cool-ad-inserter-plugin/tree/trunk/docs'
+				)
 			)
 		);
 		?>
+		</p>
 	</div>
 	<?php
 }

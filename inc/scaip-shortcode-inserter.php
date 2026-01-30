@@ -1,6 +1,8 @@
 <?php
 /**
  * Functions for the automatic insertion of scaip shortcodes
+ *
+ * @package super-cool-ad-inserter-plugin
  */
 
 /**
@@ -41,7 +43,7 @@ function scaip_insert_shortcode( $content = '' ) {
 					foreach ( $dom_body_elements as $index => $entry ) {
 						if ( ! $entry->hasChildNodes() ) {
 							// Trim whitespace, including non-breaking space.
-							$text_length = strlen( trim( $entry->textContent, "\xC2\xA0\n" ) );
+							$text_length = strlen( trim( $entry->textContent, "\xC2\xA0\n" ) ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 							if ( 0 === $text_length ) {
 								continue;
 							}
@@ -166,6 +168,7 @@ function scaip_should_insert( $start, $block_index, $insertion_index, $repetitio
 /**
  * Function to determine whether to insert the shortcode
  *
+ * @param string $content The post content.
  * @uses scaip_insert_shortcode
  * @since 0.2
  */
@@ -189,6 +192,7 @@ function scaip_maybe_insert_shortcode( $content = '' ) {
 	 * Abort if this post has the option set to not add ads.
 	 */
 	$skip = get_post_meta( $wp_query->queried_object->ID, 'scaip_prevent_shortcode_addition', true );
+
 	/*
 	 * Usually the meta field won't exist unless the checkbox to skip ads on any given post is checked.
 	 * An older version of the plugin saved it even when the box wasn't checked
@@ -238,6 +242,7 @@ add_filter( 'the_content', 'scaip_maybe_insert_shortcode', 5 );
  * @since 0.2
  * @see scaip_maybe_insert_shortcode
  * @uses has_blocks
+ * @param string $content The post content.
  */
 function scaip_maybe_remove_shortcode_inserter( $content ) {
 	if ( function_exists( 'has_block' ) && has_block( 'super-cool-ad-inserter-plugin/scaip-sidebar', $content ) ) {

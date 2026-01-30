@@ -17,7 +17,7 @@ function scaip_sidebar_block_init() {
 		return false;
 	}
 
-	$dir = dirname( __FILE__ );
+	$dir = __DIR__;
 
 	$block_js = 'scaip-sidebar/block.js';
 	wp_register_script(
@@ -29,16 +29,17 @@ function scaip_sidebar_block_init() {
 			'wp-element',
 			'wp-components',
 		),
-		filemtime( "$dir/$block_js" )
+		filemtime( "$dir/$block_js" ),
+		true
 	);
 
-	// Provide SCAIP's settings to the editor JS
+	// Provide SCAIP's settings to the editor JS.
 	$scaip_settings = array(
-		'start' => get_option( 'scaip_settings_start', 3 ),
-		'period' => get_option( 'scaip_settings_period', 3 ),
-		'repetitions' => get_option( 'scaip_settings_repetitions', 2 ),
+		'start'              => get_option( 'scaip_settings_start', 3 ),
+		'period'             => get_option( 'scaip_settings_period', 3 ),
+		'repetitions'        => get_option( 'scaip_settings_repetitions', 2 ),
 		'minimum_paragraphs' => get_option( 'scaip_settings_min_paragraphs', 6 ),
-		'sidebar_disabled' => scaip_is_sidebar_disabled(),
+		'sidebar_disabled'   => scaip_is_sidebar_disabled(),
 	);
 	wp_localize_script(
 		'scaip-sidebar-block-editor',
@@ -46,28 +47,34 @@ function scaip_sidebar_block_init() {
 		$scaip_settings
 	);
 
-	register_block_type( 'super-cool-ad-inserter-plugin/scaip-sidebar', array(
-		'editor_script' => 'scaip-sidebar-block-editor',
-		'editor_style'  => 'scaip-sidebar-block-editor',
-		'style'         => 'scaip-sidebar-block',
-		'render_callback' => 'scaip_sidebar_block_render',
-		'attributes' => array(
-			'number' => array(
-				'type' => 'string',
+	register_block_type(
+		'super-cool-ad-inserter-plugin/scaip-sidebar',
+		array(
+			'editor_script'   => 'scaip-sidebar-block-editor',
+			'editor_style'    => 'scaip-sidebar-block-editor',
+			'style'           => 'scaip-sidebar-block',
+			'render_callback' => 'scaip_sidebar_block_render',
+			'attributes'      => array(
+				'number' => array(
+					'type' => 'string',
+				),
+				'align'  => array(
+					'type' => 'string',
+				),
+				'class'  => array(
+					'type' => 'string',
+				),
 			),
-			'align' => array(
-				'type' => 'string',
-			),
-			'class' => array(
-				'type' => 'string',
-			),
-		),
-	) );
+		)
+	);
 }
 add_action( 'init', 'scaip_sidebar_block_init' );
 
 /**
  * Renders the block on front-end.
+ *
+ * @param array $attrs The block attributes.
+ * @return string The block content.
  */
 function scaip_sidebar_block_render( $attrs ) {
 	if ( scaip_is_sidebar_disabled() ) {

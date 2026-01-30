@@ -1,6 +1,8 @@
 <?php
 /**
  * The [ad] shortcode and its related functions
+ *
+ * @package super-cool-ad-inserter-plugin
  */
 
 /**
@@ -18,7 +20,7 @@ function scaip_shortcode( $atts = array(), $content = '', $tag = '' ) {
 	if ( isset( $atts['no'] ) ) {
 		return '';
 	}
-	
+
 	if ( ! isset( $atts['number'] ) ) {
 		return '';
 	}
