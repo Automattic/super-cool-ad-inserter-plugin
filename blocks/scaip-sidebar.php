@@ -28,6 +28,7 @@ function scaip_sidebar_block_init() {
 			'wp-i18n',
 			'wp-element',
 			'wp-components',
+			'wp-block-editor',
 		),
 		filemtime( "$dir/$block_js" ),
 		true
@@ -50,6 +51,7 @@ function scaip_sidebar_block_init() {
 	register_block_type(
 		'super-cool-ad-inserter-plugin/scaip-sidebar',
 		array(
+			'api_version'     => 3,
 			'editor_script'   => 'scaip-sidebar-block-editor',
 			'editor_style'    => 'scaip-sidebar-block-editor',
 			'style'           => 'scaip-sidebar-block',
