@@ -131,17 +131,15 @@
 							),
 							label: __( 'Inserted Ad Position Sidebar' ),
 							notices: notices,
-							instructions: ! notices.length ? [
-								__( 'Which Inserted Ad Position sidebar should be displayed in this area? ' ), // trailing space is important.
-								el(
-									ExternalLink,
-									{
-										href: 'https://github.com/Automattic/super-cool-ad-inserter-plugin/blob/trunk/docs/configuration.md'
-									},
-									'View the documentation.'
-								)
-							] : null
+							instructions: ! notices.length ? __( 'Which Inserted Ad Position sidebar should be displayed in this area? ' ) : null
 						},
+						! notices.length && el(
+							ExternalLink,
+							{
+								href: 'https://github.com/Automattic/super-cool-ad-inserter-plugin/blob/trunk/docs/configuration.md'
+							},
+							'View the documentation.'
+						),
 						! window.scaip.sidebar_disabled && el(
 							SelectControl,
 							{
