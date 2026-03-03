@@ -94,7 +94,6 @@
 			for ( var i = 1; i <= window.scaip.repetitions; i += 1 ) {
 				options_array.push( {
 					label: i.toString(),
-					key: i.toString(),
 					value: i.toString()
 				} );
 			}
