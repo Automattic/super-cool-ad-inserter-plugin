@@ -133,7 +133,7 @@
 						),
 						label: __( 'Inserted Ad Position Sidebar' ),
 						notices: notices,
-						instructions: ! notices.length ? __( 'Which Inserted Ad Position sidebar should be displayed in this area? ' ) : null
+						instructions: ! notices.length ? __( 'Which Inserted Ad Position sidebar should be displayed in this area?' ) : null
 					},
 					! notices.length && el(
 						ExternalLink,
