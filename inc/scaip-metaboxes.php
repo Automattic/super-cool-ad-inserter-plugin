@@ -36,11 +36,12 @@ function scaip_register_prevent_shortcode_addition_meta() {
 		'post',
 		'scaip_prevent_shortcode_addition',
 		array(
-			'type'          => 'boolean',
-			'single'        => true,
-			'show_in_rest'  => true,
-			'default'       => false,
-			'auth_callback' => 'scaip_prevent_shortcode_addition_auth_callback',
+			'type'              => 'boolean',
+			'single'            => true,
+			'show_in_rest'      => true,
+			'default'           => false,
+			'sanitize_callback' => 'rest_sanitize_boolean',
+			'auth_callback'     => 'scaip_prevent_shortcode_addition_auth_callback',
 		)
 	);
 }
