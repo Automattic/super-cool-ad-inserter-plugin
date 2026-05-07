@@ -1,6 +1,7 @@
 <?php
 /**
- * A metabox that explains how many ads are inserted and where as well as how to override the default behavior on a per-post basis.
+ * Registers the scaip_prevent_shortcode_addition post meta and the block-editor
+ * sidebar panel that toggles it on a per-post basis.
  *
  * @package WordPress
  * @subpackage SCAIP
@@ -8,111 +9,96 @@
  */
 
 /**
- * Generate the contents of the metabox.
- */
-function scaip_how_to_shortcode_callback() {
-	global $post;
-
-	$scaip_start = get_option( 'scaip_settings_start', 3 );
-	$scaip_period = get_option( 'scaip_settings_period', 3 );
-	$scaip_repetitions = get_option( 'scaip_settings_repetitions', 2 );
-	$scaip_minimum_paragraphs = get_option( 'scaip_settings_min_paragraphs', 6 );
-	wp_nonce_field( 'scaip_metabox', 'scaip_metabox_nonce' );
-	?>
-	<p>
-		<?php
-			printf(
-				// translators: %1$s is the number of ads that will be inserted, %2$s is the number of blocks before the first insertion, %3$s is the number of blocks between insertions, %4$s is the number of paragraphs required for the ads to appear.
-				esc_html__( 'By default, %1$s ads will be inserted in a post, beginning %2$s blocks after the beginning and every %3$s paragraphs after that. They will not appear if this post is shorter than %4$s paragraphs long.', 'scaip' ),
-				esc_html( $scaip_repetitions ),
-				esc_html( $scaip_start ),
-				esc_html( $scaip_period ),
-				esc_html( $scaip_minimum_paragraphs )
-			);
-		?>
-	</p>
-	<p>
-		<?php
-		echo wp_kses(
-			__( 'If the automatic positioning causes problems for any given post, you can prevent automatic placement of the ads <a href="https://github.com/Automattic/super-cool-ad-inserter-plugin/blob/trunk/docs/display-settings.md">using a shortcode</a> or disable them completely by checking this box:', 'scaip' ),
-			array(
-				'a' => array(
-					'href' => array(),
-				),
-			)
-		);
-		?>
-	</p>
-	<?php
-	if ( current_user_can( 'edit_others_posts' ) ) {
-		$checked = get_post_meta( $post->ID, 'scaip_prevent_shortcode_addition', true );
-		echo '<p><label class="selectit"><input type="checkbox" value="true" name="scaip_prevent_shortcode_addition"' . checked( $checked, 1, false ) . '> ' . esc_html__( 'Prevent automatic addition of ads to this post.', 'scaip' ) . '</label></p>';
-	}
-}
-
-// Only register the meta box if the user is an editor or greater.
-add_action(
-	'add_meta_boxes',
-	function() {
-		if ( current_user_can( 'edit_others_posts' ) ) {
-			add_meta_box( 'scaip_docs_and_options', __( 'Super Cool Ad Inserter', 'scaip' ), 'scaip_how_to_shortcode_callback', 'post', 'normal', 'low' );
-		}
-	}
-);
-
-// But always register the meta.
-register_meta( 'post', 'scaip_prevent_shortcode_addition', array( 'sanitize_callback' => 'scaip_prevent_shortcode_addition_sanitize' ) );
-
-/**
- * Sanitization callback for saving the scaip_prevent_shortcode_addition post meta option.
+ * Auth callback used by register_post_meta for scaip_prevent_shortcode_addition.
  *
- * @param array $args the callback args.
+ * Only users who can edit_others_posts may toggle this meta via the REST API.
+ * This matches the capability the original classic metabox required.
+ *
+ * @param bool   $allowed   Whether the user can edit the meta. Unused; we make
+ *                          the determination ourselves.
+ * @param string $meta_key  The meta key being modified. Unused.
+ * @param int    $object_id The post being modified. Unused; the cap is global.
+ * @param int    $user_id   The user attempting to write the meta.
+ * @return bool Whether the write should be permitted.
  */
-function scaip_prevent_shortcode_addition_sanitize( $args ) {
-	$args = sanitize_text_field( $args );
-	if ( 1 === intval( $args ) ) {
-		$ret = $args;
-	} else {
-		$ret = false;
-	}
-
-	return $ret;
+function scaip_prevent_shortcode_addition_auth_callback( $allowed, $meta_key, $object_id, $user_id ) {
+	return user_can( $user_id, 'edit_others_posts' );
 }
 
 /**
- * Save the options set in the metabox.
+ * Registers the scaip_prevent_shortcode_addition post meta.
  *
- * @param int    $post_id the post ID.
- * @param object $post the post object.
+ * Hooked on init per WordPress's recommended timing for register_post_meta;
+ * earlier registration can run before REST schema infrastructure is ready.
  */
-function _scaip_meta_box_save( $post_id, $post ) {
-
-	// Verify the nonce before proceeding.
-	$nonce = isset( $_POST['scaip_metabox_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['scaip_metabox_nonce'] ) ) : '';
-	if ( ! $nonce || ! wp_verify_nonce( $nonce, 'scaip_metabox' ) ) {
-		return false;
-	}
-
-	// Bail if we're doing an auto save.
-	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
-		return;
-	}
-
-	// If our current user can't edit this post, bail.
-	if ( ! current_user_can( 'edit_post', $post->ID ) ) {
-		return;
-	}
-
-	$new_meta_value = ( isset( $_POST['scaip_prevent_shortcode_addition'] ) ? sanitize_html_class( wp_unslash( $_POST['scaip_prevent_shortcode_addition'] ) ) : '' );
-
-	/*
-	 * If the checkbox was checked, update the meta_value
-	 * If the checkbox was unchecked, delete the meta_value
-	 */
-	if ( ! empty( $new_meta_value ) ) {
-		add_post_meta( $post_id, 'scaip_prevent_shortcode_addition', 1, true );
-	} else {
-		delete_post_meta( $post_id, 'scaip_prevent_shortcode_addition' );
-	}
+function scaip_register_prevent_shortcode_addition_meta() {
+	register_post_meta(
+		'post',
+		'scaip_prevent_shortcode_addition',
+		array(
+			'type'              => 'boolean',
+			'single'            => true,
+			'show_in_rest'      => true,
+			'default'           => false,
+			'sanitize_callback' => 'rest_sanitize_boolean',
+			'auth_callback'     => 'scaip_prevent_shortcode_addition_auth_callback',
+		)
+	);
 }
-add_action( 'save_post', '_scaip_meta_box_save', 10, 2 );
+add_action( 'init', 'scaip_register_prevent_shortcode_addition_meta' );
+
+/**
+ * Enqueues the SCAIP document settings panel script in the block editor.
+ *
+ * Skips if the current screen isn't the block editor for a post, or if the
+ * user lacks edit_others_posts — the panel JS is never sent to clients that
+ * can't use it. This matches the capability the original classic metabox
+ * required.
+ */
+function scaip_enqueue_document_panel_assets() {
+	$screen = get_current_screen();
+	if ( ! $screen || ! $screen->is_block_editor() || 'post' !== $screen->id ) {
+		return;
+	}
+
+	if ( ! current_user_can( 'edit_others_posts' ) ) {
+		return;
+	}
+
+	$plugin_dir = plugin_dir_path( SCAIP_PLUGIN_FILE );
+	$plugin_url = plugin_dir_url( SCAIP_PLUGIN_FILE );
+	$panel_path = 'assets/js/scaip-document-panel.js';
+
+	wp_enqueue_script(
+		'scaip-document-panel',
+		$plugin_url . $panel_path,
+		array(
+			'wp-plugins',
+			// Both wp-editor and wp-edit-post are required: panel.js falls back
+			// from wp.editor.PluginDocumentSettingPanel (WP 6.6+) to
+			// wp.editPost.PluginDocumentSettingPanel (older versions).
+			'wp-editor',
+			'wp-edit-post',
+			'wp-element',
+			'wp-components',
+			'wp-i18n',
+			'wp-core-data',
+			'wp-data',
+			'wp-dom-ready',
+		),
+		filemtime( $plugin_dir . $panel_path ),
+		true
+	);
+
+	wp_localize_script(
+		'scaip-document-panel',
+		'scaipDocumentPanel',
+		array(
+			'start'              => get_option( 'scaip_settings_start', 3 ),
+			'period'             => get_option( 'scaip_settings_period', 3 ),
+			'repetitions'        => get_option( 'scaip_settings_repetitions', 2 ),
+			'minimum_paragraphs' => get_option( 'scaip_settings_min_paragraphs', 6 ),
+		)
+	);
+}
+add_action( 'enqueue_block_editor_assets', 'scaip_enqueue_document_panel_assets' );
