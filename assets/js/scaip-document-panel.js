@@ -31,7 +31,8 @@
 
 		var settings = window.scaipDocumentPanel || {};
 
-		// Mirrors the classic metabox copy in scaip_how_to_shortcode_callback().
+		// Settings come from window.scaipDocumentPanel, localized in
+		// scaip_enqueue_document_panel_assets() (inc/scaip-metaboxes.php).
 		var description = sprintf(
 			/* translators: 1: number of ads inserted, 2: blocks before first insertion, 3: blocks between insertions, 4: minimum paragraphs required. */
 			__( 'By default, %1$s ads will be inserted in a post, beginning %2$s blocks after the beginning and every %3$s paragraphs after that. They will not appear if this post is shorter than %4$s paragraphs long.', 'scaip' ),

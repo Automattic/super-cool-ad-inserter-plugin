@@ -11,42 +11,56 @@
 /**
  * Auth callback used by register_post_meta for scaip_prevent_shortcode_addition.
  *
- * Anyone who can edit the post can toggle this meta via the REST API. This
- * matches the gating other Newspack-managed editor panels (ads, campaigns) use.
+ * Only users who can edit_others_posts may toggle this meta via the REST API.
+ * This matches the capability the original classic metabox required.
  *
  * @param bool   $allowed   Whether the user can edit the meta. Unused; we make
  *                          the determination ourselves.
  * @param string $meta_key  The meta key being modified. Unused.
- * @param int    $object_id The post being modified.
+ * @param int    $object_id The post being modified. Unused; the cap is global.
  * @param int    $user_id   The user attempting to write the meta.
  * @return bool Whether the write should be permitted.
  */
 function scaip_prevent_shortcode_addition_auth_callback( $allowed, $meta_key, $object_id, $user_id ) {
-	return user_can( $user_id, 'edit_post', $object_id );
+	return user_can( $user_id, 'edit_others_posts' );
 }
 
-register_post_meta(
-	'post',
-	'scaip_prevent_shortcode_addition',
-	array(
-		'type'          => 'boolean',
-		'single'        => true,
-		'show_in_rest'  => true,
-		'default'       => false,
-		'auth_callback' => 'scaip_prevent_shortcode_addition_auth_callback',
-	)
-);
+/**
+ * Registers the scaip_prevent_shortcode_addition post meta.
+ *
+ * Hooked on init per WordPress's recommended timing for register_post_meta;
+ * earlier registration can run before REST schema infrastructure is ready.
+ */
+function scaip_register_prevent_shortcode_addition_meta() {
+	register_post_meta(
+		'post',
+		'scaip_prevent_shortcode_addition',
+		array(
+			'type'          => 'boolean',
+			'single'        => true,
+			'show_in_rest'  => true,
+			'default'       => false,
+			'auth_callback' => 'scaip_prevent_shortcode_addition_auth_callback',
+		)
+	);
+}
+add_action( 'init', 'scaip_register_prevent_shortcode_addition_meta' );
 
 /**
  * Enqueues the SCAIP document settings panel script in the block editor.
  *
- * Skips if the current screen isn't the block editor for a post. WordPress
- * already gates editor access on edit_post; the auth_callback above gates
- * REST writes, so no extra cap check is needed here.
+ * Skips if the current screen isn't the block editor for a post, or if the
+ * user lacks edit_others_posts — the panel JS is never sent to clients that
+ * can't use it. This matches the capability the original classic metabox
+ * required.
  */
 function scaip_enqueue_document_panel_assets() {
 	$screen = get_current_screen();
 	if ( ! $screen || ! $screen->is_block_editor() || 'post' !== $screen->id ) {
+		return;
+	}
+
+	if ( ! current_user_can( 'edit_others_posts' ) ) {
 		return;
 	}
 

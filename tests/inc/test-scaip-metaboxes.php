@@ -15,38 +15,36 @@
 class ScaipMetaboxesTestFunctions extends WP_UnitTestCase {
 
 	/**
-	 * An Author can edit their own posts, so the meta auth callback must
-	 * allow REST writes for a post they authored.
+	 * Authors do not have edit_others_posts, so the meta auth callback
+	 * must reject their REST writes.
 	 */
-	public function test_auth_callback_allows_author_on_own_post() {
+	public function test_auth_callback_denies_users_without_edit_others_posts() {
 		$author_id = $this->factory->user->create( array( 'role' => 'author' ) );
-		$post_id   = $this->factory->post->create( array( 'post_author' => $author_id ) );
 
 		$result = scaip_prevent_shortcode_addition_auth_callback(
 			false,
 			'scaip_prevent_shortcode_addition',
-			$post_id,
+			0,
 			$author_id
 		);
 
-		$this->assertTrue( $result );
+		$this->assertFalse( $result );
 	}
 
 	/**
-	 * Subscribers cannot edit any post, so the meta auth callback must
-	 * deny their REST writes.
+	 * Editors have edit_others_posts, so the meta auth callback must
+	 * allow their REST writes.
 	 */
-	public function test_auth_callback_denies_subscriber() {
-		$subscriber_id = $this->factory->user->create( array( 'role' => 'subscriber' ) );
-		$post_id       = $this->factory->post->create();
+	public function test_auth_callback_allows_users_with_edit_others_posts() {
+		$editor_id = $this->factory->user->create( array( 'role' => 'editor' ) );
 
 		$result = scaip_prevent_shortcode_addition_auth_callback(
 			false,
 			'scaip_prevent_shortcode_addition',
-			$post_id,
-			$subscriber_id
+			0,
+			$editor_id
 		);
 
-		$this->assertFalse( $result );
+		$this->assertTrue( $result );
 	}
 }
