@@ -40,10 +40,16 @@
 	 */
 	var dashicon = wp.components.Dashicon;
 	/**
+	 * Hook to mark the block wrapper element for apiVersion 3 / iframe editor compatibility.
+	 * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-api-versions/
+	 */
+	var useBlockProps = wp.blockEditor.useBlockProps;
+	/**
 	 * Every block starts by registering a new block type definition.
 	 * @see https://wordpress.org/gutenberg/handbook/block-api/
 	 */
 	registerBlockType( 'super-cool-ad-inserter-plugin/scaip-sidebar', {
+		apiVersion: 3,
 		title: __( 'Inserted Ad Position Sidebar' ),
 		icon: 'welcome-widgets-menus',
 		category: 'widgets',
@@ -71,8 +77,10 @@
 		 * @return {Element}       Element to render.
 		 */
 		edit: function( props ) {
+			var blockProps = useBlockProps();
+
 			if ( ! window.scaip ) {
-				return "Something is wrong with the Super Cool Ad Inserter Plugin.";
+				return el( 'div', blockProps, "Something is wrong with the Super Cool Ad Inserter Plugin." );
 			}
 
 			var options_array = [] ;
@@ -86,7 +94,6 @@
 			for ( var i = 1; i <= window.scaip.repetitions; i += 1 ) {
 				options_array.push( {
 					label: i.toString(),
-					key: i.toString(),
 					value: i.toString()
 				} );
 			}
@@ -112,54 +119,46 @@
 				);
 			}
 
-
-			return [
+			return el(
+				'div',
+				blockProps,
 				el(
-					'div',
+					Placeholder,
 					{
-						className: props.className,
-						align: props.align
-					},
-					el(
-						Placeholder,
-						{
-							icon: el(
-								dashicon,
-								{
-									icon: 'welcome-widgets-menus'
-								}
-							),
-							label: __( 'Inserted Ad Position Sidebar' ),
-							notices: notices,
-							instructions: ! notices.length ? [
-								__( 'Which Inserted Ad Position sidebar should be displayed in this area? ' ), // trailing space is important.
-								el(
-									ExternalLink,
-									{
-										href: 'https://github.com/Automattic/super-cool-ad-inserter-plugin/blob/trunk/docs/configuration.md'
-									},
-									'View the documentation.'
-								)
-							] : null
-						},
-						! window.scaip.sidebar_disabled && el(
-							SelectControl,
+						icon: el(
+							dashicon,
 							{
-								label: __( 'Inserted Ad Position:' ),
-								labelPosition: 'top',
-								hideLabelFromVision: true,
-								options: options_array,
-								value: value,
-								onChange: function( value ) {
-									if ( value > 0 ) {
-										props.setAttributes( { number: value.toString() } );
-									}
+								icon: 'welcome-widgets-menus'
+							}
+						),
+						label: __( 'Inserted Ad Position Sidebar' ),
+						notices: notices,
+						instructions: ! notices.length ? __( 'Which Inserted Ad Position sidebar should be displayed in this area?' ) : null
+					},
+					! notices.length && el(
+						ExternalLink,
+						{
+							href: 'https://github.com/Automattic/super-cool-ad-inserter-plugin/blob/trunk/docs/configuration.md'
+						},
+						'View the documentation.'
+					),
+					! window.scaip.sidebar_disabled && el(
+						SelectControl,
+						{
+							label: __( 'Inserted Ad Position:' ),
+							labelPosition: 'top',
+							hideLabelFromVision: true,
+							options: options_array,
+							value: value,
+							onChange: function( value ) {
+								if ( value > 0 ) {
+									props.setAttributes( { number: value.toString() } );
 								}
 							}
-						)
+						}
 					)
 				)
-			];
+			);
 		},
 
 		/**
@@ -167,22 +166,13 @@
 		 * into the final markup, which is then serialized by Gutenberg into `post_content`.
 		 * @see https://wordpress.org/gutenberg/handbook/block-edit-save/#save
 		 *
-		 * Because this is a dynamic block, there's nothing returned here.
-		 * Yet, because this dynamic block draws from the attributes saved for its blockself
-		 * in the post_content, we must return *something* in order for the attributes
-		 * to be saved in the post.
+		 * This is a dynamic block rendered by the scaip_sidebar_block_render PHP callback.
+		 * Returning null produces a self-closing block delimiter in post_content.
 		 *
-		 * Can't use https://developer.mozilla.org/en-US/docs/Web/API/Comment/Comment because
-		 * that constructor isn't supported in IE.
-		 *
-		 * Therefore, use https://developer.mozilla.org/en-US/docs/Web/API/Document/createComment because
-		 * that particular function has been around since 2000: https://www.w3.org/TR/2000/WD-DOM-Level-1-20000929/level-one-core.html#ID-1334481328
-		 *
-		 * @return {Element}       Element to render.
+		 * @return {null} Null because rendering is handled server-side.
 		 */
-		save: function( attributes ) {
-			// Rendering in PHP
-			return document.createComment( attributes );
+		save: function() {
+			return null;
 		}
 	} );
 } )(
