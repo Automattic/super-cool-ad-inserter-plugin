@@ -1,3 +1,16 @@
+## [0.7.4](https://github.com/Automattic/super-cool-ad-inserter-plugin/compare/v0.7.3...v0.7.4) (2026-05-18)
+
+
+### Bug Fixes
+
+* remove `key` property causing React warnings in new context; SelectControl should not need it ([2b88fdf](https://github.com/Automattic/super-cool-ad-inserter-plugin/commit/2b88fdf7e028c2bd7bc3dcc51e5db349c8eeeb5b))
+* replace classic metabox with block editor sidebar panel ([#261](https://github.com/Automattic/super-cool-ad-inserter-plugin/issues/261)) ([e642205](https://github.com/Automattic/super-cool-ad-inserter-plugin/commit/e642205b3bae00d4cdb762575d4f0e2a73aed961))
+* split link out of `instructions` key so wp.a11y.speak() gets a string ([81c8390](https://github.com/Automattic/super-cool-ad-inserter-plugin/commit/81c8390f85b700816fe905946f6c41ab918be8bc))
+* update blocks to support iframe-mode Post Editor ([0a462c9](https://github.com/Automattic/super-cool-ad-inserter-plugin/commit/0a462c9242bef8aa93e03e2448e7afc20da0b580))
+* update download URL for db.php ([#221](https://github.com/Automattic/super-cool-ad-inserter-plugin/issues/221)) ([7fe411c](https://github.com/Automattic/super-cool-ad-inserter-plugin/commit/7fe411c484cea9c4d228496bab0c451415c89dcf))
+* updated `Inserted Ad Position Sidebar` block for compatibility with iframe Post Editor ([7e68571](https://github.com/Automattic/super-cool-ad-inserter-plugin/commit/7e68571784d570c76b9b76400675167d96946842))
+* use Copilot's suggestion to remove now-unneeded space ([23e3688](https://github.com/Automattic/super-cool-ad-inserter-plugin/commit/23e3688d8274573d4764a49ebe7d0a94f6d7508c))
+
 ## [0.7.3](https://github.com/Automattic/super-cool-ad-inserter-plugin/compare/v0.7.2...v0.7.3) (2025-08-11)
 
 

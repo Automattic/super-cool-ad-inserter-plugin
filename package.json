@@ -1,6 +1,6 @@
 {
 	"name": "super-cool-ad-inserter-plugin",
-	"version": "0.7.3",
+	"version": "0.7.4",
 	"author": "Automattic",
 	"scripts": {
 		"start": "npm ci",
